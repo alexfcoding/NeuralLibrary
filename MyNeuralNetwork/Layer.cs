@@ -9,15 +9,16 @@ namespace MyNeuralNetwork
     class Layer
     {
         public int NeuronCount { get; set; }
-        public List<Neuron> NeuronList { get; set; }
+        public List<Neuron> Neurons { get; set; }
 
         public Layer ()
         {
-            NeuronList = new List<Neuron>();
+            Neurons = new List<Neuron>();
         }
         public void AddNeuron(Neuron neuron)
         {
-            NeuronList.Add(neuron);
+            Neurons.Add(neuron);
+            NeuronCount++;
         }
         
     }

@@ -17,13 +17,15 @@ namespace MyNeuralNetwork
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void testNetworkButton_Click(object sender, EventArgs e)
         {
             Network MyNetwork = new Network();
 
             MyNetwork.FillInputLayer(3);
             MyNetwork.FillHiddenLayer(3);
             MyNetwork.FillOutputLayer(3);
+
+            MyNetwork.MoveForward();
         }
     }
 }
