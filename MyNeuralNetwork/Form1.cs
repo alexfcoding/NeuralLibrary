@@ -21,18 +21,28 @@ namespace MyNeuralNetwork
         {
             Network MyNetwork = new Network();
 
-            MyNetwork.FillInputLayer(3);
+            MyNetwork.FillInputLayer(3, 5);
 
-            Signal signal = new Signal();
-
+            Signal signal = new Signal(5);
             MyNetwork.SendSignalsToFirstLayer(signal.Amplitude);
 
-            MyNetwork.FillHiddenLayer(3);
-            MyNetwork.FillOutputLayer(3);
+            MyNetwork.FillHiddenLayer(5, 3);
 
-            MyNetwork.MoveForward();
+            MyNetwork.FillOutputLayer(3, 3);
 
+            MyNetwork.ForwardPropagation();
 
+            for (int i = 0; i < MyNetwork.Layers.Count; i++)
+            {
+                log.Items.Add($"Layer: {i}");
+
+                for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
+                {
+                    log.Items.Add(MyNetwork.Layers[i].Neurons[j].OutputSignal);
+                }
+
+                log.Items.Add(" ");
+            }
         }
     }
 }

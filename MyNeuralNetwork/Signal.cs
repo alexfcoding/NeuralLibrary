@@ -10,13 +10,16 @@ namespace MyNeuralNetwork
     {
         public double[] Amplitude { get; set; }
 
-        public Signal ()
+        public Signal (int samplesCount)
         {
-            Amplitude = new double[3];
+            Amplitude = new double[samplesCount];
 
-            Amplitude[0] = 2;
-            Amplitude[1] = 4;
-            Amplitude[2] = 8;
+            for (int i = 0; i < samplesCount; i++)
+            {
+                Amplitude[i] = i;
+            }
+            
         }
+        
     }
 }
