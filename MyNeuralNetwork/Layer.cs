@@ -15,11 +15,6 @@ namespace MyNeuralNetwork
         {
             Neurons = new List<Neuron>();
         }
-        public void AddNeuron(Neuron neuron)
-        {
-            Neurons.Add(neuron);
-            NeuronCount++;
-        }
         
     }
 }

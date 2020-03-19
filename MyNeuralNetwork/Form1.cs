@@ -22,10 +22,17 @@ namespace MyNeuralNetwork
             Network MyNetwork = new Network();
 
             MyNetwork.FillInputLayer(3);
+
+            Signal signal = new Signal();
+
+            MyNetwork.SendSignalsToFirstLayer(signal.Amplitude);
+
             MyNetwork.FillHiddenLayer(3);
             MyNetwork.FillOutputLayer(3);
 
             MyNetwork.MoveForward();
+
+
         }
     }
 }

@@ -64,28 +64,25 @@ namespace MyNeuralNetwork
             Layers.Add(outputLayer);
         }
 
-        public void MoveForward ()
+        public void SendSignalsToFirstLayer(double[] inputSignalAmplitude)
         {
-            Signal signal = new Signal();
-
-            List<double> powersList = new List<double>();
-            double previousSignal = 0;
-
-            for (int i = 0; i < Layers.Count; i++)
+            for (int i = 0; i < Layers[0].Neurons[0].Weights.Length; i++)
             {
-                for (int j = 0; j < Layers[i].Neurons.Count; j++)
+                Layers[0].Neurons[i].OutputSignal = inputSignalAmplitude[i];
+            }
+        }
+
+        public void MoveNeuronSignal ()
+        {
+            for (int i = 1; i < Layers.Count; i++)
+            {
+                for (int k = 0; k < Layers[i-1].Neurons.Count; k++)
                 {
-                    if (i == 0)
+                    for (int j = 0; j < Layers[i].Neurons.Count; j++)
                     {
-                        Layers[i].Neurons[j].CalculateOutputSignal(signal.Amplitude[j], NeuronType.Input);
-                        //previousSignal = Layers[i].Neurons[j].OutputSignal;
+                        Layers[i].Neurons[k].OutputSignal += Layers[i - 1].Neurons[j].OutputSignal * Layers[i - 1].Neurons[j].Weights[k];
                     }
-                    else
-                    {
-                       
-                    }
-                       
-                }
+                }                
             }
         }
     }
