@@ -21,10 +21,11 @@ namespace MyNeuralNetwork
         {
             Network MyNetwork = new Network();
             double[] targets = new double[3];
+            Random rndTarget = new Random();
 
             for (int i = 0; i < targets.Length; i++)
             {
-                targets[i] = i;
+                targets[i] = rndTarget.NextDouble();
             }
 
             MyNetwork.FillInputLayer(3, 3);
@@ -32,14 +33,13 @@ namespace MyNeuralNetwork
             Signal signal = new Signal(3);
 
             MyNetwork.SendSignalsToFirstLayer(signal.Amplitude);
-
             MyNetwork.FillHiddenLayer(3, 3);
-
             MyNetwork.FillOutputLayer(3, 3);
 
             double[] currentNetworkOut = new double[3];
             currentNetworkOut = MyNetwork.ForwardPropagation();
-            MyNetwork.CheckHiddenOutputError(currentNetworkOut, targets);
+
+            MyNetwork.CheckNetworkOutputError(currentNetworkOut, targets);
 
             MyNetwork.NeuronErrorDistribution();
 
@@ -49,7 +49,7 @@ namespace MyNeuralNetwork
 
                 for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
                 {
-                    log.Items.Add(MyNetwork.Layers[i].Neurons[j].OutputSignal);
+                    log.Items.Add(MyNetwork.Layers[i].Neurons[j].OutputSignal + $" (Error: {MyNetwork.Layers[i].Neurons[j].Error})");
                 }
 
                 log.Items.Add(" ");

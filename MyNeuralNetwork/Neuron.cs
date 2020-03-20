@@ -11,6 +11,7 @@ namespace MyNeuralNetwork
         public double OutputSignal { get; set; }
         public double[] Weights { get; set; }
         public double[] WeightErrorDistribution { get; set; }
+        public double Error { get; set; }
 
         public void GenerateWeights (int weightCount, Random randomWeight)
         {
@@ -22,7 +23,7 @@ namespace MyNeuralNetwork
             {
                 //Weights[i] = randomWeight.NextDouble();
                 Weights[i] = randomWeight.NextDouble();
-                //Weights[i] = 1;
+                //Weights[i] = i+1;
             }
         }
     }
