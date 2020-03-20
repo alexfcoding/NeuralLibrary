@@ -19,41 +19,94 @@ namespace MyNeuralNetwork
 
         private void testNetworkButton_Click(object sender, EventArgs e)
         {
-            Network MyNetwork = new Network();
-            double[] targets = new double[3];
-            Random rndTarget = new Random();
-
-            for (int i = 0; i < targets.Length; i++)
-            {
-                targets[i] = rndTarget.NextDouble();
-            }
-
-            MyNetwork.FillInputLayer(3, 3);
+            log.Items.Clear();
+            Network MyNetwork = new Network(3);
 
             Signal signal = new Signal(3);
 
+            MyNetwork.FillInputLayer(3, 3);
             MyNetwork.SendSignalsToFirstLayer(signal.Amplitude);
             MyNetwork.FillHiddenLayer(3, 3);
             MyNetwork.FillOutputLayer(3, 3);
 
-            double[] currentNetworkOut = new double[3];
-            currentNetworkOut = MyNetwork.ForwardPropagation();
+            MyNetwork.ForwardPropagation();
 
-            MyNetwork.CheckNetworkOutputError(currentNetworkOut, targets);
+            MyNetwork.FindNetworkOutputError();
 
             MyNetwork.NeuronErrorDistribution();
 
-            for (int i = 0; i < MyNetwork.Layers.Count; i++)
-            {
-                log.Items.Add($"Layer: {i}");
+            PrintNetworkStats(MyNetwork, signal, MyNetwork);
+        }
 
-                for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
+        private void PrintNetworkStats(Network networkToPrint, Signal inputSignal, Network MyNetwork)
+        {
+            log.Items.Add($"________________Targets________________ ");
+            log.Items.Add("");
+
+            for (int i = 0; i < MyNetwork.Targets.Length; i++)
+            {
+                log.Items.Add(MyNetwork.Targets[i]);
+            }
+
+            log.Items.Add("");
+
+            log.Items.Add($"________________Output________________ ");
+            log.Items.Add("");
+
+            for (int i = 0; i < MyNetwork.CurrentNetworkOutput.Length; i++)
+            {
+                log.Items.Add(MyNetwork.CurrentNetworkOutput[i]);
+            }
+            log.Items.Add("");
+
+            log.Items.Add($"________________Error________________ ");
+            log.Items.Add("");
+
+            for (int i = 0; i < MyNetwork.CurrentNetworkOutputError.Length; i++)
+            {
+                log.Items.Add(MyNetwork.CurrentNetworkOutputError[i]);
+            }
+
+            log.Items.Add($"________________Input signals:________________");
+            log.Items.Add("");
+
+            for (int i = 0; i < inputSignal.Amplitude.Length; i++)
+            {
+                log.Items.Add(inputSignal.Amplitude[i]);
+            }
+            
+            for (int i = 0; i < networkToPrint.Layers.Count; i++)
+            {
+                log.Items.Add($"________________Layer: {i} ________________");
+                log.Items.Add("");
+
+                for (int j = 0; j < networkToPrint.Layers[i].Neurons.Count; j++)
                 {
-                    log.Items.Add(MyNetwork.Layers[i].Neurons[j].OutputSignal + $" (Error: {MyNetwork.Layers[i].Neurons[j].Error})");
+                    log.Items.Add($"_________Neuron: {j} _________");
+                    log.Items.Add("");
+                    log.Items.Add($"Error: {networkToPrint.Layers[i].Neurons[j].Error}");
+                    log.Items.Add($"Signal amplitude: {networkToPrint.Layers[i].Neurons[j].OutputSignal}");
+
+                    for (int k = 0; k < networkToPrint.Layers[i].Neurons[j].Weights.Length; k++)
+                    {
+                        log.Items.Add($"Weight {k} : {networkToPrint.Layers[i].Neurons[j].Weights[k]}");
+                    }
+                    log.Items.Add("");
+
                 }
 
                 log.Items.Add(" ");
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

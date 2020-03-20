@@ -34,7 +34,7 @@
             // 
             // testNetworkButton
             // 
-            this.testNetworkButton.Location = new System.Drawing.Point(12, 502);
+            this.testNetworkButton.Location = new System.Drawing.Point(12, 12);
             this.testNetworkButton.Name = "testNetworkButton";
             this.testNetworkButton.Size = new System.Drawing.Size(396, 23);
             this.testNetworkButton.TabIndex = 0;
@@ -46,16 +46,16 @@
             // 
             this.log.FormattingEnabled = true;
             this.log.ItemHeight = 16;
-            this.log.Location = new System.Drawing.Point(12, 12);
+            this.log.Location = new System.Drawing.Point(12, 51);
             this.log.Name = "log";
-            this.log.Size = new System.Drawing.Size(396, 484);
+            this.log.Size = new System.Drawing.Size(396, 692);
             this.log.TabIndex = 1;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1440, 575);
+            this.ClientSize = new System.Drawing.Size(420, 1055);
             this.Controls.Add(this.log);
             this.Controls.Add(this.testNetworkButton);
             this.Name = "Form1";

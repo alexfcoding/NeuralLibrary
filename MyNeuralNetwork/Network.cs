@@ -9,15 +9,29 @@ namespace MyNeuralNetwork
     class Network
     {
         public List<Layer> Layers { get; set; }
+        public double[] Targets { get; set; }
         public double[] CurrentNetworkOutput { get; set; }
         public double[] CurrentNetworkOutputError { get; set; }
 
         Random randomWeight;
+        Random rndTarget;
 
-        public Network ()
+        public Network (int outputNeurons)
         {
             Layers = new List<Layer>();
+
             randomWeight = new Random();
+            rndTarget = new Random();
+
+            CurrentNetworkOutput = new double[outputNeurons];
+            CurrentNetworkOutputError = new double[outputNeurons];
+
+            Targets = new double[outputNeurons];
+
+            for (int i = 0; i < Targets.Length; i++)
+            {
+                Targets[i] = rndTarget.NextDouble();
+            }
         }
 
         public void FillInputLayer (int inputNeuronCount, int weightsCount)
@@ -41,7 +55,7 @@ namespace MyNeuralNetwork
             for (int i = 0; i < hiddenNeuronCount; i++)
             {
                 Neuron neuron = new Neuron();
-                neuron.GenerateWeights(3, randomWeight);
+                neuron.GenerateWeights(weightsCount, randomWeight);
                 hiddenLayer.Neurons.Add(neuron);
             }
 
@@ -55,7 +69,7 @@ namespace MyNeuralNetwork
             for (int i = 0; i < outputNeuronCount; i++)
             {
                 Neuron neuron = new Neuron();
-                neuron.GenerateWeights(3, randomWeight);
+                neuron.GenerateWeights(weightsCount, randomWeight);
                 outputLayer.Neurons.Add(neuron);
             }
 
@@ -72,8 +86,6 @@ namespace MyNeuralNetwork
 
         public double[] ForwardPropagation ()
         {
-            double[] currentNetworkOutput = new double[Layers[Layers.Count - 1].Neurons.Count];
-
             for (int i = 1; i < Layers.Count; i++)
             {
                 for (int k = 0; k < Layers[i].Neurons.Count; k++)
@@ -87,12 +99,12 @@ namespace MyNeuralNetwork
                     
                     if (i == Layers.Count - 1)
                     {
-                        currentNetworkOutput[k] = Layers[i].Neurons[k].OutputSignal;
+                        CurrentNetworkOutput[k] = Layers[i].Neurons[k].OutputSignal;
                     }
                 }                
             }
 
-            return currentNetworkOutput;
+            return CurrentNetworkOutput;
         }
 
         public double Sigmoid (double x)
@@ -100,19 +112,19 @@ namespace MyNeuralNetwork
             return 1 / (1 + Math.Exp(-x));
         }
 
-        public void CheckNetworkOutputError (double[] currentNetworkOutput, double[] trainingTargets)
+        public void FindNetworkOutputError ()
         {
-            double[] CurrentNetworkOutputError = new double[currentNetworkOutput.Length];
-
-            for (int i = 0; i < currentNetworkOutput.Length; i++)
+            for (int i = 0; i < CurrentNetworkOutput.Length; i++)
             {
-                CurrentNetworkOutputError[i] = trainingTargets[i] - currentNetworkOutput[i];
+                CurrentNetworkOutputError[i] = Targets[i] - CurrentNetworkOutput[i];
                 Layers[Layers.Count - 1].Neurons[i].Error = CurrentNetworkOutputError[i];
             }
         }
 
         public void NeuronErrorDistribution()
         {
+            // Weights error distribution
+
             double weightsSum = 0;
 
             for (int i = Layers.Count - 1; i > 0; i--) // layers
@@ -127,24 +139,19 @@ namespace MyNeuralNetwork
                         }
 
                         Layers[i - 1].Neurons[j].WeightErrorDistribution[k] = (Layers[i - 1].Neurons[j].Weights[k]) / (weightsSum) * Layers[i].Neurons[k].Error;
-
                         weightsSum = 0;
                     }
                 }
+                // Neuron Error Distribution
 
                 for (int j = 0; j < Layers[i - 1].Neurons.Count; j++)
                 {
-                    for (int w = 0; w < Layers[i].Neurons[j].Weights.Length; w++)
+                    for (int w = 0; w < Layers[i - 1].Neurons[j].Weights.Length; w++)
                     {
                         Layers[i - 1].Neurons[j].Error += Layers[i - 1].Neurons[j].WeightErrorDistribution[w];
                     }
                 }
             }
-        }
-
-        public void SetNeuronError ()
-        {
-
         }
     }
 }
