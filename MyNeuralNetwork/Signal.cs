@@ -10,13 +10,15 @@ namespace MyNeuralNetwork
     {
         public double[] Amplitude { get; set; }
 
+        Random rndAmplitude = new Random();
+
         public Signal (int samplesCount)
         {
             Amplitude = new double[samplesCount];
 
             for (int i = 0; i < samplesCount; i++)
             {
-                Amplitude[i] = i;
+                Amplitude[i] = rndAmplitude.Next(1,5);
             }
             
         }

@@ -20,17 +20,28 @@ namespace MyNeuralNetwork
         private void testNetworkButton_Click(object sender, EventArgs e)
         {
             Network MyNetwork = new Network();
+            double[] targets = new double[3];
 
-            MyNetwork.FillInputLayer(3, 5);
+            for (int i = 0; i < targets.Length; i++)
+            {
+                targets[i] = i;
+            }
 
-            Signal signal = new Signal(5);
+            MyNetwork.FillInputLayer(3, 3);
+
+            Signal signal = new Signal(3);
+
             MyNetwork.SendSignalsToFirstLayer(signal.Amplitude);
 
-            MyNetwork.FillHiddenLayer(5, 3);
+            MyNetwork.FillHiddenLayer(3, 3);
 
             MyNetwork.FillOutputLayer(3, 3);
 
-            MyNetwork.ForwardPropagation();
+            double[] currentNetworkOut = new double[3];
+            currentNetworkOut = MyNetwork.ForwardPropagation();
+            MyNetwork.CheckHiddenOutputError(currentNetworkOut, targets);
+
+            MyNetwork.NeuronErrorDistribution();
 
             for (int i = 0; i < MyNetwork.Layers.Count; i++)
             {

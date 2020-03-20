@@ -8,7 +8,6 @@ namespace MyNeuralNetwork
 {
     class Layer
     {
-        public int NeuronCount { get; set; }
         public List<Neuron> Neurons { get; set; }
 
         public Layer ()

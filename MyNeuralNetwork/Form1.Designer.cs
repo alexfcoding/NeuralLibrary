@@ -34,9 +34,9 @@
             // 
             // testNetworkButton
             // 
-            this.testNetworkButton.Location = new System.Drawing.Point(12, 303);
+            this.testNetworkButton.Location = new System.Drawing.Point(12, 502);
             this.testNetworkButton.Name = "testNetworkButton";
-            this.testNetworkButton.Size = new System.Drawing.Size(120, 23);
+            this.testNetworkButton.Size = new System.Drawing.Size(289, 23);
             this.testNetworkButton.TabIndex = 0;
             this.testNetworkButton.Text = "CreateNetwork";
             this.testNetworkButton.UseVisualStyleBackColor = true;
@@ -48,7 +48,7 @@
             this.log.ItemHeight = 16;
             this.log.Location = new System.Drawing.Point(12, 12);
             this.log.Name = "log";
-            this.log.Size = new System.Drawing.Size(201, 276);
+            this.log.Size = new System.Drawing.Size(289, 484);
             this.log.TabIndex = 1;
             // 
             // Form1

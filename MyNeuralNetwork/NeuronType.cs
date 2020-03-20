@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace MyNeuralNetwork
 {
-     public enum NeuronType
-     {
-        Input,
-        Hidden
-     }
+     
     
 }

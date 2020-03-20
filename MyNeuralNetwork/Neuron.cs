@@ -10,36 +10,20 @@ namespace MyNeuralNetwork
     {
         public double OutputSignal { get; set; }
         public double[] Weights { get; set; }
-        public double Power { get; set; }
-                
-        public void GenerateWeights (int weightCount, NeuronType neuronType, Random randomWeight)
+        public double[] WeightErrorDistribution { get; set; }
+
+        public void GenerateWeights (int weightCount, Random randomWeight)
         {
             Weights = new double[weightCount];
 
-            Random rndNum = new Random();
+            WeightErrorDistribution = new double[weightCount];
             
             for (int i = 0; i < weightCount; i++)
             {
+                //Weights[i] = randomWeight.NextDouble();
                 Weights[i] = randomWeight.NextDouble();
                 //Weights[i] = 1;
             }
         }
-
-        public void  CalculateOutputSignal (double inputSignal, NeuronType neuronType) 
-        {
-            if (neuronType == NeuronType.Input)
-            {
-                OutputSignal = inputSignal;
-            }
-            else
-            {
-                for (int i = 0; i < Weights.Length; i++)
-                {
-                    OutputSignal += inputSignal * Weights[i];
-                }
-            }
-        }
-
-
     }
 }
