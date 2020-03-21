@@ -29,15 +29,14 @@ namespace MyNeuralNetwork
 
             Targets = new double[outputNeurons];
 
-            for (int i = 0; i < Targets.Length; i++)
-            {
-                Targets[i] = rndTarget.NextDouble();
-            }
+            Targets[0] = 0.01;
+            Targets[1] = 0.99;
+            Targets[2] = 0.01;
 
-            LearningRate = LearningRate;
+            LearningRate = learningRate;
         }
 
-        public void FillInputLayer(int inputNeuronCount, int weightsCount)
+        public void CreateInputLayer(int inputNeuronCount, int weightsCount)
         {
             Layer inputLayer = new Layer();
 
@@ -51,7 +50,7 @@ namespace MyNeuralNetwork
             Layers.Add(inputLayer);
         }
 
-        public void FillHiddenLayer(int hiddenNeuronCount, int weightsCount)
+        public void CreateHiddenLayers(int hiddenNeuronCount, int weightsCount)
         {
             Layer hiddenLayer = new Layer();
 
@@ -65,7 +64,7 @@ namespace MyNeuralNetwork
             Layers.Add(hiddenLayer);
         }
 
-        public void FillOutputLayer(int outputNeuronCount, int weightsCount)
+        public void CreateOutputLayer(int outputNeuronCount, int weightsCount)
         {
             Layer outputLayer = new Layer();
 
@@ -79,7 +78,7 @@ namespace MyNeuralNetwork
             Layers.Add(outputLayer);
         }
 
-        public void SendSignalsToFirstLayer(double[] inputSignalAmplitude)
+        public void SendSignalsToInputLayer(double[] inputSignalAmplitude)
         {
             for (int i = 0; i < Layers[0].Neurons.Count; i++)
             {
@@ -99,6 +98,9 @@ namespace MyNeuralNetwork
                     }
 
                     Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal);
+
+                    //if (Layers[i].Neurons[k].OutputSignal < 0.000001)
+                    //    Layers[i].Neurons[k].OutputSignal = 0.01;
 
                     if (i == Layers.Count - 1)
                     {
@@ -166,9 +168,6 @@ namespace MyNeuralNetwork
                     for (int j = 0; j < Layers[i - 1].Neurons.Count; j++) // neurons
                     {
                         WijSum += Layers[i - 1].Neurons[j].Weights[k] * Layers[i - 1].Neurons[j].OutputSignal;
-
-                        //Layers[i - 1].Neurons[j].Weights[k] = (Layers[i - 1].Neurons[j].Weights[k]) / (weightsSum) * Layers[i].Neurons[k].Error;
-                        //weightsSum = 0;
                     }
 
                     for (int m = 0; m < Layers[i - 1].Neurons.Count; m++)

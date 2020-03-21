@@ -18,7 +18,7 @@ namespace MyNeuralNetwork
 
             for (int i = 0; i < samplesCount; i++)
             {
-                Amplitude[i] = rndAmplitude.Next(1,5);
+                Amplitude[i] = ((double) i / samplesCount) + 0.1;
             }
             
         }

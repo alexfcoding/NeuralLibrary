@@ -21,9 +21,14 @@ namespace MyNeuralNetwork
             
             for (int i = 0; i < weightCount; i++)
             {
-                //Weights[i] = randomWeight.NextDouble();
-                Weights[i] = randomWeight.NextDouble();
-                //Weights[i] = i+1;
+                double rnd = 0;
+
+                while (rnd < 0.1)
+                {
+                    rnd = randomWeight.NextDouble();
+                }
+
+                Weights[i] = rnd;
             }
         }
     }
