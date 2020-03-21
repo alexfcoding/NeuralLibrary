@@ -1,6 +1,6 @@
 ﻿namespace MyNeuralNetwork
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -51,14 +51,14 @@
             this.log.Size = new System.Drawing.Size(396, 692);
             this.log.TabIndex = 1;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(420, 1055);
+            this.ClientSize = new System.Drawing.Size(420, 769);
             this.Controls.Add(this.log);
             this.Controls.Add(this.testNetworkButton);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
 

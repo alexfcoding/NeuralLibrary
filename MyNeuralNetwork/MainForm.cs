@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MyNeuralNetwork
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -20,7 +20,7 @@ namespace MyNeuralNetwork
         private void testNetworkButton_Click(object sender, EventArgs e)
         {
             log.Items.Clear();
-            Network MyNetwork = new Network(3);
+            Network MyNetwork = new Network(3, 0.1);
 
             Signal signal = new Signal(3);
 
@@ -36,6 +36,31 @@ namespace MyNeuralNetwork
             MyNetwork.NeuronErrorDistribution();
 
             PrintNetworkStats(MyNetwork, signal, MyNetwork);
+
+            MyNetwork.RecalculateWeights();
+
+            log.Items.Add("______________Recalculated weights______________");
+
+            for (int i = 0; i < MyNetwork.Layers.Count; i++)
+            {
+                log.Items.Add($"______________________Layer: {i}______________________");
+                log.Items.Add("");
+
+                for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
+                {
+                    log.Items.Add($"_________Neuron: {j} _________");
+                    log.Items.Add("");
+                    log.Items.Add($"Error: {MyNetwork.Layers[i].Neurons[j].Error}");
+                    log.Items.Add($"Signal amplitude: {MyNetwork.Layers[i].Neurons[j].OutputSignal}");
+
+                    for (int k = 0; k < MyNetwork.Layers[i].Neurons[j].Weights.Length; k++)
+                    {
+                        log.Items.Add($"Weight {k} : {MyNetwork.Layers[i].Neurons[j].Weights[k]}");
+                    }
+                    log.Items.Add("");
+                }
+
+            }
         }
 
         private void PrintNetworkStats(Network networkToPrint, Signal inputSignal, Network MyNetwork)
@@ -74,10 +99,12 @@ namespace MyNeuralNetwork
             {
                 log.Items.Add(inputSignal.Amplitude[i]);
             }
-            
+            log.Items.Add("");
+
+
             for (int i = 0; i < networkToPrint.Layers.Count; i++)
             {
-                log.Items.Add($"________________Layer: {i} ________________");
+                log.Items.Add($"______________________Layer: {i}______________________");
                 log.Items.Add("");
 
                 for (int j = 0; j < networkToPrint.Layers[i].Neurons.Count; j++)
@@ -92,10 +119,8 @@ namespace MyNeuralNetwork
                         log.Items.Add($"Weight {k} : {networkToPrint.Layers[i].Neurons[j].Weights[k]}");
                     }
                     log.Items.Add("");
-
                 }
-
-                log.Items.Add(" ");
+                
             }
         }
 

@@ -9,6 +9,7 @@ namespace MyNeuralNetwork
     class Network
     {
         public List<Layer> Layers { get; set; }
+        public double LearningRate { get; set; }
         public double[] Targets { get; set; }
         public double[] CurrentNetworkOutput { get; set; }
         public double[] CurrentNetworkOutputError { get; set; }
@@ -16,7 +17,7 @@ namespace MyNeuralNetwork
         Random randomWeight;
         Random rndTarget;
 
-        public Network (int outputNeurons)
+        public Network(int outputNeurons, double learningRate)
         {
             Layers = new List<Layer>();
 
@@ -32,9 +33,11 @@ namespace MyNeuralNetwork
             {
                 Targets[i] = rndTarget.NextDouble();
             }
+
+            LearningRate = LearningRate;
         }
 
-        public void FillInputLayer (int inputNeuronCount, int weightsCount)
+        public void FillInputLayer(int inputNeuronCount, int weightsCount)
         {
             Layer inputLayer = new Layer();
 
@@ -84,35 +87,35 @@ namespace MyNeuralNetwork
             }
         }
 
-        public double[] ForwardPropagation ()
+        public double[] ForwardPropagation()
         {
             for (int i = 1; i < Layers.Count; i++)
             {
                 for (int k = 0; k < Layers[i].Neurons.Count; k++)
                 {
-                    for (int j = 0; j < Layers[i-1].Neurons.Count; j++)
+                    for (int j = 0; j < Layers[i - 1].Neurons.Count; j++)
                     {
                         Layers[i].Neurons[k].OutputSignal += Layers[i - 1].Neurons[j].OutputSignal * Layers[i - 1].Neurons[j].Weights[k];
                     }
-                    
+
                     Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal);
-                    
+
                     if (i == Layers.Count - 1)
                     {
                         CurrentNetworkOutput[k] = Layers[i].Neurons[k].OutputSignal;
                     }
-                }                
+                }
             }
 
             return CurrentNetworkOutput;
         }
 
-        public double Sigmoid (double x)
+        public double Sigmoid(double x)
         {
             return 1 / (1 + Math.Exp(-x));
         }
 
-        public void FindNetworkOutputError ()
+        public void FindNetworkOutputError()
         {
             for (int i = 0; i < CurrentNetworkOutput.Length; i++)
             {
@@ -124,7 +127,6 @@ namespace MyNeuralNetwork
         public void NeuronErrorDistribution()
         {
             // Weights error distribution
-
             double weightsSum = 0;
 
             for (int i = Layers.Count - 1; i > 0; i--) // layers
@@ -143,7 +145,6 @@ namespace MyNeuralNetwork
                     }
                 }
                 // Neuron Error Distribution
-
                 for (int j = 0; j < Layers[i - 1].Neurons.Count; j++)
                 {
                     for (int w = 0; w < Layers[i - 1].Neurons[j].Weights.Length; w++)
@@ -153,5 +154,31 @@ namespace MyNeuralNetwork
                 }
             }
         }
+
+        public void RecalculateWeights()
+        {
+            double WijSum = 0;
+
+            for (int i = Layers.Count - 1; i > 0; i--) // layers
+            {
+                for (int k = 0; k < Layers[i].Neurons.Count; k++) // neurons
+                {
+                    for (int j = 0; j < Layers[i - 1].Neurons.Count; j++) // neurons
+                    {
+                        WijSum += Layers[i - 1].Neurons[j].Weights[k] * Layers[i - 1].Neurons[j].OutputSignal;
+
+                        //Layers[i - 1].Neurons[j].Weights[k] = (Layers[i - 1].Neurons[j].Weights[k]) / (weightsSum) * Layers[i].Neurons[k].Error;
+                        //weightsSum = 0;
+                    }
+
+                    for (int m = 0; m < Layers[i - 1].Neurons.Count; m++)
+                    {
+                        Layers[i - 1].Neurons[m].Weights[k] += - LearningRate * (-Layers[i].Neurons[k].Error) * Sigmoid(WijSum) * Layers[i - 1].Neurons[m].OutputSignal;
+                    }
+                    
+                }
+            }
+        }
+
     }
 }

@@ -2,8 +2,8 @@ C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\bin\Debug\MyNeuralNetwork.e
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\bin\Debug\MyNeuralNetwork.exe
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\bin\Debug\MyNeuralNetwork.pdb
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.csprojAssemblyReference.cache
-C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.Form1.resources
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.Properties.Resources.resources
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.csproj.GenerateResource.cache
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.exe
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.pdb
+C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.MainForm.resources
