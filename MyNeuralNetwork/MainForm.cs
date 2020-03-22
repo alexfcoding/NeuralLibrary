@@ -19,7 +19,7 @@ namespace MyNeuralNetwork
         enum LogOptions
         {
             PrintFirstState,
-            PrintUpdatedNetwork
+            PrintTrainingNetwork
         }
 
         public MainForm()
@@ -31,6 +31,7 @@ namespace MyNeuralNetwork
         {
             MyNetwork = new Network(3, 0.5);
             signal = new Signal(3);
+            MyNetwork.ErrorTarget = 0.03;
 
             MyNetwork.CreateInputLayer(3, 3);
             MyNetwork.SendSignalsToInputLayer(signal.Amplitude);
@@ -41,36 +42,50 @@ namespace MyNeuralNetwork
             MyNetwork.FindNetworkOutputError();
             MyNetwork.NeuronErrorDistribution();
 
-            PrintNetworkStats(MyNetwork, signal, MyNetwork, log);
+            PrintNetworkStats(MyNetwork, signal, MyNetwork, log, LogOptions.PrintFirstState);
 
             trainNetworkButton.Enabled = true;
+            testNetworkButton.Text = "Create next network";
         }
 
-        private void PrintNetworkStats(Network networkToPrint, Signal inputSignal, Network network, ListBox logToAdd)
+        private void PrintNetworkStats(Network networkToPrint, Signal inputSignal, Network network, ListBox logToAdd, LogOptions logOptions)
         {
             logToAdd.Items.Clear();
-            logToAdd.Items.Add($"________________Targets________________ ");
+            logToAdd.Items.Add($"________________Targets_________________ ");
 
             for (int i = 0; i < network.Targets.Length; i++)
             {
                 logToAdd.Items.Add(network.Targets[i]);
             }
 
-            logToAdd.Items.Add($"________________Output________________ ");
+            logToAdd.Items.Add($"_____________Network output______________ ");
+
+            if (logOptions == LogOptions.PrintFirstState)
+                for (int i = 0; i < network.CurrentNetworkOutput.Length; i++)
+                {
+                    logToAdd.Items.Add(network.CurrentNetworkOutput[i]);
+                }
+
+            if (logOptions == LogOptions.PrintTrainingNetwork)
+                for (int i = 0; i < network.CurrentNetworkOutput.Length; i++)
+                {
+                    logToAdd.Items.Add(network.CurrentNetworkOutput[i] + $" ( Output target : {network.Targets[i]} )");
+                }
+
+            logToAdd.Items.Add($"___________Network output error___________");
             
-            for (int i = 0; i < network.CurrentNetworkOutput.Length; i++)
-            {
-                logToAdd.Items.Add(network.CurrentNetworkOutput[i]);
-            }
-           
-            logToAdd.Items.Add($"________________Error________________ ");
-           
-            for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
-            {
-                logToAdd.Items.Add(network.CurrentNetworkOutputError[i]);
-            }
-            
-            logToAdd.Items.Add($"________________Input signals:________________");
+            if (logOptions == LogOptions.PrintFirstState)
+                for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
+                {
+                    logToAdd.Items.Add(Math.Abs(network.CurrentNetworkOutputError[i]));
+                }
+            if (logOptions == LogOptions.PrintTrainingNetwork)
+                for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
+                {
+                    logToAdd.Items.Add(Math.Abs(network.CurrentNetworkOutputError[i]) + $" ( Error target : < {network.ErrorTarget} )");
+                }
+
+            logToAdd.Items.Add($"______________Input signals:_______________");
             
             for (int i = 0; i < inputSignal.Amplitude.Length; i++)
             {
@@ -79,7 +94,7 @@ namespace MyNeuralNetwork
 
             for (int i = 0; i < networkToPrint.Layers.Count; i++)
             {
-                logToAdd.Items.Add($"______________________Layer: {i}______________________");
+                logToAdd.Items.Add($"________________Layer: {i}________________");
                 
                 for (int j = 0; j < networkToPrint.Layers[i].Neurons.Count; j++)
                 {
@@ -109,6 +124,7 @@ namespace MyNeuralNetwork
 
                 chart1.Series[0].Points.Clear();
                 chart2.Series[0].Points.Clear();
+                chart3.Series[0].Points.Clear();
 
                 for (int j = 0; j < 3; j++)
                 {
@@ -116,13 +132,29 @@ namespace MyNeuralNetwork
                     chart2.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutputError[j]);
                 }
 
-                PrintNetworkStats(MyNetwork, signal, MyNetwork, log2);
+                int weightId = 0;
+
+                for (int i = 0; i < MyNetwork.Layers.Count; i++)
+                {
+                    for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
+                    {
+                        for (int k = 0; k < MyNetwork.Layers[i].Neurons[j].Weights.Length; k++)
+                        {
+                            chart3.Series[0].Points.AddXY(weightId, MyNetwork.Layers[k].Neurons[j].Weights[j]);
+                            weightId++;
+                        }
+                        
+                    }
+                    
+                }
+                weightId = 0;
+                PrintNetworkStats(MyNetwork, signal, MyNetwork, log2, LogOptions.PrintTrainingNetwork);
 
                 int errorSum = 0;
 
                 for (int i = 0; i < 3; i++)
                 {
-                    if (Math.Abs(MyNetwork.CurrentNetworkOutputError[i]) < 0.03)
+                    if (Math.Abs(MyNetwork.CurrentNetworkOutputError[i]) < MyNetwork.ErrorTarget)
                     {
                         errorSum++;
                     }

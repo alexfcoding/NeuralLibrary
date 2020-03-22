@@ -13,6 +13,8 @@ namespace MyNeuralNetwork
         public double[] Targets { get; set; }
         public double[] CurrentNetworkOutput { get; set; }
         public double[] CurrentNetworkOutputError { get; set; }
+        public double ErrorTarget { get; set; }
+        
 
         Random randomWeight;
         Random rndTarget;
@@ -99,8 +101,8 @@ namespace MyNeuralNetwork
 
                     Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal);
 
-                    //if (Layers[i].Neurons[k].OutputSignal < 0.000001)
-                    //    Layers[i].Neurons[k].OutputSignal = 0.01;
+                    if (Layers[i].Neurons[k].OutputSignal < 0.0001)
+                        Layers[i].Neurons[k].OutputSignal = 0.01;
 
                     if (i == Layers.Count - 1)
                     {
