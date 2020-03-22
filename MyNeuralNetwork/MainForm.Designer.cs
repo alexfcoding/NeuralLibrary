@@ -34,6 +34,8 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.testNetworkButton = new System.Windows.Forms.Button();
             this.log = new System.Windows.Forms.ListBox();
             this.log2 = new System.Windows.Forms.ListBox();
@@ -41,9 +43,11 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart4 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart4)).BeginInit();
             this.SuspendLayout();
             // 
             // testNetworkButton
@@ -87,11 +91,11 @@
             // 
             // chart1
             // 
-            chartArea1.AxisX.Title = "Output targets";
+            chartArea1.AxisX.Title = "Network outputs";
             chartArea1.AxisY.Interval = 0.05D;
             chartArea1.AxisY.Maximum = 1D;
             chartArea1.AxisY.Minimum = 0D;
-            chartArea1.AxisY.Title = "Output";
+            chartArea1.AxisY.Title = "Signal amplitude";
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Location = new System.Drawing.Point(634, 12);
@@ -101,7 +105,7 @@
             series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(391, 971);
+            this.chart1.Size = new System.Drawing.Size(313, 971);
             this.chart1.TabIndex = 4;
             this.chart1.Text = "chart1";
             // 
@@ -114,7 +118,7 @@
             chartArea2.AxisY.Title = "Current error";
             chartArea2.Name = "ChartArea1";
             this.chart2.ChartAreas.Add(chartArea2);
-            this.chart2.Location = new System.Drawing.Point(1031, 12);
+            this.chart2.Location = new System.Drawing.Point(953, 12);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             series2.ChartArea = "ChartArea1";
@@ -130,28 +134,48 @@
             // 
             // chart3
             // 
-            chartArea3.AxisX.Title = "Weights";
-            chartArea3.AxisY.Maximum = 30D;
-            chartArea3.AxisY.Minimum = -30D;
-            chartArea3.AxisY.Title = "Signal amplitude";
+            chartArea3.AxisX.Title = "Neuron weight";
+            chartArea3.AxisY.Maximum = 10D;
+            chartArea3.AxisY.Minimum = -10D;
+            chartArea3.AxisY.Title = "Weight strength";
             chartArea3.Name = "ChartArea1";
             this.chart3.ChartAreas.Add(chartArea3);
-            this.chart3.Location = new System.Drawing.Point(1350, 12);
+            this.chart3.Location = new System.Drawing.Point(1272, 12);
             this.chart3.Name = "chart3";
             this.chart3.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
             series3.ChartArea = "ChartArea1";
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedBar;
             series3.Name = "Series1";
             this.chart3.Series.Add(series3);
-            this.chart3.Size = new System.Drawing.Size(391, 971);
+            this.chart3.Size = new System.Drawing.Size(313, 971);
             this.chart3.TabIndex = 6;
             this.chart3.Text = "chart3";
+            // 
+            // chart4
+            // 
+            chartArea4.AxisX.Title = "Neuron";
+            chartArea4.AxisY.Maximum = 2D;
+            chartArea4.AxisY.Minimum = 0D;
+            chartArea4.AxisY.Title = "Neuron signal amplitude";
+            chartArea4.Name = "ChartArea1";
+            this.chart4.ChartAreas.Add(chartArea4);
+            this.chart4.Location = new System.Drawing.Point(1591, 12);
+            this.chart4.Name = "chart4";
+            this.chart4.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedBar;
+            series4.Name = "Series1";
+            this.chart4.Series.Add(series4);
+            this.chart4.Size = new System.Drawing.Size(313, 971);
+            this.chart4.TabIndex = 7;
+            this.chart4.Text = "chart4";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1841, 994);
+            this.Controls.Add(this.chart4);
             this.Controls.Add(this.chart3);
             this.Controls.Add(this.chart2);
             this.Controls.Add(this.chart1);
@@ -160,11 +184,12 @@
             this.Controls.Add(this.log);
             this.Controls.Add(this.testNetworkButton);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Multilayer perceptron";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -178,6 +203,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart3;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart4;
     }
 }
 

@@ -44,8 +44,53 @@ namespace MyNeuralNetwork
 
             PrintNetworkStats(MyNetwork, signal, MyNetwork, log, LogOptions.PrintFirstState);
 
+            chart1.Series[0].Points.Clear();
+            chart2.Series[0].Points.Clear();
+            chart3.Series[0].Points.Clear();
+
+            for (int j = 0; j < 3; j++)
+            {
+                chart1.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutput[j]);
+                chart2.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutputError[j]);
+            }
+
+            DrawNetworkStats();
+
             trainNetworkButton.Enabled = true;
             testNetworkButton.Text = "Create next network";
+        }
+
+        private void DrawNetworkStats()
+        {
+            chart1.Series[0].Points.Clear();
+            chart2.Series[0].Points.Clear();
+            chart3.Series[0].Points.Clear();
+            chart4.Series[0].Points.Clear();
+
+            for (int j = 0; j < 3; j++)
+            {
+                chart1.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutput[j]);
+                chart2.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutputError[j]);
+            }
+
+            int weightId = 0;
+            int neuronId = 0;
+
+            for (int i = 0; i < MyNetwork.Layers.Count; i++)
+            {
+                for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
+                {
+                    for (int k = 0; k < MyNetwork.Layers[i].Neurons[j].Weights.Length; k++)
+                    {
+                        chart3.Series[0].Points.AddXY(weightId, MyNetwork.Layers[k].Neurons[j].Weights[j]);
+                        weightId++;
+                    }
+
+                    chart4.Series[0].Points.AddXY(neuronId, MyNetwork.Layers[i].Neurons[j].OutputSignal);
+                    neuronId++;
+                }   
+
+            }
         }
 
         private void PrintNetworkStats(Network networkToPrint, Signal inputSignal, Network network, ListBox logToAdd, LogOptions logOptions)
@@ -122,33 +167,8 @@ namespace MyNeuralNetwork
                 Application.DoEvents();
                 Thread.Sleep(20);
 
-                chart1.Series[0].Points.Clear();
-                chart2.Series[0].Points.Clear();
-                chart3.Series[0].Points.Clear();
-
-                for (int j = 0; j < 3; j++)
-                {
-                    chart1.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutput[j]);
-                    chart2.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutputError[j]);
-                }
-
-                int weightId = 0;
-
-                for (int i = 0; i < MyNetwork.Layers.Count; i++)
-                {
-                    for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
-                    {
-                        for (int k = 0; k < MyNetwork.Layers[i].Neurons[j].Weights.Length; k++)
-                        {
-                            chart3.Series[0].Points.AddXY(weightId, MyNetwork.Layers[k].Neurons[j].Weights[j]);
-                            weightId++;
-                        }
-                        
-                    }
-                    
-                }
-                weightId = 0;
                 PrintNetworkStats(MyNetwork, signal, MyNetwork, log2, LogOptions.PrintTrainingNetwork);
+                DrawNetworkStats();
 
                 int errorSum = 0;
 
