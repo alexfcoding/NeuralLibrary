@@ -44,14 +44,14 @@ namespace MyNeuralNetwork
 
             PrintNetworkStats(MyNetwork, signal, MyNetwork, log, LogOptions.PrintFirstState);
 
-            chart1.Series[0].Points.Clear();
-            chart2.Series[0].Points.Clear();
-            chart3.Series[0].Points.Clear();
+            outputsChart.Series[0].Points.Clear();
+            errorsChart.Series[0].Points.Clear();
+            weightsChart.Series[0].Points.Clear();
 
             for (int j = 0; j < 3; j++)
             {
-                chart1.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutput[j]);
-                chart2.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutputError[j]);
+                outputsChart.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutput[j]);
+                errorsChart.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutputError[j]);
             }
 
             DrawNetworkStats();
@@ -62,15 +62,15 @@ namespace MyNeuralNetwork
 
         private void DrawNetworkStats()
         {
-            chart1.Series[0].Points.Clear();
-            chart2.Series[0].Points.Clear();
-            chart3.Series[0].Points.Clear();
-            chart4.Series[0].Points.Clear();
+            outputsChart.Series[0].Points.Clear();
+            errorsChart.Series[0].Points.Clear();
+            weightsChart.Series[0].Points.Clear();
+            signalsChart.Series[0].Points.Clear();
 
             for (int j = 0; j < 3; j++)
             {
-                chart1.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutput[j]);
-                chart2.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutputError[j]);
+                outputsChart.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutput[j]);
+                errorsChart.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutputError[j]);
             }
 
             int weightId = 0;
@@ -82,11 +82,11 @@ namespace MyNeuralNetwork
                 {
                     for (int k = 0; k < MyNetwork.Layers[i].Neurons[j].Weights.Length; k++)
                     {
-                        chart3.Series[0].Points.AddXY(weightId, MyNetwork.Layers[k].Neurons[j].Weights[j]);
+                        weightsChart.Series[0].Points.AddXY(weightId, MyNetwork.Layers[k].Neurons[j].Weights[j]);
                         weightId++;
                     }
 
-                    chart4.Series[0].Points.AddXY(neuronId, MyNetwork.Layers[i].Neurons[j].OutputSignal);
+                    signalsChart.Series[0].Points.AddXY(neuronId, MyNetwork.Layers[i].Neurons[j].OutputSignal);
                     neuronId++;
                 }   
 
@@ -95,6 +95,7 @@ namespace MyNeuralNetwork
 
         private void PrintNetworkStats(Network networkToPrint, Signal inputSignal, Network network, ListBox logToAdd, LogOptions logOptions)
         {
+            Thread.Sleep(20);
             logToAdd.Items.Clear();
             logToAdd.Items.Add($"________________Targets_________________ ");
 
@@ -153,26 +154,34 @@ namespace MyNeuralNetwork
                     }
                 }
             }
+            Application.DoEvents();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Random noise = new Random();
+
             while(true)
             {
-                for (int k = 0; k < 10; k++)
+                for (int k = 0; k < 70; k++)
                 {
+                    for (int i = 0; i < signal.Amplitude.Length; i++)
+                    {
+                        signal.Amplitude[i] = ((double)i / signal.Amplitude.Length) + noise.NextDouble() / 10;
+                    }
+
+                    MyNetwork.SendSignalsToInputLayer(signal.Amplitude);
                     TrainNetwork(MyNetwork);
                 }
 
                 Application.DoEvents();
-                Thread.Sleep(20);
 
                 PrintNetworkStats(MyNetwork, signal, MyNetwork, log2, LogOptions.PrintTrainingNetwork);
                 DrawNetworkStats();
 
                 int errorSum = 0;
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < MyNetwork.CurrentNetworkOutputError.Length; i++)
                 {
                     if (Math.Abs(MyNetwork.CurrentNetworkOutputError[i]) < MyNetwork.ErrorTarget)
                     {
