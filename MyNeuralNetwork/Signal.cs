@@ -12,15 +12,22 @@ namespace MyNeuralNetwork
 
         Random rndAmplitude = new Random();
 
-        public Signal (int samplesCount)
+        public Signal (int samplesCount, SignalType Sinus, double freq = 100)
         {
             Amplitude = new double[samplesCount];
 
-            for (int i = 0; i < samplesCount; i++)
+            if (Sinus == SignalType.Sinus)
             {
-                Amplitude[i] = ((double) i / samplesCount) + 0.1;
+                double time = 0;
+
+                for (int i = 0; i < samplesCount; i += 1)
+                {
+                    time += 0.01;
+                    Amplitude[i] = Math.Sin(time * freq) + Math.Sin(4 * time * freq) + rndAmplitude.NextDouble() / 8;
+                }
             }
             
+
         }
         
     }

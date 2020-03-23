@@ -23,7 +23,7 @@ namespace MyNeuralNetwork
             {
                 double rnd = 0;
 
-                while (rnd < 0.1)
+                while (rnd < 0.01)
                 {
                     rnd = randomWeight.NextDouble();
                 }
