@@ -57,6 +57,7 @@
             this.tg4 = new System.Windows.Forms.TextBox();
             this.tg8 = new System.Windows.Forms.TextBox();
             this.tg7 = new System.Windows.Forms.TextBox();
+            this.recognitionTestButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.outputsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.weightsChart)).BeginInit();
@@ -68,7 +69,7 @@
             // 
             this.testNetworkButton.Location = new System.Drawing.Point(12, 12);
             this.testNetworkButton.Name = "testNetworkButton";
-            this.testNetworkButton.Size = new System.Drawing.Size(241, 23);
+            this.testNetworkButton.Size = new System.Drawing.Size(302, 23);
             this.testNetworkButton.TabIndex = 0;
             this.testNetworkButton.Text = "Create Network";
             this.testNetworkButton.UseVisualStyleBackColor = true;
@@ -81,7 +82,7 @@
             this.log.ItemHeight = 15;
             this.log.Location = new System.Drawing.Point(12, 150);
             this.log.Name = "log";
-            this.log.Size = new System.Drawing.Size(302, 379);
+            this.log.Size = new System.Drawing.Size(302, 664);
             this.log.TabIndex = 1;
             // 
             // log2
@@ -89,9 +90,9 @@
             this.log2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.log2.FormattingEnabled = true;
             this.log2.ItemHeight = 15;
-            this.log2.Location = new System.Drawing.Point(12, 602);
+            this.log2.Location = new System.Drawing.Point(12, 827);
             this.log2.Name = "log2";
-            this.log2.Size = new System.Drawing.Size(302, 379);
+            this.log2.Size = new System.Drawing.Size(302, 154);
             this.log2.TabIndex = 2;
             // 
             // trainNetorkButton
@@ -210,7 +211,7 @@
             // 
             // tg2
             // 
-            this.tg2.Location = new System.Drawing.Point(153, 41);
+            this.tg2.Location = new System.Drawing.Point(214, 41);
             this.tg2.Name = "tg2";
             this.tg2.Size = new System.Drawing.Size(100, 22);
             this.tg2.TabIndex = 10;
@@ -228,9 +229,9 @@
             // 
             // signalParamTextBox
             // 
-            this.signalParamTextBox.Location = new System.Drawing.Point(198, 81);
+            this.signalParamTextBox.Location = new System.Drawing.Point(259, 80);
             this.signalParamTextBox.Name = "signalParamTextBox";
-            this.signalParamTextBox.Size = new System.Drawing.Size(55, 22);
+            this.signalParamTextBox.Size = new System.Drawing.Size(56, 22);
             this.signalParamTextBox.TabIndex = 19;
             this.signalParamTextBox.Text = "10";
             // 
@@ -299,11 +300,22 @@
             this.tg7.Text = "0,01";
             this.tg7.Visible = false;
             // 
+            // recognitionTestButton
+            // 
+            this.recognitionTestButton.Location = new System.Drawing.Point(169, 109);
+            this.recognitionTestButton.Name = "recognitionTestButton";
+            this.recognitionTestButton.Size = new System.Drawing.Size(146, 23);
+            this.recognitionTestButton.TabIndex = 26;
+            this.recognitionTestButton.Text = "Recognition test";
+            this.recognitionTestButton.UseVisualStyleBackColor = true;
+            this.recognitionTestButton.Click += new System.EventHandler(this.recognitionTestButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1973, 994);
+            this.ClientSize = new System.Drawing.Size(1924, 994);
+            this.Controls.Add(this.recognitionTestButton);
             this.Controls.Add(this.tg8);
             this.Controls.Add(this.tg7);
             this.Controls.Add(this.tg6);
@@ -326,6 +338,7 @@
             this.Name = "MainForm";
             this.Text = "Multilayer perceptron";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.outputsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.weightsChart)).EndInit();
@@ -357,6 +370,7 @@
         private System.Windows.Forms.TextBox tg4;
         private System.Windows.Forms.TextBox tg8;
         private System.Windows.Forms.TextBox tg7;
+        private System.Windows.Forms.Button recognitionTestButton;
     }
 }
 

@@ -13,7 +13,7 @@ namespace MyNeuralNetwork
 {
     public partial class MainForm : Form
     {
-        Network MyNetwork;
+        Network network;
         Signal signal;
         double signalSamples;
 
@@ -27,13 +27,13 @@ namespace MyNeuralNetwork
             signalSamples = 64;
             int hiddenNeurons = 16;
             int outputNeurons = 2;
-            double learningRate = 0.002;
+            double learningRate = 0.01;
 
-            MyNetwork = new Network(outputNeurons, learningRate);
-            MyNetwork.ErrorTarget = 0.1;
+            network = new Network(outputNeurons, learningRate);
+            network.ErrorTarget = 0.1;
 
-            MyNetwork.Targets[0] = Convert.ToDouble(tg1.Text);
-            MyNetwork.Targets[1] = Convert.ToDouble(tg2.Text);
+            network.Targets[0] = Convert.ToDouble(tg1.Text);
+            network.Targets[1] = Convert.ToDouble(tg2.Text);
             //MyNetwork.Targets[2] = Convert.ToDouble(tg3.Text);
             //MyNetwork.Targets[3] = Convert.ToDouble(tg4.Text);
             //MyNetwork.Targets[4] = Convert.ToDouble(tg5.Text);
@@ -54,24 +54,24 @@ namespace MyNeuralNetwork
                 chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
             }
 
-            MyNetwork.CreateInputLayer((int)signalSamples, hiddenNeurons);
-            MyNetwork.SendSignalsToInputLayer(signal.Amplitude);
-            MyNetwork.CreateHiddenLayers(hiddenNeurons, (int)signalSamples);
-            MyNetwork.CreateOutputLayer(outputNeurons, hiddenNeurons);
+            network.CreateInputLayer((int)signalSamples, hiddenNeurons);
+            network.SendSignalsToInputLayer(signal.Amplitude);
+            network.CreateHiddenLayers(hiddenNeurons, (int)signalSamples);
+            network.CreateOutputLayer(outputNeurons, hiddenNeurons);
 
-            MyNetwork.ForwardPropagation();
-            MyNetwork.FindNetworkOutputError();
-            MyNetwork.NeuronErrorDistribution();
+            network.ForwardPropagation();
+            network.FindNetworkOutputError();
+            network.NeuronErrorDistribution();
 
-            PrintNetworkStats(MyNetwork, signal, MyNetwork, log, LogOptions.PrintFirstState);
+            PrintNetworkStats(network, signal, network, log, LogOptions.PrintFirstState);
             DrawNetworkStats();
 
-            for (int i = 0; i < MyNetwork.Layers.Count; i++)
+            for (int i = 0; i < network.Layers.Count; i++)
             {
-                for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
+                for (int j = 0; j < network.Layers[i].Neurons.Count; j++)
                 {
-                    MyNetwork.Layers[i].Neurons[j].OutputSignal = 0;
-                    MyNetwork.Layers[i].Neurons[j].Error = 0;
+                    network.Layers[i].Neurons[j].OutputSignal = 0;
+                    network.Layers[i].Neurons[j].Error = 0;
                 }
             }
 
@@ -86,26 +86,26 @@ namespace MyNeuralNetwork
             weightsChart.Series[0].Points.Clear();
             signalsChart.Series[0].Points.Clear();
 
-            for (int j = 0; j < MyNetwork.CurrentNetworkOutput.Length; j++)
+            for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
             {
-                outputsChart.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutput[j]);
-                errorsChart.Series[0].Points.AddXY(j, MyNetwork.CurrentNetworkOutputError[j]);
+                outputsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutput[j]);
+                errorsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutputError[j]);
             }
 
             int weightId = 0;
             int neuronId = 0;
 
-            for (int i = 0; i < MyNetwork.Layers.Count; i++)
+            for (int i = 0; i < network.Layers.Count; i++)
             {
-                for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
+                for (int j = 0; j < network.Layers[i].Neurons.Count; j++)
                 {
-                    for (int k = 0; k < MyNetwork.Layers[i].Neurons[j].Weights.Length; k++)
+                    for (int k = 0; k < network.Layers[i].Neurons[j].Weights.Length; k++)
                     {
-                        weightsChart.Series[0].Points.AddXY(weightId, MyNetwork.Layers[i].Neurons[j].Weights[k]);
+                        weightsChart.Series[0].Points.AddXY(weightId, network.Layers[i].Neurons[j].Weights[k]);
                         weightId++;
                     }
 
-                    signalsChart.Series[0].Points.AddXY(neuronId, MyNetwork.Layers[i].Neurons[j].OutputSignal);
+                    signalsChart.Series[0].Points.AddXY(neuronId, network.Layers[i].Neurons[j].OutputSignal);
                     neuronId++;
                 }   
             }
@@ -181,8 +181,8 @@ namespace MyNeuralNetwork
 
         private void TrainNetworkButton_Click(object sender, EventArgs e)
         {
-            MyNetwork.Targets[0] = Convert.ToDouble(tg1.Text);
-            MyNetwork.Targets[1] = Convert.ToDouble(tg2.Text);
+            network.Targets[0] = Convert.ToDouble(tg1.Text);
+            network.Targets[1] = Convert.ToDouble(tg2.Text);
             //MyNetwork.Targets[2] = Convert.ToDouble(tg3.Text);
             //MyNetwork.Targets[3] = Convert.ToDouble(tg4.Text);
             //MyNetwork.Targets[4] = Convert.ToDouble(tg5.Text);
@@ -193,6 +193,8 @@ namespace MyNeuralNetwork
             double freq = Convert.ToDouble(signalParamTextBox.Text);
             signal = new Signal((int)signalSamples, SignalType.Sinus, freq);
 
+            network.signalParamsList.Add(freq);
+
             for (int i = 0; i < signalSamples; i += 1)
             {
                 chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
@@ -201,9 +203,9 @@ namespace MyNeuralNetwork
             //signal.Amplitude[1] = Convert.ToDouble(tg5.Text);
             //signal.Amplitude[2] = Convert.ToDouble(tg6.Text);
 
-            for (int i = 0; i < MyNetwork.CurrentNetworkOutputError.Length; i++)
+            for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
             {
-                MyNetwork.CurrentNetworkOutputError[i] = 1;
+                network.CurrentNetworkOutputError[i] = 1;
             }
 
             int errorSum = 0;
@@ -231,28 +233,28 @@ namespace MyNeuralNetwork
                         chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
                     }
 
-                    MyNetwork.SendSignalsToInputLayer(signal.Amplitude);
-                    TrainNetwork(MyNetwork);
+                    network.SendSignalsToInputLayer(signal.Amplitude);
+                    TrainNetwork(network);
                    
                     if (k == 0)
                     {
                         Application.DoEvents();
-                        PrintNetworkStats(MyNetwork, signal, MyNetwork, log2, LogOptions.PrintTrainingNetwork);
+                        PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
                         DrawNetworkStats();
                     }
 
-                    MyNetwork.CleanOldData();
+                    network.CleanOldData();
                 }
 
-                for (int i = 0; i < MyNetwork.CurrentNetworkOutputError.Length; i++)
+                for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
                 {
-                    if (Math.Abs(MyNetwork.CurrentNetworkOutputError[i]) < MyNetwork.ErrorTarget)
+                    if (Math.Abs(network.CurrentNetworkOutputError[i]) < network.ErrorTarget)
                     {
                         errorSum++;
                     }
                 }
 
-                if (errorSum == MyNetwork.CurrentNetworkOutput.Length)
+                if (errorSum == network.CurrentNetworkOutput.Length)
                 {
                     loopExit = 1;
                     errorSum = 0;
@@ -287,14 +289,6 @@ namespace MyNeuralNetwork
                 double freq = Convert.ToDouble(signalParamTextBox.Text);
                 signal = new Signal((int)signalSamples, SignalType.Sinus, freq);
 
-                double time = 0;
-                Random noise = new Random();
-                for (int i = 0; i < signal.Amplitude.Length; i += 1)
-                {
-                    time += 0.01;
-                    signal.Amplitude[i] = Math.Sin(time * freq) + Math.Sin(4 * time * freq) + noise.NextDouble() / 8;
-                }
-                
                 chart1.Series[0].Points.Clear();
 
                 for (int i = 0; i < signalSamples; i += 1)
@@ -302,23 +296,38 @@ namespace MyNeuralNetwork
                     chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
                 }
 
-                MyNetwork.SendSignalsToInputLayer(signal.Amplitude);
+                network.SendSignalsToInputLayer(signal.Amplitude);
 
-                MyNetwork.ForwardPropagation();
+                network.ForwardPropagation();
 
-                PrintNetworkStats(MyNetwork, signal, MyNetwork, log2, LogOptions.PrintTrainingNetwork);
+                PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
 
                 DrawNetworkStats();
 
-                for (int i = 0; i < MyNetwork.Layers.Count; i++)
+                for (int i = 0; i < network.Layers.Count; i++)
                 {
-                    for (int j = 0; j < MyNetwork.Layers[i].Neurons.Count; j++)
+                    for (int j = 0; j < network.Layers[i].Neurons.Count; j++)
                     {
-                        MyNetwork.Layers[i].Neurons[j].OutputSignal = 0;
-                        MyNetwork.Layers[i].Neurons[j].Error = 0;
+                        network.Layers[i].Neurons[j].OutputSignal = 0;
+                        network.Layers[i].Neurons[j].Error = 0;
                     }
                 }
             }
+        }
+
+        private void recognitionTestButton_Click(object sender, EventArgs e)
+        {
+            double[] result = network.TestRecognitionRate();
+
+            for (int i = 0; i < network.signalParamsList.Count; i++)
+            {
+                MessageBox.Show($"Recognition quality for signal parameter ({network.signalParamsList[i]}) is: {result[i]}%");
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -14,6 +14,7 @@ namespace MyNeuralNetwork
         public double[] CurrentNetworkOutput { get; set; }
         public double[] CurrentNetworkOutputError { get; set; }
         public double ErrorTarget { get; set; }
+        public List<double> signalParamsList { get; set; }
 
         Random randomWeight;
         Random rndTarget;
@@ -21,7 +22,6 @@ namespace MyNeuralNetwork
         public Network(int outputNeurons, double learningRate)
         {
             Layers = new List<Layer>();
-
             randomWeight = new Random();
             rndTarget = new Random();
 
@@ -30,6 +30,8 @@ namespace MyNeuralNetwork
 
             Targets = new double[outputNeurons];
             LearningRate = learningRate;
+
+            signalParamsList = new List<double>();
         }
 
         public void CreateInputLayer(int inputNeuronCount, int weightsCount)
@@ -96,7 +98,6 @@ namespace MyNeuralNetwork
                         }
                     }
 
-                    
                     Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal);
                     
                     //if (Layers[i].Neurons[k].OutputSignal < 0.01)
@@ -194,7 +195,7 @@ namespace MyNeuralNetwork
             //}
         }
 
-        public void CleanOldData ()
+        public void CleanOldData()
         {
             for (int i = 0; i < Layers.Count; i++)
             {
@@ -204,6 +205,51 @@ namespace MyNeuralNetwork
                     Layers[i].Neurons[j].Error = 0;
                 }
             }
+        }
+
+        public double[] TestRecognitionRate()
+        {
+            double testCount = 1000;
+            double[] goodResultsCount = new double[signalParamsList.Count];
+
+            for (int i = 0; i < signalParamsList.Count; i++)
+            {
+                for (int j = 0; j < testCount; j++)
+                {
+                    double freq = signalParamsList[i];
+                    Signal signal = new Signal(Layers[0].Neurons.Count, SignalType.Sinus, freq);
+
+                    SendSignalsToInputLayer(signal.Amplitude);
+                    ForwardPropagation();
+                    FindNetworkOutputError();
+                    
+                    double maxPower = CurrentNetworkOutput[0];
+                    double maxIndex = 0;
+
+                    for (int k = 0; k < CurrentNetworkOutput.Length; k++)
+                    {
+                        if (CurrentNetworkOutput[k] > maxPower)
+                        {
+                            maxPower = CurrentNetworkOutput[k];
+                            maxIndex = k;
+                        }
+                    }
+
+                    if (maxIndex == i)
+                    {
+                        goodResultsCount[i]++;
+                    }
+
+                    CleanOldData();
+                }
+            }
+
+            for (int i = 0; i < signalParamsList.Count; i++)
+            {
+                goodResultsCount[i] = goodResultsCount[i] / testCount * 100;
+            }
+
+            return goodResultsCount;
         }
     }
 }
