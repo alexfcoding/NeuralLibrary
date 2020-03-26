@@ -21,14 +21,16 @@ namespace MyNeuralNetwork
             
             for (int i = 0; i < weightCount; i++)
             {
-                double rnd = 0;
+                //double rnd = randomWeight.NextDouble() + 0.5;
 
-                while (rnd < 0.01)
-                {
-                    rnd = randomWeight.NextDouble();
-                }
+                double mean = 0;
+                double stdDev = 0.4;
 
-                Weights[i] = rnd;
+                MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(mean, stdDev);
+                double randomGaussianValue = normalDist.Sample();
+
+                Weights[i] = randomGaussianValue;
+
             }
         }
     }

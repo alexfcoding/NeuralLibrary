@@ -7,3 +7,6 @@ C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.c
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.exe
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.pdb
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.MainForm.resources
+C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\bin\Debug\MathNet.Numerics.dll
+C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\bin\Debug\MathNet.Numerics.xml
+C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.csproj.CopyComplete

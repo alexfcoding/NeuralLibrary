@@ -6,15 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyNeuralNetwork
 {
-    public enum LogOptions
+    class ImageSource
     {
-        PrintFirstState,
-        PrintTrainingNetwork
-    }
-
-    public enum SignalType
-    {
-        Sinus,
-        Image
     }
 }

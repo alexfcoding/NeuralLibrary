@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MathNet.Numerics;
 
 namespace MyNeuralNetwork
 {
@@ -90,18 +91,16 @@ namespace MyNeuralNetwork
             {
                 for (int k = 0; k < Layers[i].Neurons.Count; k++)
                 {
-                    //for (int m = 0; m < Layers[i - 1].Neurons.Count; m++)
+                    
+                    for (int j = 0; j < Layers[i - 1].Neurons.Count; j++)
                     {
-                        for (int j = 0; j < Layers[i - 1].Neurons.Count; j++)
-                        {
-                            Layers[i].Neurons[k].OutputSignal += Layers[i - 1].Neurons[j].OutputSignal * Layers[i - 1].Neurons[j].Weights[k];
-                        }
+                        Layers[i].Neurons[k].OutputSignal += Layers[i - 1].Neurons[j].OutputSignal * Layers[i - 1].Neurons[j].Weights[k];
                     }
 
                     Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal);
                     
                     //if (Layers[i].Neurons[k].OutputSignal < 0.01)
-                    //    Layers[i].Neurons[k].OutputSignal = 0.1;
+                    //    Layers[i].Neurons[k].OutputSignal = 0.01;
 
                     if (i == Layers.Count - 1)
                     {
@@ -143,7 +142,9 @@ namespace MyNeuralNetwork
                             weightsSum += Layers[i - 1].Neurons[w].Weights[k];
                         }
 
-                        Layers[i - 1].Neurons[j].WeightErrorDistribution[k] = (Layers[i - 1].Neurons[j].Weights[k]) / (weightsSum) * Layers[i].Neurons[k].Error;
+                        Layers[i - 1].Neurons[j].WeightErrorDistribution[k] = (Layers[i - 1].Neurons[j].Weights[k]) / 
+                            (weightsSum) * Layers[i].Neurons[k].Error;
+
                         weightsSum = 0;
                     }
                 }
@@ -173,14 +174,14 @@ namespace MyNeuralNetwork
 
                     for (int m = 0; m < Layers[i - 1].Neurons.Count; m++)
                     {
-                        Layers[i - 1].Neurons[m].Weights[k] += -LearningRate * (-Layers[i].Neurons[k].Error) * Sigmoid(WijSum) * Layers[i - 1].Neurons[m].OutputSignal;
+                        Layers[i - 1].Neurons[m].Weights[k] += -LearningRate * (-Layers[i].Neurons[k].Error) * Sigmoid(WijSum) * (1 - Sigmoid(WijSum)) * Layers[i - 1].Neurons[m].OutputSignal;
                     }
 
                     WijSum = 0;
                 }
             }
 
-            int weightId = 0;
+            //int weightId = 0;
             //for (int i = 0; i < Layers.Count; i++)
             //{
             //    for (int j = 0; j < Layers[i].Neurons.Count; j++)
@@ -188,7 +189,7 @@ namespace MyNeuralNetwork
             //        for (int k = 0; k < Layers[i].Neurons[j].Weights.Length; k++)
             //        {
             //            if (Math.Abs(Layers[i].Neurons[j].Weights[k]) < 0.0001)
-            //                Layers[i].Neurons[j].Weights[k] = 0.1;
+            //                Layers[i].Neurons[j].Weights[k] = 0.001;
             //            weightId++;
             //        }
             //    }
@@ -217,7 +218,8 @@ namespace MyNeuralNetwork
                 for (int j = 0; j < testCount; j++)
                 {
                     double freq = signalParamsList[i];
-                    Signal signal = new Signal(Layers[0].Neurons.Count, SignalType.Sinus, freq);
+                    Signal signal = new Signal(Layers[0].Neurons.Count);
+                    signal.GenerateSinus(freq);
 
                     SendSignalsToInputLayer(signal.Amplitude);
                     ForwardPropagation();
