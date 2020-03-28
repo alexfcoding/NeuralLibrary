@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace MyNeuralNetwork
 {
@@ -25,7 +26,7 @@ namespace MyNeuralNetwork
             for (int i = 0; i < samplesCount; i += 1)
             {
                 time += 0.01;
-                Amplitude[i] = Math.Sin(time * freq) + Math.Sin(4 * time * freq); //+ rndAmplitude.NextDouble();
+                Amplitude[i] = (Math.Sin(time * freq) + Math.Sin(4 * time * freq)) / 2.2; //+ rndAmplitude.NextDouble();
             }
             
         }
@@ -34,18 +35,45 @@ namespace MyNeuralNetwork
         {
             image = new Bitmap(imagePath);
             Color clr = new Color();
+            Color[] colorArray = new Color[784];
 
             int k = 0;
             for (int i = 0; i < image.Width; i += 1)
             {
                 for (int j = 0; j < image.Height; j += 1)
                 {
-                    clr = image.GetPixel(i, j);                    
-                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114) / 255 + 0.05;
-                    
+                    clr = image.GetPixel(i, j);
+                    colorArray[k] = clr;
+                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114) + 0.01;
+
                     if (Amplitude[k] > 1)
                         Amplitude[k] = 0.99;
-                    
+
+                    k++;
+                }
+            }
+        }
+
+        public void GenerateImageFromDrawer(PictureBox pictureBox)
+        {
+            image = new Bitmap(pictureBox.Image); 
+
+            Color clr = new Color();
+            Color[] colorArray = new Color[784];
+
+            int k = 0;
+            for (int i = 0; i < image.Width; i += 1)
+            {
+                for (int j = 0; j < image.Height; j += 1)
+                {
+                    clr = image.GetPixel(i, j);
+                    colorArray[k] = clr;
+
+                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114) + 0.05;
+
+                    if (Amplitude[k] > 1)
+                        Amplitude[k] = 0.99;
+
                     k++;
                 }
             }

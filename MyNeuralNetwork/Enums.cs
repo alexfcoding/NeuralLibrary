@@ -17,4 +17,10 @@ namespace MyNeuralNetwork
         Sinus,
         Image
     }
+
+    public enum ImageType
+    {
+        FromFile,
+        FromDrawer
+    }
 }

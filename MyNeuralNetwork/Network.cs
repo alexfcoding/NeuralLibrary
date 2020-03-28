@@ -97,7 +97,7 @@ namespace MyNeuralNetwork
                         Layers[i].Neurons[k].OutputSignal += Layers[i - 1].Neurons[j].OutputSignal * Layers[i - 1].Neurons[j].Weights[k];
                     }
 
-                    Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal);
+                    Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal);// +Layers[i].Neurons[k].bias); //// ;
                     
                     //if (Layers[i].Neurons[k].OutputSignal < 0.01)
                     //    Layers[i].Neurons[k].OutputSignal = 0.01;
@@ -135,20 +135,22 @@ namespace MyNeuralNetwork
             {
                 for (int k = 0; k < Layers[i].Neurons.Count; k++) // neurons
                 {
-                    for (int j = 0; j < Layers[i - 1].Neurons.Count; j++) // neurons
+                    for (int w = 0; w < Layers[i - 1].Neurons.Count; w++)
                     {
-                        for (int w = 0; w < Layers[i - 1].Neurons.Count; w++)
-                        {
-                            weightsSum += Layers[i - 1].Neurons[w].Weights[k];
-                        }
+                        weightsSum += Layers[i - 1].Neurons[w].Weights[k];
+                    }
 
+                    for (int j = 0; j < Layers[i].Neurons.Count; j++) // it was Layers[i - 1]
+                    {
                         Layers[i - 1].Neurons[j].WeightErrorDistribution[k] = (Layers[i - 1].Neurons[j].Weights[k]) / 
                             (weightsSum) * Layers[i].Neurons[k].Error;
-
-                        weightsSum = 0;
                     }
+
+                    weightsSum = 0;
                 }
-                // Neuron Error Distribution
+
+                //Neuron Error Distribution
+
                 for (int j = 0; j < Layers[i - 1].Neurons.Count; j++)
                 {
                     for (int w = 0; w < Layers[i - 1].Neurons[j].Weights.Length; w++)
@@ -175,6 +177,7 @@ namespace MyNeuralNetwork
                     for (int m = 0; m < Layers[i - 1].Neurons.Count; m++)
                     {
                         Layers[i - 1].Neurons[m].Weights[k] += -LearningRate * (-Layers[i].Neurons[k].Error) * Sigmoid(WijSum) * (1 - Sigmoid(WijSum)) * Layers[i - 1].Neurons[m].OutputSignal;
+                        //Layers[i - 1].Neurons[m].bias += -LearningRate * (-Layers[i].Neurons[k].Error) * Sigmoid(WijSum) * (1 - Sigmoid(WijSum)) * Layers[i - 1].Neurons[m].OutputSignal;
                     }
 
                     WijSum = 0;
