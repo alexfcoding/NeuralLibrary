@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyNeuralNetwork
 {
-    class Neuron
+    public class Neuron
     {
         public double OutputSignal { get; set; }
         public double[] Weights { get; set; }
@@ -22,10 +22,6 @@ namespace MyNeuralNetwork
             
             for (int i = 0; i < weightCount; i++)
             {
-                //double rnd = randomWeight.NextDouble()-0.5;
-                //if (rnd < 0.01)
-                //    rnd = 0.01;
-
                 double mean = 0;
                 double stdDev = 0.5;
 
@@ -33,10 +29,7 @@ namespace MyNeuralNetwork
                 double randomGaussianValue = normalDist.Sample();
                 
                 Weights[i] = randomGaussianValue;
-
                 bias = randomGaussianValue;
-
-
             }
         }
     }

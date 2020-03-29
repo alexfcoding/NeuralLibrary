@@ -12,6 +12,12 @@ namespace MyNeuralNetwork
         PrintTrainingNetwork
     }
 
+    public enum DrawOptions
+    {
+        DrawWeights,
+        DontDrawWeights
+    }
+
     public enum SignalType
     {
         Sinus,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyNeuralNetwork
 {
-    class Layer
+    public class Layer
     {
         public List<Neuron> Neurons { get; set; }
 
