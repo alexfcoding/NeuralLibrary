@@ -91,7 +91,6 @@ namespace MyNeuralNetwork
             {
                 for (int k = 0; k < Layers[i].Neurons.Count; k++)
                 {
-                    
                     for (int j = 0; j < Layers[i - 1].Neurons.Count; j++)
                     {
                         Layers[i].Neurons[k].OutputSignal += Layers[i - 1].Neurons[j].OutputSignal * Layers[i - 1].Neurons[j].Weights[k];

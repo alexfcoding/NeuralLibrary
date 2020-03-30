@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MyNeuralNetwork
 {
@@ -13,9 +14,10 @@ namespace MyNeuralNetwork
         int trainCount;
         bool imageMode;
         bool pencilDown;
+        bool chartCreated;
         Bitmap bmp;
         Graphics g;
-
+        
         public MainForm()
         {
             InitializeComponent();
@@ -29,7 +31,7 @@ namespace MyNeuralNetwork
             signalSamples = 784;
             int hiddenNeurons = 200;
             int outputNeurons = 10;
-            double learningRate = 0.3;
+            double learningRate = 0.1;
             network = new Network(outputNeurons, learningRate);
             network.ErrorTarget = 0.3;
 
@@ -70,38 +72,67 @@ namespace MyNeuralNetwork
             testNetworkButton.Text = "Create next network";
         }
 
-        private void DrawNetworkStats(DrawOptions drawOptions)
+        private void DrawNetworkStats(DrawOptions drawOptions, int currentIteration = 1)
         {
             outputsChart.Series[0].Points.Clear();
             errorsChart.Series[0].Points.Clear();
             weightsChart.Series[0].Points.Clear();
             signalsChart.Series[0].Points.Clear();
 
+            if (!chartCreated)
+            {
+                for (int i = 0; i < network.CurrentNetworkOutput.Length; i++)
+                {
+                    var newSeries = new System.Windows.Forms.DataVisualization.Charting.Series
+                    {
+                        Name = "Series" + (i).ToString(),
+                        Color = System.Drawing.Color.Black,
+                        IsVisibleInLegend = false,
+                        IsXValueIndexed = false,
+                        ChartType = SeriesChartType.Spline,
+                        BorderWidth = 1
+                    };
+
+                    errorsChart2.Series.Add(newSeries);
+                }
+
+                chartCreated = true;
+            }
+
+            //errorsChart2.Series[0].Points.Clear();
+            double cumulativeError = 0;
+
             for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
             {
                 outputsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutput[j]);
                 errorsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutputError[j]);
+                cumulativeError += Math.Pow(network.CurrentNetworkOutputError[j], 2) / network.CurrentNetworkOutput.Length;
+                //errorsChart2.Series[j].Points.AddY(network.CurrentNetworkOutputError[j]);
             }
+
+            if (currentIteration % 10 == 0)
+                errorsChart2.Series[0].Points.AddY((cumulativeError));
 
             int weightId = 0;
             int neuronId = 0;
 
-            if (drawOptions == DrawOptions.DrawWeights)
+            for (int i = 0; i < network.Layers.Count; i++)
             {
-                for (int i = 0; i < network.Layers.Count; i++)
+                for (int j = 0; j < network.Layers[i].Neurons.Count; j++)
                 {
-                    for (int j = 0; j < network.Layers[i].Neurons.Count; j++)
+                    for (int k = 0; k < network.Layers[i].Neurons[j].Weights.Length; k++)
                     {
-                        for (int k = 0; k < network.Layers[i].Neurons[j].Weights.Length; k++)
+                        if (drawOptions == DrawOptions.DrawWeights)
                         {
                             weightsChart.Series[0].Points.AddXY(weightId, network.Layers[i].Neurons[j].Weights[k]);
                             weightId++;
                         }
-
-                        signalsChart.Series[0].Points.AddXY(neuronId, network.Layers[i].Neurons[j].OutputSignal);
-                        neuronId++;
                     }
+
+                    signalsChart.Series[0].Points.AddXY(neuronId, network.Layers[i].Neurons[j].OutputSignal);
+                    neuronId++;
                 }
+                
             }
         }
 
@@ -188,7 +219,7 @@ namespace MyNeuralNetwork
             }
             
             int loopExit = 0;
-            long trainIteration = 0;
+            int trainIteration = 0;
             double[] signalParam = { 0, 4 };
             Random noise = new Random();
             Random rndSet = new Random();
@@ -226,14 +257,16 @@ namespace MyNeuralNetwork
 
                 network.SendSignalsToInputLayer(signal.Amplitude);
                 TrainNetwork(network);
-                //PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
-                DrawNetworkStats(DrawOptions.DontDrawWeights);
+                PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
+                DrawNetworkStats(DrawOptions.DontDrawWeights, trainIteration);
                 network.CleanOldData();
 
                 Application.DoEvents();
 
                 trainIteration++;
                 iterationLabel.Text = $"iteration: {trainIteration.ToString()}";
+
+                FillProgressBar(0, trainCount, trainIteration);
 
                 double[] errors = new double[network.CurrentNetworkOutputError.Length];
 
@@ -258,11 +291,18 @@ namespace MyNeuralNetwork
             networkToTrain.RecalculateWeights();
         }
 
+        public void FillProgressBar(int min, int max, int iteration)
+        {
+            progressBar1.Maximum = max;
+            progressBar1.Minimum = min;
+            progressBar1.Value = iteration;
+        }
+
         private void TestButton_Click(object sender, EventArgs e)
         {
             int imageIndex = 1;
 
-            for (int a = 0; a < 100; a++)
+            //for (int a = 0; a < 100; a++)
             { 
                 double param = Convert.ToDouble(signalParamTextBox.Text);
                 signal = new Signal((int)signalSamples);
@@ -291,7 +331,7 @@ namespace MyNeuralNetwork
 
                 PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
                 
-                DrawNetworkStats(DrawOptions.DrawWeights);
+                DrawNetworkStats(DrawOptions.DontDrawWeights);
                 network.CleanOldData();
 
                 Application.DoEvents();
