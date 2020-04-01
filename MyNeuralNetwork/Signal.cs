@@ -55,8 +55,7 @@ namespace MyNeuralNetwork
 
         public void ImageFromDrawer(PictureBox pictureBox)
         {
-            image = new Bitmap(pictureBox.Image); 
-
+            image = new Bitmap(pictureBox.Image);
             Color clr = new Color();
             Color[] colorArray = new Color[784];
 
@@ -68,7 +67,7 @@ namespace MyNeuralNetwork
                     clr = image.GetPixel(i, j);
                     colorArray[k] = clr;
 
-                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114) + 0.05;
+                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114);
 
                     if (Amplitude[k] > 1)
                         Amplitude[k] = 0.99;

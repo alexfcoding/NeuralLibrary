@@ -14,6 +14,7 @@ namespace MyNeuralNetwork
         public double[] Targets { get; set; }
         public double[] CurrentNetworkOutput { get; set; }
         public double[] CurrentNetworkOutputError { get; set; }
+        public double[] avgError { get; set; }
         public double[] testResults { get; set; }
         public double ErrorTarget { get; set; }
         public List<double> signalParamsList { get; set; }
@@ -32,7 +33,7 @@ namespace MyNeuralNetwork
 
             LearningRate = learningRate;
             signalParamsList = new List<double>();
-            
+            avgError = new double[outputNeurons];
         }
 
         public void CreateInputLayer(int inputNeuronCount, int weightsCount)
@@ -96,7 +97,7 @@ namespace MyNeuralNetwork
                         Layers[i].Neurons[k].OutputSignal += Layers[i - 1].Neurons[j].OutputSignal * Layers[i - 1].Neurons[j].Weights[k];
                     }
 
-                    Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal + Layers[i].Neurons[k].bias);
+                    Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal ); //+ Layers[i].Neurons[k].bias
 
                     if (i == Layers.Count - 1)
                     {
@@ -186,7 +187,7 @@ namespace MyNeuralNetwork
                     for (int m = 0; m < Layers[i - 1].Neurons.Count; m++)
                     {
                         Layers[i - 1].Neurons[m].Weights[k] += LearningRate * (Layers[i].Neurons[k].Error) * Layers[i].Neurons[k].OutputSignal * (1 - Layers[i].Neurons[k].OutputSignal) * Layers[i - 1].Neurons[m].OutputSignal;
-                        Layers[i - 1].Neurons[m].bias += LearningRate * (Layers[i].Neurons[k].Error) * Layers[i].Neurons[k].OutputSignal * (1 - Layers[i].Neurons[k].OutputSignal) * Layers[i - 1].Neurons[m].OutputSignal;
+                        //Layers[i - 1].Neurons[m].bias += LearningRate * (Layers[i].Neurons[k].Error) * Layers[i].Neurons[k].OutputSignal * (1 - Layers[i].Neurons[k].OutputSignal) * Layers[i - 1].Neurons[m].OutputSignal;
                     }
 
                     WijSum = 0;
@@ -204,54 +205,6 @@ namespace MyNeuralNetwork
                     Layers[i].Neurons[j].Error = 0;
                 }
             }
-        }
-
-        public double[] TestRecognitionRate()
-        {
-            double testCount = 100;
-            testResults = new double[signalParamsList.Count];
-            int imageIndex = 1;
-
-            for (int i = 0; i < signalParamsList.Count; i++)
-            {
-                for (int j = 0; j < testCount; j++)
-                { 
-                    Signal signal = new Signal(Layers[0].Neurons.Count);
-                    
-                    signal.ImageFromFile($@"C:\mnist_png\testing\{i}\" + imageIndex.ToString() + ".png");
-                    imageIndex++;
-
-                    SendSignalsToInputLayer(signal.Amplitude);
-                    ForwardPropagation();
-                    FindNetworkOutputError();
-                    
-                    double maxPower = CurrentNetworkOutput[0];
-                    double maxIndex = 0;
-
-                    for (int k = 0; k < CurrentNetworkOutput.Length; k++)
-                    {
-                        if (CurrentNetworkOutput[k] > maxPower)
-                        {
-                            maxPower = CurrentNetworkOutput[k];
-                            maxIndex = k;
-                        }
-                    }
-
-                    if (maxIndex == i)
-                    {
-                        testResults[i]++;
-                    }
-
-                    CleanOldData();
-                }
-            }
-
-            for (int i = 0; i < signalParamsList.Count; i++)
-            {
-                testResults[i] = testResults[i] / testCount * 100;
-            }
-
-            return testResults;
         }
     }
 }
