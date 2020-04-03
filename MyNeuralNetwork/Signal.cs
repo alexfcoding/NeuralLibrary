@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace MyNeuralNetwork
@@ -10,8 +11,7 @@ namespace MyNeuralNetwork
         public double samplesCount { get; set; }
         public String ImagePath { get; set; }
         public Bitmap image { get; set; }
-
-        Random rndAmplitude = new Random();
+        public Image imageRotate { get; set; }
         
         public Signal (int samplesCount)
         {
@@ -30,9 +30,11 @@ namespace MyNeuralNetwork
             }
         }
 
-        public void ImageFromFile(string imagePath)
+        public Image ImageFromFile(string imagePath, Random rndAngle)
         {
-            image = new Bitmap(imagePath);
+            Image im = Image.FromFile(imagePath);
+            image = new Bitmap(RotateImage(im, rndAngle.Next(0,360)));
+                        
             Color clr = new Color();
             Color[] colorArray = new Color[784];
             int k = 0;
@@ -43,6 +45,32 @@ namespace MyNeuralNetwork
                 {
                     clr = image.GetPixel(i, j);
                     colorArray[k] = clr;
+                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114);
+
+                    if (Amplitude[k] > 1)
+                        Amplitude[k] = 0.99;
+
+                    k++;
+                }
+            }
+            return image;
+        }
+
+        public void ImageFromDrawer(PictureBox pictureBox)
+        {
+            image = new Bitmap(pictureBox.Image);
+
+            Color clr = new Color();
+            Color[] colorArray = new Color[784];
+
+            int k = 0;
+            for (int i = 0; i < image.Width; i += 1)
+            {
+                for (int j = 0; j < image.Height; j += 1)
+                {
+                    clr = image.GetPixel(i, j);
+                    colorArray[k] = clr;
+
                     Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114);
 
                     if (Amplitude[k] > 1)
@@ -53,28 +81,25 @@ namespace MyNeuralNetwork
             }
         }
 
-        public void ImageFromDrawer(PictureBox pictureBox)
+        public static Image RotateImage(Image img, float rotationAngle)
         {
-            image = new Bitmap(pictureBox.Image);
-            Color clr = new Color();
-            Color[] colorArray = new Color[784];
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
 
-            int k = 0;
-            for (int i = 0; i < image.Width; i += 1)
-            {
-                for (int j = 0; j < image.Height; j += 1)
-                {
-                    clr = image.GetPixel(i, j);
-                    colorArray[k] = clr;
+            Graphics gfx = Graphics.FromImage(bmp);
 
-                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114);
+            gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
 
-                    if (Amplitude[k] > 1)
-                        Amplitude[k] = 0.99;
+            gfx.RotateTransform(rotationAngle);
 
-                    k++;
-                }
-            }
+            gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
+
+            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+           
+            gfx.DrawImage(img, new Point(0, 0));
+
+            gfx.Dispose();
+
+            return bmp;
         }
     }
 }

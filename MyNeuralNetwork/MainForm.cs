@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace MyNeuralNetwork
 {
@@ -20,6 +21,7 @@ namespace MyNeuralNetwork
         Bitmap bmp;
         Graphics g;
         Random randomClr = new Random();
+        Random rndAngle = new Random();
 
         public MainForm()
         {
@@ -28,7 +30,8 @@ namespace MyNeuralNetwork
 
         private void testNetworkButton_Click(object sender, EventArgs e)
         {
-            imageMode = true;
+            imageMode = radioButton1.Checked;
+
             trainCount = Convert.ToInt32(iterationsText.Text);
             signalSamples = Convert.ToInt32(inputsText.Text);
             int hiddenNeurons = Convert.ToInt32(hiddenText.Text);
@@ -43,7 +46,9 @@ namespace MyNeuralNetwork
             
             if (imageMode)
             {
-                signal.ImageFromFile($@"mnist_png\training\{freq}\1.png");
+                Random rndAngle = new Random();
+                rndAngle.Next(0, 360);
+                signal.ImageFromFile($@"mnist_png\training\{freq}\1.png", rndAngle);
                 previewPaintBox2.Image = signal.image;
             }
             else
@@ -96,7 +101,7 @@ namespace MyNeuralNetwork
                         IsVisibleInLegend = false,
                         IsXValueIndexed = false,
                         ChartType = SeriesChartType.Spline,
-                        BorderWidth = 1
+                        BorderWidth = 2
                     };
 
                     errorsChart2.Series.Add(newSeries);
@@ -107,18 +112,14 @@ namespace MyNeuralNetwork
             
             double cumulativeError = 0;
 
-
             for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
             {
                 outputsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutput[j]);
                 errorsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutputError[j]);
-                cumulativeError += Math.Pow(network.CurrentNetworkOutputError[j], 2) / network.CurrentNetworkOutput.Length;
-                //errorsChart2.Series[j].Points.AddY(network.CurrentNetworkOutputError[j]);
+                //cumulativeError += Math.Pow(network.CurrentNetworkOutputError[j], 2) / network.CurrentNetworkOutput.Length;
             }
 
-            //if (currentIteration % 10 == 0)
-            //    errorsChart2.Series[0].Points.AddY((cumulativeError));
-            if (currentIteration % 100 == 0)
+            if (currentIteration % 50 == 0)
             {
                 for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
                 {
@@ -235,7 +236,7 @@ namespace MyNeuralNetwork
             double[] signalParam = { 0, 4 };
             Random noise = new Random();
             Random rndSet = new Random();
-            
+
             int[] imageIndex = new int[network.Targets.Length];
 
             while (loopExit == 0)
@@ -244,7 +245,6 @@ namespace MyNeuralNetwork
 
                 int param = rndSet.Next(0, Convert.ToInt32(network.Targets.Length));
                
-
                 for (int i = 0; i < network.Targets.Length; i++)
                 {
                     network.Targets[i] = 0.01;
@@ -259,11 +259,11 @@ namespace MyNeuralNetwork
                         imageIndex[param] = 1;
                     }
 
-                    signal.ImageFromFile($@"mnist_png\training\{param}\" + imageIndex[param].ToString() + ".png");
+                    rndAngle.Next(0, 360);
+                    signal.ImageFromFile($@"mnist_png\training\{param}\" + imageIndex[param].ToString() + ".png", rndAngle);
                     previewPaintBox2.Image = signal.image;
                     previewPaintBox.Image = signal.image;
                     imageIndex[param]++;
-                    //imageIndex++;
                 }
                 else
                 {
@@ -316,9 +316,16 @@ namespace MyNeuralNetwork
                 }
 
                 watch.Stop();
+
                 var elapsedMs = watch.ElapsedMilliseconds;
-                label9.Text = $"Performance per cycle: {elapsedMs} ms / Estimated time: { (trainCount- trainIteration) * elapsedMs / 1000 / 60} min";
+                double sec = (trainCount - (double)trainIteration) * elapsedMs / 1000;
+                double estimateMin = (sec - sec % 60) / 60;
+                double estimateSec = Math.Round(sec % 60);
+
+                estimateLabel.Text = $" {Math.Round((double)trainIteration / (double)trainCount * 100)} % / Performance per cycle: {elapsedMs} ms / Estimated time: {estimateMin} min {estimateSec} s";
             }
+
+            recognitionTestButton.Enabled = true;
         }
 
         private void TestSamples(Network networkToTest, int trueValue)
@@ -360,7 +367,6 @@ namespace MyNeuralNetwork
             double testCount = 100;
             networkToTest.testResults = new double[networkToTest.signalParamsList.Count];
             int imageIndex = 1;
-
             double[] resultMatrix = new double[networkToTest.signalParamsList.Count];
 
             for (int i = 0; i < networkToTest.signalParamsList.Count; i++)
@@ -368,9 +374,11 @@ namespace MyNeuralNetwork
                 for (int j = 0; j < testCount; j++)
                 {
                     Signal signal = new Signal(networkToTest.Layers[0].Neurons.Count);
-
-                    signal.ImageFromFile($@"mnist_png\testing\{i}\" + imageIndex.ToString() + ".png");
+                    rndAngle.Next(0, 360);
+                    signal.ImageFromFile($@"mnist_png\testing\{i}\" + imageIndex.ToString() + ".png", rndAngle);
+                    previewPaintBox2.Image = signal.image;
                     previewPaintBox.Image = signal.image;
+
                     Application.DoEvents();
                     imageIndex++;
 
@@ -434,41 +442,38 @@ namespace MyNeuralNetwork
             try
             {
                 int imageIndex = 1;
+                
+                double param = Convert.ToDouble(signalParamText.Text);
+                signal = new Signal((int)signalSamples);
 
-                //for (int a = 0; a < 100; a++)
+                if (imageMode)
                 {
-                    double param = Convert.ToDouble(signalParamText.Text);
-                    signal = new Signal((int)signalSamples);
-
-                    if (imageMode)
-                    {
-                        signal.ImageFromFile($@"mnist_png\testing\{param}\" + imageIndex.ToString() + ".png");
-                        previewPaintBox2.Image = signal.image;
-                    }
-                    else
-                    {
-                        signal.GenerateSinus(param);
-                    }
-
-                    imageIndex++;
-
-                    chart1.Series[0].Points.Clear();
-
-                    for (int i = 0; i < signalSamples; i += 1)
-                    {
-                        chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
-                    }
-
-                    network.SendSignalsToInputLayer(signal.Amplitude);
-                    network.ForwardPropagation();
-
-                    PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
-
-                    DrawNetworkStats(DrawOptions.DontDrawWeights);
-                    network.CleanOldData();
-
-                    Application.DoEvents();
+                    rndAngle.Next(0, 360);
+                    signal.ImageFromFile($@"mnist_png\testing\{param}\" + imageIndex.ToString() + ".png", rndAngle);
+                    previewPaintBox2.Image = signal.image;
                 }
+                else
+                {
+                    signal.GenerateSinus(param);
+                }
+
+                imageIndex++;
+
+                chart1.Series[0].Points.Clear();
+
+                for (int i = 0; i < signalSamples; i += 1)
+                {
+                    chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
+                }
+
+                network.SendSignalsToInputLayer(signal.Amplitude);
+                network.ForwardPropagation();
+                PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
+                DrawNetworkStats(DrawOptions.DontDrawWeights);
+                network.CleanOldData();
+
+                Application.DoEvents();
+                
             }
             catch
             {
@@ -490,10 +495,6 @@ namespace MyNeuralNetwork
                         network.signalParamsList.Add(i);
                     }
                 }
-
-                //new Thread(delegate () {
-                //    TestNetworkWork(network);
-                //}).Start();
 
                 TestNetworkWork(network);
             }
@@ -545,74 +546,17 @@ namespace MyNeuralNetwork
 
         private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
         {
-            //pencilDown = true;
-            //bmp = new Bitmap(userPaintBox.Width, userPaintBox.Height);
-            //g = Graphics.FromImage(bmp);
+            
         }
 
         private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
         {
-            //Color clr = new Color();
-            //clr = Color.FromArgb(255, 252, 252, 252);
-
-            //int X = e.X;
-            //int Y = e.Y;
             
-            //Point p = new Point(X, Y);
-            //Pen pencil = new Pen(clr);
-
-            //pencil.Width = 2f;
-
-            //if (pencilDown)
-            //{
-            //    g.DrawEllipse(pencil, new RectangleF(X, Y, 1, 1));
-            //}
-            //userPaintBox.Image = bmp;
         }
 
         private void pictureBox2_MouseUp(object sender, MouseEventArgs e)
         {
-            //pencilDown = false;
-            //pictureBox1.Image = userPaintBox.Image;
-
-            //if (imageMode)
-            //{
-            //    signal.ImageFromDrawer(userPaintBox);
-            //}
-
-            //chart1.Series[0].Points.Clear();
-
-            //for (int i = 0; i < signalSamples; i += 1)
-            //{
-            //    chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
-            //}
-
-            //network.SendSignalsToInputLayer(signal.Amplitude);
-
-            //network.ForwardPropagation();
-
-            //PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
-
-            //DrawNetworkStats(DrawOptions.DontDrawWeights);
-
-            //network.CleanOldData();
-
-            //Application.DoEvents();
             
-
-            //double maxPower = network.CurrentNetworkOutput[0];
-            //double maxIndex = 0;
-
-            //for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
-            //{
-            //    if (network.CurrentNetworkOutput[j] > maxPower)
-            //    {
-            //        maxPower = network.CurrentNetworkOutput[j];
-            //        maxIndex = j;
-            //    }
-            //}
-
-            //label1.Text = maxIndex.ToString();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -633,7 +577,7 @@ namespace MyNeuralNetwork
             Point p = new Point(X, Y);
             Pen pencil = new Pen(clr);
 
-            pencil.Width = 24f;
+            pencil.Width = 12f;
 
             if (pencilDown)
             {
