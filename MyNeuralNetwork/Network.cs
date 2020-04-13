@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace MyNeuralNetwork
 {
@@ -15,6 +11,8 @@ namespace MyNeuralNetwork
         public double[] CurrentNetworkOutput { get; set; }
         public double[] CurrentNetworkOutputError { get; set; }
         public double[] avgError { get; set; }
+        public double CurrentCumulativeError { get; set; }
+        public double squaredError { get; set; }
         public double[] testResults { get; set; }
         public double ErrorTarget { get; set; }
         public List<double> signalParamsList { get; set; }
@@ -34,6 +32,7 @@ namespace MyNeuralNetwork
             LearningRate = learningRate;
             signalParamsList = new List<double>();
             avgError = new double[outputNeurons];
+            CurrentCumulativeError = 0;
         }
 
         public void CreateInputLayer(int inputNeuronCount, int weightsCount)
@@ -118,7 +117,7 @@ namespace MyNeuralNetwork
         {
             for (int i = 0; i < Layers[Layers.Count - 1].Neurons.Count; i++)
             {
-                CurrentNetworkOutputError[i] = ((Targets[i] - CurrentNetworkOutput[i]));
+                CurrentNetworkOutputError[i] = Targets[i] - CurrentNetworkOutput[i];
                 Layers[Layers.Count - 1].Neurons[i].Error = CurrentNetworkOutputError[i];
             }
         }

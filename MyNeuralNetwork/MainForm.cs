@@ -22,6 +22,7 @@ namespace MyNeuralNetwork
         Graphics g;
         Random randomClr = new Random();
         Random rndAngle = new Random();
+        Random rndAmplitude = new Random();
 
         public MainForm()
         {
@@ -53,7 +54,7 @@ namespace MyNeuralNetwork
             }
             else
             {
-                signal.GenerateSinus(freq);
+                signal.GenerateSinus(freq, rndAmplitude);
             }
 
             for (int i = 0; i < signalSamples; i += 1)
@@ -79,7 +80,7 @@ namespace MyNeuralNetwork
             testNetworkButton.Text = "Create next network";
         }
 
-        private void DrawNetworkStats(DrawOptions drawOptions, int currentIteration = 1)
+        private void DrawNetworkStats(DrawOptions drawOptions, int trainIteration = 1)
         {
             outputsChart.Series[0].Points.Clear();
             errorsChart.Series[0].Points.Clear();
@@ -104,7 +105,7 @@ namespace MyNeuralNetwork
                         BorderWidth = 2
                     };
 
-                    errorsChart2.Series.Add(newSeries);
+                    stateErrorsChart.Series.Add(newSeries);
                 }
 
                 chartCreated = true;
@@ -112,19 +113,33 @@ namespace MyNeuralNetwork
             
             double cumulativeError = 0;
 
+            if (trainIteration == 1)
+            {
+                errorsChart2.Series[0].Points.AddY(0);
+
+                for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
+                {
+                    stateErrorsChart.Series[j].Points.AddY(0);
+                }
+            }
+
             for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
             {
                 outputsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutput[j]);
                 errorsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutputError[j]);
-                //cumulativeError += Math.Pow(network.CurrentNetworkOutputError[j], 2) / network.CurrentNetworkOutput.Length;
             }
 
-            if (currentIteration % 50 == 0)
+            if (trainIteration % (network.CurrentNetworkOutput.Length * 5) == 0)
+            {
+                errorsChart2.Series[0].Points.AddY(network.CurrentCumulativeError / (network.CurrentNetworkOutput.Length * 5));
+            }
+
+            if (trainIteration % (network.CurrentNetworkOutput.Length * 2) == 0)
             {
                 for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
                 {
-                    errorsChart2.Series[j].Points.AddY((network.avgError[j]));
-                }
+                    stateErrorsChart.Series[j].Points.AddY((network.avgError[j]));
+                }                
             }
 
             int weightId = 0;
@@ -232,19 +247,20 @@ namespace MyNeuralNetwork
             }
             
             int loopExit = 0;
-            int trainIteration = 0;
+            int trainIteration = 1;
             double[] signalParam = { 0, 4 };
             Random noise = new Random();
             Random rndSet = new Random();
 
             int[] imageIndex = new int[network.Targets.Length];
-
+            //int param = 0;
             while (loopExit == 0)
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
 
+                //int param = rndSet.Next(0, Convert.ToInt32(network.Targets.Length));
                 int param = rndSet.Next(0, Convert.ToInt32(network.Targets.Length));
-               
+
                 for (int i = 0; i < network.Targets.Length; i++)
                 {
                     network.Targets[i] = 0.01;
@@ -267,7 +283,7 @@ namespace MyNeuralNetwork
                 }
                 else
                 {
-                    signal.GenerateSinus(param * 10 + 1);
+                    signal.GenerateSinus(param * 10 + 1, rndAmplitude);
                 }
 
                 chart1.Series[0].Points.Clear();
@@ -281,10 +297,16 @@ namespace MyNeuralNetwork
                 TrainNetwork(network);
                 PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
                 DrawNetworkStats(DrawOptions.DontDrawWeights, trainIteration);
-                TestSamples(network, param);
-                
+                TestSamples(network, param); 
                 network.CleanOldData();
 
+                trainIteration++;
+
+                if (trainIteration % (network.Targets.Length * 5 + 1) == 0)
+                    network.CurrentCumulativeError = 0;
+
+                network.squaredError = 0;
+                
                 for (int i = 0; i < network.Targets.Length; i++)
                 {
                     network.avgError[param] = 0;
@@ -292,12 +314,11 @@ namespace MyNeuralNetwork
 
                 for (int i = 0; i < network.Targets.Length; i++)
                 {
-                    network.avgError[param] += Math.Abs(network.CurrentNetworkOutputError[i]) / network.Targets.Length;
+                    network.avgError[param] += Math.Abs(network.CurrentNetworkOutputError[i] * network.CurrentNetworkOutputError[i]);                   
                 }
 
                 Application.DoEvents();
-
-                trainIteration++;
+                
                 iterationLabel.Text = $"iteration: {trainIteration.ToString()}";
 
                 FillProgressBar(0, trainCount, trainIteration);
@@ -321,7 +342,6 @@ namespace MyNeuralNetwork
                 double sec = (trainCount - (double)trainIteration) * elapsedMs / 1000;
                 double estimateMin = (sec - sec % 60) / 60;
                 double estimateSec = Math.Round(sec % 60);
-
                 estimateLabel.Text = $" {Math.Round((double)trainIteration / (double)trainCount * 100)} % / Performance per cycle: {elapsedMs} ms / Estimated time: {estimateMin} min {estimateSec} s";
             }
 
@@ -351,6 +371,7 @@ namespace MyNeuralNetwork
             {
                 detectLabel.Text = "Fail";
                 detectLabel.BackColor = Color.Red;
+                networkToTest.CurrentCumulativeError++;                
             }
         }
 
@@ -454,7 +475,7 @@ namespace MyNeuralNetwork
                 }
                 else
                 {
-                    signal.GenerateSinus(param);
+                    signal.GenerateSinus(param, rndAmplitude);
                 }
 
                 imageIndex++;
@@ -479,7 +500,6 @@ namespace MyNeuralNetwork
             {
                 MessageBox.Show("Create network first");
             }
-            
         }
 
         private void recognitionTestButton_Click(object sender, EventArgs e)

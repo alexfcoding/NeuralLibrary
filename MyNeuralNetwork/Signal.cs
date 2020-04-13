@@ -12,29 +12,30 @@ namespace MyNeuralNetwork
         public String ImagePath { get; set; }
         public Bitmap image { get; set; }
         public Image imageRotate { get; set; }
-        
+
         public Signal (int samplesCount)
         {
             Amplitude = new double[samplesCount];
             this.samplesCount = samplesCount;
         }
 
-        public void GenerateSinus(double freq)
+        public void GenerateSinus(double freq, Random rndAmplitude)
         {
             double time = 0;
 
             for (int i = 0; i < samplesCount; i += 1)
             {
                 time += 0.01;
-                Amplitude[i] = (Math.Sin(time * freq) + Math.Sin(4 * time * freq)) / 2.2; //+ rndAmplitude.NextDouble();
+                Amplitude[i] = ((Math.Sin(time * freq) + Math.Sin(4 * time * freq)) + rndAmplitude.NextDouble() * 8) / 9; //;
             }
         }
 
         public Image ImageFromFile(string imagePath, Random rndAngle)
         {
             Image im = Image.FromFile(imagePath);
-            image = new Bitmap(RotateImage(im, rndAngle.Next(0,360)));
-                        
+            //image = new Bitmap(RotateImage(im, rndAngle.Next(0,360)));
+            image = new Bitmap(im);
+
             Color clr = new Color();
             Color[] colorArray = new Color[784];
             int k = 0;

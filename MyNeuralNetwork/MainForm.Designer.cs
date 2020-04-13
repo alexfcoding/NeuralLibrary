@@ -28,17 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea61 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series51 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea62 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series52 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea63 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series53 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea64 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series54 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea65 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series55 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea66 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.testNetworkButton = new System.Windows.Forms.Button();
             this.log = new System.Windows.Forms.ListBox();
             this.log2 = new System.Windows.Forms.ListBox();
@@ -91,6 +93,7 @@
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.вToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stateErrorsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.outputsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rateChart)).BeginInit();
@@ -105,6 +108,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.stateErrorsChart)).BeginInit();
             this.SuspendLayout();
             // 
             // testNetworkButton
@@ -134,94 +138,94 @@
             this.log2.ItemHeight = 15;
             this.log2.Location = new System.Drawing.Point(12, 290);
             this.log2.Name = "log2";
-            this.log2.Size = new System.Drawing.Size(302, 709);
+            this.log2.Size = new System.Drawing.Size(302, 379);
             this.log2.TabIndex = 2;
             // 
             // outputsChart
             // 
-            chartArea61.AxisX.Title = "Output neurons";
-            chartArea61.AxisY.Interval = 0.05D;
-            chartArea61.AxisY.Maximum = 1D;
-            chartArea61.AxisY.Minimum = 0D;
-            chartArea61.AxisY.Title = "Signal amplitude";
-            chartArea61.Name = "ChartArea1";
-            this.outputsChart.ChartAreas.Add(chartArea61);
-            this.outputsChart.Location = new System.Drawing.Point(320, 229);
+            chartArea8.AxisX.Title = "Output neurons";
+            chartArea8.AxisY.Interval = 0.05D;
+            chartArea8.AxisY.Maximum = 1D;
+            chartArea8.AxisY.Minimum = 0D;
+            chartArea8.AxisY.Title = "Signal amplitude";
+            chartArea8.Name = "ChartArea1";
+            this.outputsChart.ChartAreas.Add(chartArea8);
+            this.outputsChart.Location = new System.Drawing.Point(320, 306);
             this.outputsChart.Name = "outputsChart";
-            series51.ChartArea = "ChartArea1";
-            series51.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
-            series51.Name = "Series1";
-            this.outputsChart.Series.Add(series51);
-            this.outputsChart.Size = new System.Drawing.Size(255, 753);
+            series7.ChartArea = "ChartArea1";
+            series7.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
+            series7.Name = "Series1";
+            this.outputsChart.Series.Add(series7);
+            this.outputsChart.Size = new System.Drawing.Size(255, 676);
             this.outputsChart.TabIndex = 4;
             this.outputsChart.Text = "chart1";
             // 
             // errorsChart
             // 
-            chartArea62.AxisX.Title = "Output neurons";
-            chartArea62.AxisY.Interval = 0.1D;
-            chartArea62.AxisY.Maximum = 1D;
-            chartArea62.AxisY.Minimum = -1D;
-            chartArea62.AxisY.Title = "Error";
-            chartArea62.Name = "ChartArea1";
-            this.errorsChart.ChartAreas.Add(chartArea62);
-            this.errorsChart.Location = new System.Drawing.Point(581, 229);
+            chartArea9.AxisX.Title = "Output neurons";
+            chartArea9.AxisY.Interval = 0.1D;
+            chartArea9.AxisY.Maximum = 1D;
+            chartArea9.AxisY.Minimum = -1D;
+            chartArea9.AxisY.Title = "Error";
+            chartArea9.Name = "ChartArea1";
+            this.errorsChart.ChartAreas.Add(chartArea9);
+            this.errorsChart.Location = new System.Drawing.Point(581, 306);
             this.errorsChart.Name = "errorsChart";
             this.errorsChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series52.ChartArea = "ChartArea1";
-            series52.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series52.Color = System.Drawing.Color.Red;
-            series52.MarkerSize = 15;
-            series52.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Cross;
-            series52.Name = "Series1";
-            series52.YValuesPerPoint = 4;
-            this.errorsChart.Series.Add(series52);
-            this.errorsChart.Size = new System.Drawing.Size(255, 753);
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series8.Color = System.Drawing.Color.Red;
+            series8.MarkerSize = 15;
+            series8.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Cross;
+            series8.Name = "Series1";
+            series8.YValuesPerPoint = 4;
+            this.errorsChart.Series.Add(series8);
+            this.errorsChart.Size = new System.Drawing.Size(255, 676);
             this.errorsChart.TabIndex = 5;
             this.errorsChart.Text = "chart2";
             // 
             // rateChart
             // 
             this.rateChart.BorderlineColor = System.Drawing.Color.Empty;
-            chartArea63.AxisX.Interval = 1D;
-            chartArea63.AxisX.Title = "Classes";
-            chartArea63.AxisX2.LineColor = System.Drawing.Color.White;
-            chartArea63.AxisX2.TitleForeColor = System.Drawing.Color.White;
-            chartArea63.AxisY.Maximum = 100D;
-            chartArea63.AxisY.Minimum = 0D;
-            chartArea63.AxisY.Title = "Recogniton rate, %";
-            chartArea63.BackColor = System.Drawing.Color.White;
-            chartArea63.Name = "ChartArea1";
-            this.rateChart.ChartAreas.Add(chartArea63);
-            this.rateChart.Location = new System.Drawing.Point(1048, 756);
+            chartArea10.AxisX.Interval = 1D;
+            chartArea10.AxisX.Title = "Classes";
+            chartArea10.AxisX2.LineColor = System.Drawing.Color.White;
+            chartArea10.AxisX2.TitleForeColor = System.Drawing.Color.White;
+            chartArea10.AxisY.Maximum = 100D;
+            chartArea10.AxisY.Minimum = 0D;
+            chartArea10.AxisY.Title = "Recogniton rate, %";
+            chartArea10.BackColor = System.Drawing.Color.White;
+            chartArea10.Name = "ChartArea1";
+            this.rateChart.ChartAreas.Add(chartArea10);
+            this.rateChart.Location = new System.Drawing.Point(12, 675);
             this.rateChart.Name = "rateChart";
             this.rateChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series53.ChartArea = "ChartArea1";
-            series53.Color = System.Drawing.Color.Red;
-            series53.MarkerBorderColor = System.Drawing.Color.White;
-            series53.MarkerSize = 1;
-            series53.Name = "Series1";
-            series53.ShadowColor = System.Drawing.Color.White;
-            this.rateChart.Series.Add(series53);
-            this.rateChart.Size = new System.Drawing.Size(852, 226);
+            series9.ChartArea = "ChartArea1";
+            series9.Color = System.Drawing.Color.Red;
+            series9.MarkerBorderColor = System.Drawing.Color.White;
+            series9.MarkerSize = 1;
+            series9.Name = "Series1";
+            series9.ShadowColor = System.Drawing.Color.White;
+            this.rateChart.Series.Add(series9);
+            this.rateChart.Size = new System.Drawing.Size(302, 307);
             this.rateChart.TabIndex = 6;
             this.rateChart.Text = "chart3";
             // 
             // signalsChart
             // 
-            chartArea64.AxisX.Title = "All neurons";
-            chartArea64.AxisY.Maximum = 1D;
-            chartArea64.AxisY.Minimum = 0D;
-            chartArea64.AxisY.Title = "Amplitude";
-            chartArea64.Name = "ChartArea1";
-            this.signalsChart.ChartAreas.Add(chartArea64);
-            this.signalsChart.Location = new System.Drawing.Point(842, 229);
+            chartArea11.AxisX.Title = "All neurons";
+            chartArea11.AxisY.Maximum = 1D;
+            chartArea11.AxisY.Minimum = 0D;
+            chartArea11.AxisY.Title = "Amplitude";
+            chartArea11.Name = "ChartArea1";
+            this.signalsChart.ChartAreas.Add(chartArea11);
+            this.signalsChart.Location = new System.Drawing.Point(842, 306);
             this.signalsChart.Name = "signalsChart";
-            series54.ChartArea = "ChartArea1";
-            series54.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedBar;
-            series54.Name = "Series1";
-            this.signalsChart.Series.Add(series54);
-            this.signalsChart.Size = new System.Drawing.Size(200, 753);
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedBar;
+            series10.Name = "Series1";
+            this.signalsChart.Series.Add(series10);
+            this.signalsChart.Size = new System.Drawing.Size(200, 676);
             this.signalsChart.TabIndex = 7;
             this.signalsChart.Text = "chart4";
             // 
@@ -236,20 +240,20 @@
             // 
             // chart1
             // 
-            chartArea65.AxisX.Title = "Input neurons";
-            chartArea65.AxisY.Title = "Amplitude";
-            chartArea65.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea65);
-            this.chart1.Location = new System.Drawing.Point(320, 77);
+            chartArea12.AxisX.Title = "Input neurons";
+            chartArea12.AxisY.Title = "Amplitude";
+            chartArea12.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea12);
+            this.chart1.Location = new System.Drawing.Point(320, 70);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series55.BorderWidth = 2;
-            series55.ChartArea = "ChartArea1";
-            series55.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series55.Color = System.Drawing.Color.Black;
-            series55.Name = "Series1";
-            this.chart1.Series.Add(series55);
-            this.chart1.Size = new System.Drawing.Size(1580, 146);
+            series11.BorderWidth = 2;
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series11.Color = System.Drawing.Color.Black;
+            series11.Name = "Series1";
+            this.chart1.Series.Add(series11);
+            this.chart1.Size = new System.Drawing.Size(722, 230);
             this.chart1.TabIndex = 20;
             this.chart1.Text = "chart1";
             // 
@@ -314,7 +318,7 @@
             // 
             this.iterationLabel.AutoSize = true;
             this.iterationLabel.BackColor = System.Drawing.Color.White;
-            this.iterationLabel.Location = new System.Drawing.Point(330, 201);
+            this.iterationLabel.Location = new System.Drawing.Point(333, 266);
             this.iterationLabel.Name = "iterationLabel";
             this.iterationLabel.Size = new System.Drawing.Size(67, 17);
             this.iterationLabel.TabIndex = 28;
@@ -466,7 +470,7 @@
             this.iterationsText.Name = "iterationsText";
             this.iterationsText.Size = new System.Drawing.Size(40, 22);
             this.iterationsText.TabIndex = 35;
-            this.iterationsText.Text = "3000";
+            this.iterationsText.Text = "1000";
             // 
             // label6
             // 
@@ -490,7 +494,6 @@
             // 
             // TestButton
             // 
-            this.TestButton.Enabled = false;
             this.TestButton.Location = new System.Drawing.Point(180, 228);
             this.TestButton.Name = "TestButton";
             this.TestButton.Size = new System.Drawing.Size(134, 23);
@@ -520,17 +523,23 @@
             // 
             // errorsChart2
             // 
-            chartArea66.AxisX.InterlacedColor = System.Drawing.Color.Black;
-            chartArea66.AxisX.Title = "Dataset sample x50";
-            chartArea66.AxisY.InterlacedColor = System.Drawing.Color.Black;
-            chartArea66.AxisY.Title = "Error";
-            chartArea66.BackColor = System.Drawing.Color.White;
-            chartArea66.Name = "ChartArea1";
-            this.errorsChart2.ChartAreas.Add(chartArea66);
-            this.errorsChart2.Location = new System.Drawing.Point(1048, 229);
+            chartArea13.AxisX.InterlacedColor = System.Drawing.Color.Black;
+            chartArea13.AxisX.Title = "Dataset sample x50";
+            chartArea13.AxisY.InterlacedColor = System.Drawing.Color.Black;
+            chartArea13.AxisY.Title = "Error";
+            chartArea13.BackColor = System.Drawing.Color.White;
+            chartArea13.Name = "ChartArea1";
+            this.errorsChart2.ChartAreas.Add(chartArea13);
+            this.errorsChart2.Location = new System.Drawing.Point(1049, 702);
             this.errorsChart2.Name = "errorsChart2";
             this.errorsChart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            this.errorsChart2.Size = new System.Drawing.Size(852, 235);
+            series12.BorderWidth = 3;
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series12.Color = System.Drawing.Color.Red;
+            series12.Name = "Series1";
+            this.errorsChart2.Series.Add(series12);
+            this.errorsChart2.Size = new System.Drawing.Size(851, 280);
             this.errorsChart2.TabIndex = 37;
             this.errorsChart2.Text = "chart2";
             // 
@@ -582,7 +591,7 @@
             // 
             this.previewPaintBox.BackColor = System.Drawing.Color.Black;
             this.previewPaintBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.previewPaintBox.Location = new System.Drawing.Point(1048, 470);
+            this.previewPaintBox.Location = new System.Drawing.Point(1049, 416);
             this.previewPaintBox.Name = "previewPaintBox";
             this.previewPaintBox.Size = new System.Drawing.Size(280, 280);
             this.previewPaintBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -593,7 +602,7 @@
             // 
             this.detectLabel.AutoSize = true;
             this.detectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.detectLabel.Location = new System.Drawing.Point(1051, 722);
+            this.detectLabel.Location = new System.Drawing.Point(1058, 665);
             this.detectLabel.Name = "detectLabel";
             this.detectLabel.Size = new System.Drawing.Size(19, 25);
             this.detectLabel.TabIndex = 40;
@@ -603,7 +612,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Black;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(1334, 470);
+            this.pictureBox1.Location = new System.Drawing.Point(1335, 416);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(280, 280);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -617,7 +626,7 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Black;
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(1620, 470);
+            this.pictureBox2.Location = new System.Drawing.Point(1621, 416);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(280, 280);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -630,7 +639,7 @@
             this.label8.BackColor = System.Drawing.Color.Black;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 128F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(1671, 476);
+            this.label8.Location = new System.Drawing.Point(1647, 429);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(173, 243);
             this.label8.TabIndex = 43;
@@ -664,26 +673,42 @@
             this.выходToolStripMenuItem1,
             this.вToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(46, 26);
             this.файлToolStripMenuItem.Text = "File";
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.выходToolStripMenuItem.Text = "Load network...";
             // 
             // выходToolStripMenuItem1
             // 
             this.выходToolStripMenuItem1.Name = "выходToolStripMenuItem1";
-            this.выходToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.выходToolStripMenuItem1.Size = new System.Drawing.Size(191, 26);
             this.выходToolStripMenuItem1.Text = "Save network...";
             // 
             // вToolStripMenuItem
             // 
             this.вToolStripMenuItem.Name = "вToolStripMenuItem";
-            this.вToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.вToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.вToolStripMenuItem.Text = "Exit";
+            // 
+            // stateErrorsChart
+            // 
+            chartArea14.AxisX.InterlacedColor = System.Drawing.Color.Black;
+            chartArea14.AxisX.Title = "Dataset sample x50";
+            chartArea14.AxisY.InterlacedColor = System.Drawing.Color.Black;
+            chartArea14.AxisY.Title = "Error";
+            chartArea14.BackColor = System.Drawing.Color.White;
+            chartArea14.Name = "ChartArea1";
+            this.stateErrorsChart.ChartAreas.Add(chartArea14);
+            this.stateErrorsChart.Location = new System.Drawing.Point(1048, 70);
+            this.stateErrorsChart.Name = "stateErrorsChart";
+            this.stateErrorsChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            this.stateErrorsChart.Size = new System.Drawing.Size(860, 340);
+            this.stateErrorsChart.TabIndex = 46;
+            this.stateErrorsChart.Text = "chart2";
             // 
             // MainForm
             // 
@@ -691,6 +716,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1924, 994);
+            this.Controls.Add(this.iterationLabel);
+            this.Controls.Add(this.stateErrorsChart);
             this.Controls.Add(this.estimateLabel);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.pictureBox2);
@@ -706,7 +733,6 @@
             this.Controls.Add(this.log2);
             this.Controls.Add(this.tg10);
             this.Controls.Add(this.tg9);
-            this.Controls.Add(this.iterationLabel);
             this.Controls.Add(this.previewPaintBox2);
             this.Controls.Add(this.recognitionTestButton);
             this.Controls.Add(this.tg8);
@@ -746,6 +772,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.stateErrorsChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -805,6 +832,7 @@
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem вToolStripMenuItem;
+        private System.Windows.Forms.DataVisualization.Charting.Chart stateErrorsChart;
     }
 }
 
