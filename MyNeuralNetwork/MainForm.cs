@@ -14,7 +14,6 @@ namespace MyNeuralNetwork
         Network network;
         Signal signal;
         double signalSamples;
-        int trainCount;
         bool imageMode;
         bool pencilDown;
         bool chartCreated;
@@ -23,6 +22,9 @@ namespace MyNeuralNetwork
         Random randomClr = new Random();
         Random rndAngle = new Random();
         Random rndAmplitude = new Random();
+        Random rndSet = new Random();
+        int trainCount;
+        int trainParam;
 
         public MainForm()
         {
@@ -78,6 +80,9 @@ namespace MyNeuralNetwork
 
             trainNetorkButton.Enabled = true;
             testNetworkButton.Text = "Create next network";
+
+            trainParam = rndSet.Next(0, Convert.ToInt32(network.Targets.Length));
+            trainSymbol.Text = "Draw " + trainParam.ToString();
         }
 
         private void DrawNetworkStats(DrawOptions drawOptions, int trainIteration = 1)
@@ -108,19 +113,15 @@ namespace MyNeuralNetwork
                     stateErrorsChart.Series.Add(newSeries);
                 }
 
-                chartCreated = true;
-            }
-            
-            double cumulativeError = 0;
-
-            if (trainIteration == 1)
-            {
+               
                 errorsChart2.Series[0].Points.AddY(0);
 
                 for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
                 {
                     stateErrorsChart.Series[j].Points.AddY(0);
-                }
+                }                
+
+                chartCreated = true;
             }
 
             for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
@@ -131,7 +132,7 @@ namespace MyNeuralNetwork
 
             if (trainIteration % (network.CurrentNetworkOutput.Length * 5) == 0)
             {
-                errorsChart2.Series[0].Points.AddY(network.CurrentCumulativeError / (network.CurrentNetworkOutput.Length * 5));
+                errorsChart2.Series[0].Points.AddXY(trainIteration, Math.Abs(network.CurrentCumulativeError / (network.CurrentNetworkOutput.Length * 5) * 100 - 100));
             }
 
             if (trainIteration % (network.CurrentNetworkOutput.Length * 2) == 0)
@@ -158,7 +159,7 @@ namespace MyNeuralNetwork
                         }
                     }
 
-                    signalsChart.Series[0].Points.AddXY(neuronId, network.Layers[i].Neurons[j].OutputSignal);
+                    signalsChart.Series[0].Points.AddY(network.Layers[i].Neurons[j].OutputSignal);
                     neuronId++;
                 }
             }
@@ -198,7 +199,7 @@ namespace MyNeuralNetwork
             if (logOptions == LogOptions.PrintTrainingNetwork)
                 for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
                 {
-                    logToAdd.Items.Add(Math.Abs(network.CurrentNetworkOutputError[i]) + $" ( Error target : < {network.ErrorTarget} )");
+                    logToAdd.Items.Add(Math.Abs(network.CurrentNetworkOutputError[i]));
                 }
 
             //if (logOptions == LogOptions.PrintFirstState)
@@ -385,7 +386,7 @@ namespace MyNeuralNetwork
 
         public double[] TestRecognitionRate(Network networkToTest)
         {
-            double testCount = 100;
+            double testCount = 500;
             networkToTest.testResults = new double[networkToTest.signalParamsList.Count];
             int imageIndex = 1;
             double[] resultMatrix = new double[networkToTest.signalParamsList.Count];
@@ -406,6 +407,15 @@ namespace MyNeuralNetwork
                     networkToTest.SendSignalsToInputLayer(signal.Amplitude);
                     networkToTest.ForwardPropagation();
                     networkToTest.FindNetworkOutputError();
+
+                    outputsChart.Series[0].Points.Clear();
+
+                    for (int k = 0; k < network.CurrentNetworkOutput.Length; k++)
+                    {
+                        outputsChart.Series[0].Points.AddXY(k, network.CurrentNetworkOutput[k]);
+                    }
+
+                    
 
                     double maxPower = networkToTest.CurrentNetworkOutput[0];
                     double maxIndex = 0;
@@ -441,11 +451,13 @@ namespace MyNeuralNetwork
                     }
                     networkToTest.CleanOldData();
                 }
+
+                imageIndex = 1;
             }
 
             for (int i = 0; i < networkToTest.signalParamsList.Count; i++)
             {
-                networkToTest.testResults[i] = networkToTest.testResults[i] / testCount * 100;
+                networkToTest.testResults[i] = networkToTest.testResults[i];
             }
 
             return networkToTest.testResults;
@@ -522,7 +534,7 @@ namespace MyNeuralNetwork
             {
                 MessageBox.Show("Create network first");
             }
-            
+
         }
 
         public void TestNetworkWork (Network networkToTest)
@@ -533,7 +545,7 @@ namespace MyNeuralNetwork
 
             for (int i = 0; i < networkToTest.signalParamsList.Count; i++)
             {
-                outputMessage += $"Recognition rate for signal parameter ({networkToTest.signalParamsList[i]}) is {networkToTest.testResults[i]}% \n";
+                outputMessage += $"Recognition rate for signal parameter ({networkToTest.signalParamsList[i]}): {networkToTest.testResults[i]} / 500 = {networkToTest.testResults[i] / 500 * 100}% \n";
             }
 
             MessageBox.Show(outputMessage);
@@ -617,40 +629,89 @@ namespace MyNeuralNetwork
                 signal.ImageFromDrawer(userPaintBox);
             }
 
-            chart1.Series[0].Points.Clear();
-
-            for (int i = 0; i < signalSamples; i += 1)
+            if (!trainModeBox.Checked)
             {
-                chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
-            }
+                chart1.Series[0].Points.Clear();
 
-            network.SendSignalsToInputLayer(signal.Amplitude);
-
-            network.ForwardPropagation();
-
-            PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
-
-            DrawNetworkStats(DrawOptions.DontDrawWeights);
-
-            network.CleanOldData();
-
-            Application.DoEvents();
-
-
-            double maxPower = network.CurrentNetworkOutput[0];
-            double maxIndex = 0;
-
-            for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
-            {
-                if (network.CurrentNetworkOutput[j] > maxPower)
+                for (int i = 0; i < signalSamples; i += 1)
                 {
-                    maxPower = network.CurrentNetworkOutput[j];
-                    maxIndex = j;
+                    chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
                 }
-            }
 
-            label1.Text = maxIndex.ToString();
-            label8.Text = maxIndex.ToString();
+                network.SendSignalsToInputLayer(signal.Amplitude);
+
+                network.ForwardPropagation();
+
+                PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
+
+                DrawNetworkStats(DrawOptions.DontDrawWeights);
+
+                network.CleanOldData();
+
+                Application.DoEvents();
+
+                double maxPower = network.CurrentNetworkOutput[0];
+                double maxIndex = 0;
+
+                for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
+                {
+                    if (network.CurrentNetworkOutput[j] > maxPower)
+                    {
+                        maxPower = network.CurrentNetworkOutput[j];
+                        maxIndex = j;
+                    }
+                }
+
+                label1.Text = maxIndex.ToString();
+                label8.Text = maxIndex.ToString();
+            }            
+            else
+            {
+                for (int i = 0; i < network.Targets.Length; i++)
+                {
+                    network.Targets[i] = 0.01;
+                }
+
+                network.Targets[trainParam] = 0.99;
+
+                if (imageMode)
+                {
+                    rndAngle.Next(0, 360);
+                }
+                else
+                {
+                    signal.GenerateSinus(trainParam * 10 + 1, rndAmplitude);
+                }
+
+                chart1.Series[0].Points.Clear();
+
+                for (int i = 0; i < signalSamples; i += 1)
+                {
+                    chart1.Series[0].Points.AddXY(i, signal.Amplitude[i]);
+                }
+
+                network.SendSignalsToInputLayer(signal.Amplitude);
+                TrainNetwork(network);
+                PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
+                DrawNetworkStats(DrawOptions.DontDrawWeights);
+                TestSamples(network, trainParam);
+                network.CleanOldData();
+
+                trainParam = rndSet.Next(0, Convert.ToInt32(network.Targets.Length));
+                trainSymbol.Text = "Draw " + trainParam.ToString();
+
+                Application.DoEvents();
+            }
+        }
+
+        private void errorsChart2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
