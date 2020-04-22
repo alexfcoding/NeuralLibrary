@@ -47,20 +47,32 @@ namespace MyNeuralNetwork
             }
 
             Layers.Add(inputLayer);
+            
         }
 
-        public void CreateHiddenLayers(int hiddenNeuronCount, int weightsCount)
+        public void CreateHiddenLayers(int[] hiddenLayerNeurons, int lastHiddenLayerWeightsCount)
         {
-            Layer hiddenLayer = new Layer();
-
-            for (int i = 0; i < hiddenNeuronCount; i++)
+            for (int layer = 0; layer < hiddenLayerNeurons.Length; layer++)
             {
-                Neuron neuron = new Neuron();
-                neuron.GenerateWeights(weightsCount, randomWeight);
-                hiddenLayer.Neurons.Add(neuron);
-            }
+                Layer hiddenLayer = new Layer();
 
-            Layers.Add(hiddenLayer);
+                for (int i = 0; i < hiddenLayerNeurons[layer]; i++)
+                {
+                    Neuron neuron = new Neuron();
+
+                    if (layer == hiddenLayerNeurons.Length-1)
+                    {
+                        neuron.GenerateWeights(lastHiddenLayerWeightsCount, randomWeight);
+                    }
+                    else
+                    {
+                        neuron.GenerateWeights(hiddenLayerNeurons[layer + 1], randomWeight);
+                    }
+                    
+                    hiddenLayer.Neurons.Add(neuron);
+                }
+                Layers.Add(hiddenLayer);
+            }
         }
 
         public void CreateOutputLayer(int outputNeuronCount, int weightsCount)

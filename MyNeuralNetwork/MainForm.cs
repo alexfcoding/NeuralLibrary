@@ -66,7 +66,8 @@ namespace MyNeuralNetwork
 
             network.CreateInputLayer((int)signalSamples, hiddenNeurons);
             network.SendSignalsToInputLayer(signal.Amplitude);
-            network.CreateHiddenLayers(hiddenNeurons, outputNeurons);
+
+            network.CreateHiddenLayers(new int[] { hiddenNeurons, hiddenNeurons }, outputNeurons);
             network.CreateOutputLayer(outputNeurons, 0);
 
             network.ForwardPropagation();
@@ -74,7 +75,6 @@ namespace MyNeuralNetwork
             network.NeuronErrorDistribution();
 
             PrintNetworkStats(network, signal, network, log, LogOptions.PrintFirstState);
-            //DrawNetworkStats();
 
             network.CleanOldData();
 
@@ -415,8 +415,6 @@ namespace MyNeuralNetwork
                         outputsChart.Series[0].Points.AddXY(k, network.CurrentNetworkOutput[k]);
                     }
 
-                    
-
                     double maxPower = networkToTest.CurrentNetworkOutput[0];
                     double maxIndex = 0;
 
@@ -639,13 +637,9 @@ namespace MyNeuralNetwork
                 }
 
                 network.SendSignalsToInputLayer(signal.Amplitude);
-
                 network.ForwardPropagation();
-
                 PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
-
                 DrawNetworkStats(DrawOptions.DontDrawWeights);
-
                 network.CleanOldData();
 
                 Application.DoEvents();

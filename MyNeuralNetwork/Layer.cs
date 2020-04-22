@@ -14,6 +14,5 @@ namespace MyNeuralNetwork
         {
             Neurons = new List<Neuron>();
         }
-        
     }
 }
