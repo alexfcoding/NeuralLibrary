@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace MyNeuralNetwork
+{
+    public partial class Monitor : Form
+    {        
+        public bool monitorEnabled { get; set; }
+
+        public Monitor()
+        {
+            InitializeComponent();
+            monitorEnabled = true;
+        }
+
+        public void drawWeightsInMonitor(Network network)
+        {
+            int weightId = 0;
+            int neuronId = 0;
+
+            if (monitorEnabled == true)
+            {
+                for (int i = 0; i < network.Layers.Count; i++)
+                {
+                    for (int j = 0; j < network.Layers[i].Neurons.Count; j += 1)
+                    {
+                        for (int k = 0; k < network.Layers[i].Neurons[j].Weights.Length; k++)
+                        {
+                            if (k % 10 == 0)
+                            {
+                                weightsChart.Series[0].Points.AddXY(weightId, network.Layers[i].Neurons[j].Weights[k]);
+                            }
+                            weightId++;
+                        }
+
+                        //if (i > 0)
+                        //{
+                        //    neuronsChart.Series[0].Points.AddXY(i, network.Layers[i].Neurons[j].OutputSignal);
+                        //}
+
+                        //neuronId++;
+                    }
+                }
+            }
+        }
+
+        public void clearMonitor()
+        {
+            if (monitorEnabled == true)
+            {
+                weightsChart.Series[0].Points.Clear();
+            }
+            
+            //signalsChart.Series[0].Points.Clear();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (monitorEnableCheckBox.Checked)
+            {
+                monitorEnabled = true;
+            }
+            else
+            {
+                monitorEnabled = false;
+            }
+        }
+    }
+}

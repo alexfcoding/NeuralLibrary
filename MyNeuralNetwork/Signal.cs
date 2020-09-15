@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace MyNeuralNetwork
 {
-    class Signal
+    public class Signal
     {
         public double[] Amplitude { get; set; }
         public double samplesCount { get; set; }
@@ -72,7 +72,7 @@ namespace MyNeuralNetwork
                     clr = image.GetPixel(i, j);
                     colorArray[k] = clr;
 
-                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114);
+                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114)/255;
 
                     if (Amplitude[k] > 1)
                         Amplitude[k] = 0.99;

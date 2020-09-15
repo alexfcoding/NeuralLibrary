@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Threading;
 namespace MyNeuralNetwork
 {
     public class Network
@@ -16,6 +16,7 @@ namespace MyNeuralNetwork
         public double[] testResults { get; set; }
         public double ErrorTarget { get; set; }
         public List<double> signalParamsList { get; set; }
+        public bool isTraining { get; set; }
 
         Random randomWeight;
 
@@ -33,6 +34,8 @@ namespace MyNeuralNetwork
             signalParamsList = new List<double>();
             avgError = new double[outputNeurons];
             CurrentCumulativeError = 0;
+
+            isTraining = true;
         }
 
         public void CreateInputLayer(int inputNeuronCount, int weightsCount)
@@ -50,23 +53,25 @@ namespace MyNeuralNetwork
             
         }
 
-        public void CreateHiddenLayers(int[] hiddenLayerNeurons, int lastHiddenLayerWeightsCount)
+        public void CreateHiddenLayers(int[] hiddenLayersNeurons, int lastHiddenLayerNeurons)
         {
-            for (int layer = 0; layer < hiddenLayerNeurons.Length; layer++)
+            int layersCount = hiddenLayersNeurons.Length;
+
+            for (int layer = 0; layer < layersCount; layer++)
             {
                 Layer hiddenLayer = new Layer();
 
-                for (int i = 0; i < hiddenLayerNeurons[layer]; i++)
+                for (int i = 0; i < hiddenLayersNeurons[layer]; i++)
                 {
                     Neuron neuron = new Neuron();
 
-                    if (layer == hiddenLayerNeurons.Length-1)
+                    if (layer == hiddenLayersNeurons.Length-1)
                     {
-                        neuron.GenerateWeights(lastHiddenLayerWeightsCount, randomWeight);
+                        neuron.GenerateWeights(lastHiddenLayerNeurons, randomWeight);
                     }
                     else
                     {
-                        neuron.GenerateWeights(hiddenLayerNeurons[layer + 1], randomWeight);
+                        neuron.GenerateWeights(hiddenLayersNeurons[layer + 1], randomWeight);
                     }
                     
                     hiddenLayer.Neurons.Add(neuron);
@@ -185,20 +190,24 @@ namespace MyNeuralNetwork
         public void RecalculateWeights()
         {
             double WijSum = 0;
-
+           
             for (int i = Layers.Count - 1; i > 0; i--) // layers
             {
                 for (int k = 0; k < Layers[i].Neurons.Count; k++) // neurons
                 {
-                    for (int j = 0; j < Layers[i - 1].Neurons.Count; j++) // neurons
-                    {
-                        WijSum += Layers[i - 1].Neurons[j].Weights[k] * Layers[i - 1].Neurons[j].OutputSignal;
-                    }
+                    //for (int j = 0; j < Layers[i - 1].Neurons.Count; j++) // neurons
+                    //{
+                    //    WijSum += Layers[i - 1].Neurons[j].Weights[k] * Layers[i - 1].Neurons[j].OutputSignal;
+                    //}
 
                     for (int m = 0; m < Layers[i - 1].Neurons.Count; m++)
                     {
                         Layers[i - 1].Neurons[m].Weights[k] += LearningRate * (Layers[i].Neurons[k].Error) * Layers[i].Neurons[k].OutputSignal * (1 - Layers[i].Neurons[k].OutputSignal) * Layers[i - 1].Neurons[m].OutputSignal;
                         //Layers[i - 1].Neurons[m].bias += LearningRate * (Layers[i].Neurons[k].Error) * Layers[i].Neurons[k].OutputSignal * (1 - Layers[i].Neurons[k].OutputSignal) * Layers[i - 1].Neurons[m].OutputSignal;
+                        if (i==1 && Layers[i - 1].Neurons[m].OutputSignal != 0)
+                        {
+                          // MainForm.listBox1.Items.Add(Layers[i - 1].Neurons[m].OutputSignal);
+                        }
                     }
 
                     WijSum = 0;

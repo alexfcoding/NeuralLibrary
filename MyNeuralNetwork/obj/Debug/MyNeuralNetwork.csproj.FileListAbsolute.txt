@@ -6,7 +6,9 @@ C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.P
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.csproj.GenerateResource.cache
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.exe
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.pdb
-C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.MainForm.resources
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\bin\Debug\MathNet.Numerics.dll
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\bin\Debug\MathNet.Numerics.xml
 C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.csproj.CopyComplete
+C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.MainForm.resources
+C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.ModelConstructor.resources
+C:\Users\User\source\MyNeuralNetwork\MyNeuralNetwork\obj\Debug\MyNeuralNetwork.Monitor.resources
