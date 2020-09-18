@@ -26,7 +26,8 @@ namespace MyNeuralNetwork
             for (int i = 0; i < samplesCount; i += 1)
             {
                 time += 0.01;
-                Amplitude[i] = ((Math.Sin(time * freq) + Math.Sin(4 * time * freq)) + rndAmplitude.NextDouble() * 8) / 9; //;
+                Amplitude[i] = Math.Sin(time * freq) + 4 * rndAmplitude.NextDouble(); //;
+                Amplitude[i] /= 5;
             }
         }
 
@@ -39,6 +40,7 @@ namespace MyNeuralNetwork
             Color clr = new Color();
             Color[] colorArray = new Color[784];
             int k = 0;
+            int[] a = {0,1,2,3 };
 
             for (int i = 0; i < image.Width; i += 1)
             {
@@ -46,11 +48,12 @@ namespace MyNeuralNetwork
                 {
                     clr = image.GetPixel(i, j);
                     colorArray[k] = clr;
-                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114);
+                    Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114)/255;
 
-                    if (Amplitude[k] > 1)
+                    if (Amplitude[k] > 0.1)
                         Amplitude[k] = 0.99;
-
+                    else
+                        Amplitude[k] = 0;
                     k++;
                 }
             }
@@ -75,7 +78,7 @@ namespace MyNeuralNetwork
                     Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114)/255;
 
                     if (Amplitude[k] > 1)
-                        Amplitude[k] = 0.99;
+                        Amplitude[k] = 0.99;                   
 
                     k++;
                 }

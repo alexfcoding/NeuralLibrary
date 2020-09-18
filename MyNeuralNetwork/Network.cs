@@ -10,13 +10,13 @@ namespace MyNeuralNetwork
         public double[] Targets { get; set; }
         public double[] CurrentNetworkOutput { get; set; }
         public double[] CurrentNetworkOutputError { get; set; }
-        public double[] avgError { get; set; }
-        public double CurrentCumulativeError { get; set; }
-        public double squaredError { get; set; }
+        public double[] squaredError { get; set; }
+        public double CurrentCumulativeError { get; set; }        
         public double[] testResults { get; set; }
         public double ErrorTarget { get; set; }
         public List<double> signalParamsList { get; set; }
         public bool isTraining { get; set; }
+        public bool isValidating { get; set; }
 
         Random randomWeight;
 
@@ -32,10 +32,11 @@ namespace MyNeuralNetwork
 
             LearningRate = learningRate;
             signalParamsList = new List<double>();
-            avgError = new double[outputNeurons];
+            squaredError = new double[outputNeurons];
             CurrentCumulativeError = 0;
 
-            isTraining = true;
+            isTraining = false;
+            isValidating = false;
         }
 
         public void CreateInputLayer(int inputNeuronCount, int weightsCount)
@@ -113,7 +114,7 @@ namespace MyNeuralNetwork
                         Layers[i].Neurons[k].OutputSignal += Layers[i - 1].Neurons[j].OutputSignal * Layers[i - 1].Neurons[j].Weights[k];
                     }
 
-                    Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal ); //+ Layers[i].Neurons[k].bias
+                    Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal); //+ Layers[i].Neurons[k].bias); //
 
                     if (i == Layers.Count - 1)
                     {
@@ -134,7 +135,7 @@ namespace MyNeuralNetwork
         {
             for (int i = 0; i < Layers[Layers.Count - 1].Neurons.Count; i++)
             {
-                CurrentNetworkOutputError[i] = Targets[i] - CurrentNetworkOutput[i];
+                CurrentNetworkOutputError[i] = (Targets[i] - CurrentNetworkOutput[i]);
                 Layers[Layers.Count - 1].Neurons[i].Error = CurrentNetworkOutputError[i];
             }
         }
@@ -189,7 +190,7 @@ namespace MyNeuralNetwork
 
         public void RecalculateWeights()
         {
-            double WijSum = 0;
+            //double WijSum = 0;
            
             for (int i = Layers.Count - 1; i > 0; i--) // layers
             {
@@ -204,13 +205,9 @@ namespace MyNeuralNetwork
                     {
                         Layers[i - 1].Neurons[m].Weights[k] += LearningRate * (Layers[i].Neurons[k].Error) * Layers[i].Neurons[k].OutputSignal * (1 - Layers[i].Neurons[k].OutputSignal) * Layers[i - 1].Neurons[m].OutputSignal;
                         //Layers[i - 1].Neurons[m].bias += LearningRate * (Layers[i].Neurons[k].Error) * Layers[i].Neurons[k].OutputSignal * (1 - Layers[i].Neurons[k].OutputSignal) * Layers[i - 1].Neurons[m].OutputSignal;
-                        if (i==1 && Layers[i - 1].Neurons[m].OutputSignal != 0)
-                        {
-                          // MainForm.listBox1.Items.Add(Layers[i - 1].Neurons[m].OutputSignal);
-                        }
                     }
 
-                    WijSum = 0;
+                    //WijSum = 0;
                 }
             }
         }

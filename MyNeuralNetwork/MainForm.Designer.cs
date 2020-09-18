@@ -96,6 +96,8 @@
             this.userPaintBox = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.epochsTextBox = new System.Windows.Forms.TextBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.trainModeBox = new System.Windows.Forms.CheckBox();
@@ -125,6 +127,8 @@
             this.errorsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.signalParamText = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
+            this.errorsCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.outputsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rateChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputsChart)).BeginInit();
@@ -168,10 +172,10 @@
             this.log2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.log2.FormattingEnabled = true;
             this.log2.ItemHeight = 12;
-            this.log2.Location = new System.Drawing.Point(8, 185);
+            this.log2.Location = new System.Drawing.Point(8, 201);
             this.log2.Margin = new System.Windows.Forms.Padding(2);
             this.log2.Name = "log2";
-            this.log2.Size = new System.Drawing.Size(226, 544);
+            this.log2.Size = new System.Drawing.Size(226, 520);
             this.log2.TabIndex = 2;
             // 
             // outputsChart
@@ -207,8 +211,7 @@
             // rateChart
             // 
             this.rateChart.BorderlineColor = System.Drawing.Color.Empty;
-            chartArea2.AxisX.Interval = 1D;
-            chartArea2.AxisX.Minimum = -1D;
+            chartArea2.AxisX.IsStartedFromZero = false;
             chartArea2.AxisX.Title = "Classes";
             chartArea2.AxisX2.LineColor = System.Drawing.Color.White;
             chartArea2.AxisX2.TitleForeColor = System.Drawing.Color.White;
@@ -338,19 +341,20 @@
             // previewPaintBox2
             // 
             this.previewPaintBox2.BackColor = System.Drawing.Color.Black;
-            this.previewPaintBox2.Location = new System.Drawing.Point(266, 28);
+            this.previewPaintBox2.Location = new System.Drawing.Point(16, 694);
             this.previewPaintBox2.Margin = new System.Windows.Forms.Padding(2);
             this.previewPaintBox2.Name = "previewPaintBox2";
             this.previewPaintBox2.Size = new System.Drawing.Size(21, 23);
             this.previewPaintBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.previewPaintBox2.TabIndex = 27;
             this.previewPaintBox2.TabStop = false;
+            this.previewPaintBox2.Visible = false;
             // 
             // iterationLabel
             // 
             this.iterationLabel.AutoSize = true;
             this.iterationLabel.BackColor = System.Drawing.Color.White;
-            this.iterationLabel.Location = new System.Drawing.Point(253, 185);
+            this.iterationLabel.Location = new System.Drawing.Point(246, 194);
             this.iterationLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.iterationLabel.Name = "iterationLabel";
             this.iterationLabel.Size = new System.Drawing.Size(45, 13);
@@ -383,27 +387,31 @@
             // 
             this.userPaintBox.BackColor = System.Drawing.Color.Black;
             this.userPaintBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.userPaintBox.Location = new System.Drawing.Point(302, 28);
+            this.userPaintBox.Location = new System.Drawing.Point(52, 694);
             this.userPaintBox.Margin = new System.Windows.Forms.Padding(2);
             this.userPaintBox.Name = "userPaintBox";
             this.userPaintBox.Size = new System.Drawing.Size(22, 23);
             this.userPaintBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.userPaintBox.TabIndex = 31;
             this.userPaintBox.TabStop = false;
+            this.userPaintBox.Visible = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(338, 26);
+            this.label1.Location = new System.Drawing.Point(88, 692);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(20, 26);
             this.label1.TabIndex = 33;
             this.label1.Text = "-";
+            this.label1.Visible = false;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.epochsTextBox);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.trainModeBox);
@@ -413,15 +421,34 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(114, 130);
+            this.groupBox1.Size = new System.Drawing.Size(114, 141);
             this.groupBox1.TabIndex = 35;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 49);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 13);
+            this.label2.TabIndex = 51;
+            this.label2.Text = "Epochs:";
+            // 
+            // epochsTextBox
+            // 
+            this.epochsTextBox.Location = new System.Drawing.Point(66, 46);
+            this.epochsTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.epochsTextBox.Name = "epochsTextBox";
+            this.epochsTextBox.Size = new System.Drawing.Size(42, 20);
+            this.epochsTextBox.TabIndex = 50;
+            this.epochsTextBox.Text = "5";
+            // 
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(13, 68);
+            this.radioButton2.Location = new System.Drawing.Point(13, 92);
             this.radioButton2.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(95, 17);
@@ -433,7 +460,7 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(13, 46);
+            this.radioButton1.Location = new System.Drawing.Point(13, 70);
             this.radioButton1.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(83, 17);
@@ -445,7 +472,7 @@
             // trainModeBox
             // 
             this.trainModeBox.AutoSize = true;
-            this.trainModeBox.Location = new System.Drawing.Point(13, 92);
+            this.trainModeBox.Location = new System.Drawing.Point(13, 116);
             this.trainModeBox.Margin = new System.Windows.Forms.Padding(2);
             this.trainModeBox.Name = "trainModeBox";
             this.trainModeBox.Size = new System.Drawing.Size(85, 17);
@@ -468,7 +495,7 @@
             this.iterationsText.Location = new System.Drawing.Point(66, 22);
             this.iterationsText.Margin = new System.Windows.Forms.Padding(2);
             this.iterationsText.Name = "iterationsText";
-            this.iterationsText.Size = new System.Drawing.Size(31, 20);
+            this.iterationsText.Size = new System.Drawing.Size(42, 20);
             this.iterationsText.TabIndex = 35;
             this.iterationsText.Text = "2000";
             // 
@@ -509,10 +536,10 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(361, 36);
+            this.progressBar1.Location = new System.Drawing.Point(240, 36);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(930, 11);
+            this.progressBar1.Size = new System.Drawing.Size(554, 11);
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 36;
             // 
@@ -522,36 +549,37 @@
             chartArea4.AxisX.IsLabelAutoFit = false;
             chartArea4.AxisX.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartArea4.AxisX.Minimum = 0D;
-            chartArea4.AxisX.Title = "Dataset samples";
+            chartArea4.AxisX.Title = "Training samples";
             chartArea4.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartArea4.AxisY.InterlacedColor = System.Drawing.Color.Black;
             chartArea4.AxisY.Interval = 10D;
             chartArea4.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
             chartArea4.AxisY.IsLabelAutoFit = false;
             chartArea4.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chartArea4.AxisY.Maximum = 100D;
+            chartArea4.AxisY.Maximum = 110D;
             chartArea4.AxisY.Minimum = 0D;
             chartArea4.AxisY.Title = "Recognition Rate, %";
             chartArea4.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartArea4.BackColor = System.Drawing.Color.White;
             chartArea4.Name = "ChartArea1";
             this.errorsChart2.ChartAreas.Add(chartArea4);
-            this.errorsChart2.Location = new System.Drawing.Point(803, 471);
+            this.errorsChart2.Location = new System.Drawing.Point(798, 471);
             this.errorsChart2.Margin = new System.Windows.Forms.Padding(2);
             this.errorsChart2.Name = "errorsChart2";
             this.errorsChart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
             this.errorsChart2.Size = new System.Drawing.Size(488, 250);
             this.errorsChart2.TabIndex = 37;
             this.errorsChart2.Text = "chart2";
+            this.errorsChart2.Click += new System.EventHandler(this.errorsChart2_Click);
             // 
             // previewPaintBox
             // 
             this.previewPaintBox.BackColor = System.Drawing.Color.Black;
             this.previewPaintBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.previewPaintBox.Location = new System.Drawing.Point(803, 56);
+            this.previewPaintBox.Location = new System.Drawing.Point(798, 30);
             this.previewPaintBox.Margin = new System.Windows.Forms.Padding(2);
             this.previewPaintBox.Name = "previewPaintBox";
-            this.previewPaintBox.Size = new System.Drawing.Size(160, 212);
+            this.previewPaintBox.Size = new System.Drawing.Size(160, 183);
             this.previewPaintBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.previewPaintBox.TabIndex = 39;
             this.previewPaintBox.TabStop = false;
@@ -560,7 +588,7 @@
             // 
             this.detectLabel.AutoSize = true;
             this.detectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.detectLabel.Location = new System.Drawing.Point(811, 240);
+            this.detectLabel.Location = new System.Drawing.Point(806, 185);
             this.detectLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.detectLabel.Name = "detectLabel";
             this.detectLabel.Size = new System.Drawing.Size(14, 20);
@@ -571,10 +599,10 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Black;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(967, 56);
+            this.pictureBox1.Location = new System.Drawing.Point(962, 30);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(160, 212);
+            this.pictureBox1.Size = new System.Drawing.Size(160, 183);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 41;
             this.pictureBox1.TabStop = false;
@@ -586,10 +614,10 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Black;
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(1131, 56);
+            this.pictureBox2.Location = new System.Drawing.Point(1126, 30);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(160, 212);
+            this.pictureBox2.Size = new System.Drawing.Size(160, 183);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 42;
             this.pictureBox2.TabStop = false;
@@ -599,10 +627,10 @@
             this.label8.BackColor = System.Drawing.Color.Black;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 128F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(1131, 65);
+            this.label8.Location = new System.Drawing.Point(1126, 30);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(139, 193);
+            this.label8.Size = new System.Drawing.Size(139, 173);
             this.label8.TabIndex = 43;
             this.label8.Text = "-";
             // 
@@ -610,7 +638,7 @@
             // 
             this.estimateLabel.AutoSize = true;
             this.estimateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.estimateLabel.Location = new System.Drawing.Point(358, 7);
+            this.estimateLabel.Location = new System.Drawing.Point(245, 9);
             this.estimateLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.estimateLabel.Name = "estimateLabel";
             this.estimateLabel.Size = new System.Drawing.Size(14, 20);
@@ -625,7 +653,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1299, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1292, 24);
             this.menuStrip1.TabIndex = 45;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -668,19 +696,20 @@
             chartArea5.BackColor = System.Drawing.Color.White;
             chartArea5.Name = "ChartArea1";
             this.stateErrorsChart.ChartAreas.Add(chartArea5);
-            this.stateErrorsChart.Location = new System.Drawing.Point(803, 276);
+            this.stateErrorsChart.Location = new System.Drawing.Point(798, 217);
             this.stateErrorsChart.Margin = new System.Windows.Forms.Padding(2);
             this.stateErrorsChart.Name = "stateErrorsChart";
             this.stateErrorsChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            this.stateErrorsChart.Size = new System.Drawing.Size(488, 191);
+            this.stateErrorsChart.Size = new System.Drawing.Size(488, 250);
             this.stateErrorsChart.TabIndex = 46;
-            this.stateErrorsChart.Text = "chart2";            
+            this.stateErrorsChart.Text = "chart2";
+            this.stateErrorsChart.Click += new System.EventHandler(this.stateErrorsChart_Click);
             // 
             // trainSymbol
             // 
             this.trainSymbol.AutoSize = true;
             this.trainSymbol.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.trainSymbol.Location = new System.Drawing.Point(977, 236);
+            this.trainSymbol.Location = new System.Drawing.Point(972, 181);
             this.trainSymbol.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.trainSymbol.Name = "trainSymbol";
             this.trainSymbol.Size = new System.Drawing.Size(17, 24);
@@ -751,7 +780,7 @@
             this.signalParamText.Size = new System.Drawing.Size(27, 20);
             this.signalParamText.TabIndex = 51;
             this.signalParamText.Tag = "";
-            this.signalParamText.Text = "9";
+            this.signalParamText.Text = "1";
             // 
             // label6
             // 
@@ -763,12 +792,24 @@
             this.label6.TabIndex = 50;
             this.label6.Text = "Test Input:";
             // 
+            // errorsCheckBox
+            // 
+            this.errorsCheckBox.AutoSize = true;
+            this.errorsCheckBox.BackColor = System.Drawing.SystemColors.Window;
+            this.errorsCheckBox.Location = new System.Drawing.Point(815, 443);
+            this.errorsCheckBox.Name = "errorsCheckBox";
+            this.errorsCheckBox.Size = new System.Drawing.Size(102, 17);
+            this.errorsCheckBox.TabIndex = 52;
+            this.errorsCheckBox.Text = "Cumulative error";
+            this.errorsCheckBox.UseVisualStyleBackColor = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1299, 742);
+            this.ClientSize = new System.Drawing.Size(1292, 726);
+            this.Controls.Add(this.errorsCheckBox);
             this.Controls.Add(this.signalParamText);
             this.Controls.Add(this.StopTrainingButton);
             this.Controls.Add(this.label6);
@@ -809,7 +850,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
-            this.Text = "Multilayer Perceptron";            
+            this.Text = "Multilayer Perceptron";
             ((System.ComponentModel.ISupportInitialize)(this.outputsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rateChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputsChart)).EndInit();
@@ -879,6 +920,10 @@
         public System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.TextBox signalParamText;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
+        private System.Windows.Forms.Label label2;
+        public System.Windows.Forms.TextBox epochsTextBox;
+        private System.Windows.Forms.CheckBox errorsCheckBox;
     }
 }
 

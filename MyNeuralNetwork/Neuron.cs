@@ -28,7 +28,7 @@ namespace MyNeuralNetwork
                 MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(mean, stdDev);
                 double randomGaussianValue = normalDist.Sample();
                 //randomGaussianValue = randomWeight.NextDouble() - 0.5;
-
+                //randomGaussianValue = 1;
                 Weights[i] = randomGaussianValue;
                 bias = randomGaussianValue;
             }
