@@ -103,9 +103,9 @@ namespace MyNeuralNetwork
                 for (int i = 0; i < network.CurrentNetworkOutput.Length; i++)
                 {
                     
-                    int R = randomClr.Next(50, 255);
-                    int G = randomClr.Next(50, 255);
-                    int B = randomClr.Next(50, 255);
+                    int R = randomClr.Next(0, 255);
+                    int G = randomClr.Next(0, 255);
+                    int B = randomClr.Next(0, 255);
 
                     var newSeries = new System.Windows.Forms.DataVisualization.Charting.Series
                     {
@@ -138,7 +138,8 @@ namespace MyNeuralNetwork
 
             if (trainIteration % (200) == 0)
             {
-                errorsChart2.Series[errorsChart2.Series.Count-1].Points.AddXY(trainIteration, Math.Abs(network.CurrentCumulativeError / (network.CurrentNetworkOutput.Length * 20) * 100 - 100));
+                errorsChart2.Series[errorsChart2.Series.Count-1].Points.AddXY(trainIteration, (double)network.CurrentRecognitionCount / 200 * 100);
+                network.CurrentRecognitionCount = 0;
             }
 
             if (trainIteration % (network.CurrentNetworkOutput.Length * 2) == 0)
@@ -265,9 +266,9 @@ namespace MyNeuralNetwork
                 //    errorsChart2.Series[i].Points.Clear();
                 //}
 
-                int R = randomClr.Next(50, 255);
-                int G = randomClr.Next(50, 255);
-                int B = randomClr.Next(50, 255);
+                int R = randomClr.Next(0, 255);
+                int G = randomClr.Next(0, 255);
+                int B = randomClr.Next(0, 255);
 
                 var newSeries2 = new System.Windows.Forms.DataVisualization.Charting.Series
                 {
@@ -313,12 +314,7 @@ namespace MyNeuralNetwork
                 
                     int param2 = sampleRandomizer.Next(1, trainCount);
 
-                    for (int i = 0; i < network.Targets.Length; i++)
-                    {
-                        network.Targets[i] = 0.01;
-                    }
-
-                    network.Targets[param] = 0.99;
+                    network.SetTarget(param);
                     
                     if (signalType == SignalType.Image)
                     {
@@ -347,16 +343,15 @@ namespace MyNeuralNetwork
                         inputsChart.Series[0].Points.AddXY(i, signal.Amplitude[i]);
                     }
 
+                    trainIteration++;
+
                     network.SendSignalsToInputLayer(signal.Amplitude);
                     TrainNetwork(network);
                     PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
                     DrawNetworkStats(DrawOptions.DrawWeights, trainIteration);
                     TestSamples(network, param);
                     network.CleanOldData();
-                    trainIteration++;
-
-                    if (trainIteration % (network.Targets.Length * 20 + 1) == 0)
-                        network.CurrentCumulativeError = 0;
+                                                            
 
                     for (int i = 0; i < network.Targets.Length; i++)
                     {
@@ -392,12 +387,13 @@ namespace MyNeuralNetwork
                     double sec = (totalIterations - epochIteration) * elapsedMs / 1000;
                     double estimateMin = (sec - sec % 60) / 60;
                     double estimateSec = Math.Round(sec % 60);
-                    estimateLabel.Text = $"{Math.Round((double)epochIteration / totalIterations * 100)} % / Epoch: {epoch} / Performance per cycle: {elapsedMs} ms / Estimated time: {estimateMin} min {estimateSec} s";
+                    estimateLabel.Text = $"{Math.Round((double)epochIteration / totalIterations * 100)} % / Epoch: {epoch + 1} / Performance per cycle: {elapsedMs} ms / Estimated time: {estimateMin} min {estimateSec} s";
                 }
                        
                 this.Text = $"Multilayer Perceptron [Ready...] Model configuration: {networkConfig}";
                 recognitionTestButton.Enabled = true;                
             }
+
         }
 
         private void TestSamples(Network networkToTest, int trueValue)
@@ -418,12 +414,12 @@ namespace MyNeuralNetwork
             {
                 detectLabel.Text = "Recognized";
                 detectLabel.BackColor = Color.Lime;
+                networkToTest.CurrentRecognitionCount++;
             }
             else
             {
                 detectLabel.Text = "Failed";
-                detectLabel.BackColor = Color.Red;
-                networkToTest.CurrentCumulativeError++;                
+                detectLabel.BackColor = Color.Red;                             
             }
         }
 
@@ -446,6 +442,8 @@ namespace MyNeuralNetwork
                        
             for (int i = 0; i < networkToTest.signalParamsList.Count; i++)
             {
+                network.SetTarget(i);
+
                 for (int j = 0; j < testCount; j++)
                 {
                     if (network.isValidating)
@@ -453,12 +451,7 @@ namespace MyNeuralNetwork
                         signal = new Signal(networkToTest.Layers[0].Neurons.Count);
                         int param = sampleRandomizer.Next(0, Convert.ToInt32(network.Targets.Length));
 
-                        for (int m = 0; m < network.Targets.Length; m++)
-                        {
-                            network.Targets[m] = 0.01;
-                        }
-
-                        network.Targets[i] = 0.99;
+                        
 
                         if (signalType == SignalType.Image)
                         {            
@@ -632,11 +625,15 @@ namespace MyNeuralNetwork
         {
             TestRecognitionRate(networkToTest);
             string outputMessage = "";
-
+            double validatedCorrectlyCount = 0;
             for (int i = 0; i < networkToTest.signalParamsList.Count; i++)
             {
-                outputMessage += $"Validation rate for signal parameter ({networkToTest.signalParamsList[i]}): {networkToTest.testResults[i]} / 500 = {networkToTest.testResults[i] / 500 * 100}% \n";
+                validatedCorrectlyCount += (int)networkToTest.testResults[i];
+                outputMessage += $"Validation rate for class ({networkToTest.signalParamsList[i]}): {networkToTest.testResults[i]} / 500 = {networkToTest.testResults[i] / 500 * 100}% \n";
             }
+
+           outputMessage += "\n";
+           outputMessage += $"Total Accuracy: {validatedCorrectlyCount}/{(500 * networkToTest.signalParamsList.Count)}={validatedCorrectlyCount / (500 * networkToTest.signalParamsList.Count) * 100}% \n";
 
             MessageBox.Show(outputMessage);
         }
@@ -735,12 +732,7 @@ namespace MyNeuralNetwork
             }            
             else
             {
-                for (int i = 0; i < network.Targets.Length; i++)
-                {
-                    network.Targets[i] = 0.01;
-                }
-
-                network.Targets[trainParam] = 0.99;
+                network.SetTarget(trainParam);
 
                 if (signalType == SignalType.Image)
                 {
@@ -861,9 +853,9 @@ namespace MyNeuralNetwork
             List<int> neuronsList = new List<int>();
             int strCounter = 0;
 
-            int R = randomClr.Next(50, 255);
-            int G = randomClr.Next(50, 255);
-            int B = randomClr.Next(50, 255);
+            int R = randomClr.Next(0, 255);
+            int G = randomClr.Next(0, 255);
+            int B = randomClr.Next(0, 255);
 
             var newSeries = new System.Windows.Forms.DataVisualization.Charting.Series
             {

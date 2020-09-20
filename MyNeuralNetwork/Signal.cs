@@ -77,8 +77,10 @@ namespace MyNeuralNetwork
 
                     Amplitude[k] = (clr.R * 0.21 + clr.G * 0.587 + clr.B * 0.114)/255;
 
-                    if (Amplitude[k] > 1)
-                        Amplitude[k] = 0.99;                   
+                    if (Amplitude[k] > 0.1)
+                        Amplitude[k] = 0.99;
+                    else
+                        Amplitude[k] = 0;
 
                     k++;
                 }

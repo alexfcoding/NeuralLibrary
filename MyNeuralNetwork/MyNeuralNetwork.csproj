@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RandomExtensions.cs" />
     <Compile Include="MainSetup.cs" />
     <Compile Include="ImageLoader.cs" />
     <Compile Include="ImageSource.cs" />

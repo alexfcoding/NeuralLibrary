@@ -11,7 +11,7 @@ namespace MyNeuralNetwork
         public double[] CurrentNetworkOutput { get; set; }
         public double[] CurrentNetworkOutputError { get; set; }
         public double[] squaredError { get; set; }
-        public double CurrentCumulativeError { get; set; }        
+        public double CurrentRecognitionCount { get; set; }        
         public double[] testResults { get; set; }
         public double ErrorTarget { get; set; }
         public List<double> signalParamsList { get; set; }
@@ -33,7 +33,7 @@ namespace MyNeuralNetwork
             LearningRate = learningRate;
             signalParamsList = new List<double>();
             squaredError = new double[outputNeurons];
-            CurrentCumulativeError = 0;
+            CurrentRecognitionCount = 0;
 
             isTraining = false;
             isValidating = false;
@@ -93,6 +93,15 @@ namespace MyNeuralNetwork
             }
 
             Layers.Add(outputLayer);
+        }
+
+        public void SetTarget(int classToTrain)
+        {
+            for (int k = 0; k <Targets.Length; k++)
+            {
+               Targets[k] = 0.01;
+            }
+           Targets[classToTrain] = 0.99;
         }
 
         public void SendSignalsToInputLayer(double[] inputSignalAmplitude)
@@ -222,6 +231,15 @@ namespace MyNeuralNetwork
                     Layers[i].Neurons[j].Error = 0;
                 }
             }
+        }
+
+        public void Pass()
+        {
+            ForwardPropagation(); // Forward propagation;
+            FindNetworkOutputError(); // Calculate output
+            NeuronErrorDistribution(); // Check errors
+            RecalculateWeights(); // Back propagation with stochastic gradient descent
+            CleanOldData(); // Cleanup before next pass
         }
     }
 }
