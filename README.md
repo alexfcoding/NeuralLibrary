@@ -23,13 +23,13 @@ Used as secondary method in [LINK] project to recognize controlled object state 
 
 ##### Accuracy: 2329/2500 = 93,16%
 
-![1](test.gif)
+![](test2.gif)
 
 ## MNIST 10 digits validation: 784x400x10, 8 epochs x 50000
 
 ##### Accuracy: 4776/5000 = 95,52%
 
-![8epoch (2)](C:\Users\User\Downloads\test.gif)
+![](test.gif)
 
 ## Quick noisy signal train/validation:  800x200x100x40, x epochs x
 
