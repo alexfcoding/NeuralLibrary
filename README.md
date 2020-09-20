@@ -23,7 +23,7 @@ Used as secondary method in [LINK] project to recognize controlled object state 
 
 ##### Accuracy: 2329/2500 = 93,16%
 
-![1](test2.gif)
+![1](test.gif)
 
 ## MNIST 10 digits validation: 784x400x10, 8 epochs x 50000
 
