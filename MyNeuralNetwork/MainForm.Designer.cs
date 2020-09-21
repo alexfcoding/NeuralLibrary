@@ -28,46 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint7 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint8 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint10 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint11 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint12 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint13 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint14 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint15 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint16 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint17 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint18 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint19 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint20 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint21 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint22 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint23 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint24 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint25 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint26 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint27 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint28 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint29 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint30 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint61 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint62 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint63 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint64 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint65 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint66 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint67 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint68 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint69 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint70 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint71 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint72 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint73 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint74 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint75 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint76 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint77 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint78 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint79 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint80 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea16 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint81 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint82 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint83 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint84 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint85 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint86 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint87 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint88 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint89 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint90 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
             this.callModelConstructorButton = new System.Windows.Forms.Button();
             this.log = new System.Windows.Forms.ListBox();
             this.log2 = new System.Windows.Forms.ListBox();
@@ -120,6 +120,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.errorsCheckBox = new System.Windows.Forms.CheckBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.outputsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rateChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputsChart)).BeginInit();
@@ -133,6 +135,7 @@
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stateErrorsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorsChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // callModelConstructorButton
@@ -163,38 +166,38 @@
             this.log2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.log2.FormattingEnabled = true;
             this.log2.ItemHeight = 12;
-            this.log2.Location = new System.Drawing.Point(8, 201);
+            this.log2.Location = new System.Drawing.Point(11, 213);
             this.log2.Margin = new System.Windows.Forms.Padding(2);
             this.log2.Name = "log2";
-            this.log2.Size = new System.Drawing.Size(226, 520);
+            this.log2.Size = new System.Drawing.Size(223, 508);
             this.log2.TabIndex = 2;
             // 
             // outputsChart
             // 
-            chartArea1.AxisX.Title = "Output neurons";
-            chartArea1.AxisY.Interval = 0.05D;
-            chartArea1.AxisY.Maximum = 1D;
-            chartArea1.AxisY.Minimum = 0D;
-            chartArea1.AxisY.Title = "Amplitude";
-            chartArea1.Name = "ChartArea1";
-            this.outputsChart.ChartAreas.Add(chartArea1);
+            chartArea13.AxisX.Title = "Output neurons";
+            chartArea13.AxisY.Interval = 0.05D;
+            chartArea13.AxisY.Maximum = 1D;
+            chartArea13.AxisY.Minimum = 0D;
+            chartArea13.AxisY.Title = "Amplitude";
+            chartArea13.Name = "ChartArea1";
+            this.outputsChart.ChartAreas.Add(chartArea13);
             this.outputsChart.Location = new System.Drawing.Point(240, 217);
             this.outputsChart.Margin = new System.Windows.Forms.Padding(2);
             this.outputsChart.Name = "outputsChart";
-            series1.ChartArea = "ChartArea1";
-            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
-            series1.Name = "Series1";
-            series1.Points.Add(dataPoint1);
-            series1.Points.Add(dataPoint2);
-            series1.Points.Add(dataPoint3);
-            series1.Points.Add(dataPoint4);
-            series1.Points.Add(dataPoint5);
-            series1.Points.Add(dataPoint6);
-            series1.Points.Add(dataPoint7);
-            series1.Points.Add(dataPoint8);
-            series1.Points.Add(dataPoint9);
-            series1.Points.Add(dataPoint10);
-            this.outputsChart.Series.Add(series1);
+            series9.ChartArea = "ChartArea1";
+            series9.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
+            series9.Name = "Series1";
+            series9.Points.Add(dataPoint61);
+            series9.Points.Add(dataPoint62);
+            series9.Points.Add(dataPoint63);
+            series9.Points.Add(dataPoint64);
+            series9.Points.Add(dataPoint65);
+            series9.Points.Add(dataPoint66);
+            series9.Points.Add(dataPoint67);
+            series9.Points.Add(dataPoint68);
+            series9.Points.Add(dataPoint69);
+            series9.Points.Add(dataPoint70);
+            this.outputsChart.Series.Add(series9);
             this.outputsChart.Size = new System.Drawing.Size(233, 504);
             this.outputsChart.TabIndex = 4;
             this.outputsChart.Text = "chart1";
@@ -202,28 +205,28 @@
             // rateChart
             // 
             this.rateChart.BorderlineColor = System.Drawing.Color.Empty;
-            chartArea2.AxisX.IsStartedFromZero = false;
-            chartArea2.AxisX.Title = "Classes";
-            chartArea2.AxisX2.LineColor = System.Drawing.Color.White;
-            chartArea2.AxisX2.TitleForeColor = System.Drawing.Color.White;
-            chartArea2.AxisY.Interval = 10D;
-            chartArea2.AxisY.Maximum = 100D;
-            chartArea2.AxisY.Minimum = 0D;
-            chartArea2.AxisY.Title = "Validation Rate, %";
-            chartArea2.BackColor = System.Drawing.Color.White;
-            chartArea2.Name = "ChartArea1";
-            this.rateChart.ChartAreas.Add(chartArea2);
+            chartArea14.AxisX.IsStartedFromZero = false;
+            chartArea14.AxisX.Title = "Classes";
+            chartArea14.AxisX2.LineColor = System.Drawing.Color.White;
+            chartArea14.AxisX2.TitleForeColor = System.Drawing.Color.White;
+            chartArea14.AxisY.Interval = 10D;
+            chartArea14.AxisY.Maximum = 100D;
+            chartArea14.AxisY.Minimum = 0D;
+            chartArea14.AxisY.Title = "Validation Rate, %";
+            chartArea14.BackColor = System.Drawing.Color.White;
+            chartArea14.Name = "ChartArea1";
+            this.rateChart.ChartAreas.Add(chartArea14);
             this.rateChart.Location = new System.Drawing.Point(477, 217);
             this.rateChart.Margin = new System.Windows.Forms.Padding(2);
             this.rateChart.Name = "rateChart";
             this.rateChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series2.ChartArea = "ChartArea1";
-            series2.Color = System.Drawing.Color.Red;
-            series2.MarkerBorderColor = System.Drawing.Color.White;
-            series2.MarkerSize = 1;
-            series2.Name = "Series1";
-            series2.ShadowColor = System.Drawing.Color.White;
-            this.rateChart.Series.Add(series2);
+            series10.ChartArea = "ChartArea1";
+            series10.Color = System.Drawing.Color.Red;
+            series10.MarkerBorderColor = System.Drawing.Color.White;
+            series10.MarkerSize = 1;
+            series10.Name = "Series1";
+            series10.ShadowColor = System.Drawing.Color.White;
+            this.rateChart.Series.Add(series10);
             this.rateChart.Size = new System.Drawing.Size(317, 250);
             this.rateChart.TabIndex = 6;
             this.rateChart.Text = "chart3";
@@ -240,30 +243,30 @@
             // 
             // inputsChart
             // 
-            chartArea3.AxisX.Title = "Input neurons";
-            chartArea3.AxisY.Title = "Amplitude";
-            chartArea3.Name = "ChartArea1";
-            this.inputsChart.ChartAreas.Add(chartArea3);
+            chartArea15.AxisX.Title = "Input neurons";
+            chartArea15.AxisY.Title = "Amplitude";
+            chartArea15.Name = "ChartArea1";
+            this.inputsChart.ChartAreas.Add(chartArea15);
             this.inputsChart.Location = new System.Drawing.Point(240, 55);
             this.inputsChart.Margin = new System.Windows.Forms.Padding(2);
             this.inputsChart.Name = "inputsChart";
             this.inputsChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series3.BorderWidth = 2;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series3.Color = System.Drawing.Color.Black;
-            series3.Name = "Series1";
-            series3.Points.Add(dataPoint11);
-            series3.Points.Add(dataPoint12);
-            series3.Points.Add(dataPoint13);
-            series3.Points.Add(dataPoint14);
-            series3.Points.Add(dataPoint15);
-            series3.Points.Add(dataPoint16);
-            series3.Points.Add(dataPoint17);
-            series3.Points.Add(dataPoint18);
-            series3.Points.Add(dataPoint19);
-            series3.Points.Add(dataPoint20);
-            this.inputsChart.Series.Add(series3);
+            series11.BorderWidth = 2;
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series11.Color = System.Drawing.Color.Black;
+            series11.Name = "Series1";
+            series11.Points.Add(dataPoint71);
+            series11.Points.Add(dataPoint72);
+            series11.Points.Add(dataPoint73);
+            series11.Points.Add(dataPoint74);
+            series11.Points.Add(dataPoint75);
+            series11.Points.Add(dataPoint76);
+            series11.Points.Add(dataPoint77);
+            series11.Points.Add(dataPoint78);
+            series11.Points.Add(dataPoint79);
+            series11.Points.Add(dataPoint80);
+            this.inputsChart.Series.Add(series11);
             this.inputsChart.Size = new System.Drawing.Size(554, 158);
             this.inputsChart.TabIndex = 20;
             this.inputsChart.Text = "chart1";
@@ -392,18 +395,18 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButton3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.epochsTextBox);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Controls.Add(this.trainModeBox);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.iterationsText);
             this.groupBox1.Location = new System.Drawing.Point(11, 52);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(114, 141);
+            this.groupBox1.Size = new System.Drawing.Size(114, 151);
             this.groupBox1.TabIndex = 35;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
@@ -430,7 +433,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(13, 92);
+            this.radioButton2.Location = new System.Drawing.Point(13, 96);
             this.radioButton2.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(95, 17);
@@ -442,7 +445,7 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(13, 70);
+            this.radioButton1.Location = new System.Drawing.Point(13, 75);
             this.radioButton1.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(83, 17);
@@ -454,7 +457,7 @@
             // trainModeBox
             // 
             this.trainModeBox.AutoSize = true;
-            this.trainModeBox.Location = new System.Drawing.Point(13, 116);
+            this.trainModeBox.Location = new System.Drawing.Point(134, 188);
             this.trainModeBox.Margin = new System.Windows.Forms.Padding(2);
             this.trainModeBox.Name = "trainModeBox";
             this.trainModeBox.Size = new System.Drawing.Size(85, 17);
@@ -527,24 +530,24 @@
             // 
             // errorsChart2
             // 
-            chartArea4.AxisX.InterlacedColor = System.Drawing.Color.Black;
-            chartArea4.AxisX.IsLabelAutoFit = false;
-            chartArea4.AxisX.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chartArea4.AxisX.Minimum = 0D;
-            chartArea4.AxisX.Title = "Training samples";
-            chartArea4.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chartArea4.AxisY.InterlacedColor = System.Drawing.Color.Black;
-            chartArea4.AxisY.Interval = 10D;
-            chartArea4.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea4.AxisY.IsLabelAutoFit = false;
-            chartArea4.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chartArea4.AxisY.Maximum = 110D;
-            chartArea4.AxisY.Minimum = 0D;
-            chartArea4.AxisY.Title = "Recognition Rate, %";
-            chartArea4.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chartArea4.BackColor = System.Drawing.Color.White;
-            chartArea4.Name = "ChartArea1";
-            this.errorsChart2.ChartAreas.Add(chartArea4);
+            chartArea16.AxisX.InterlacedColor = System.Drawing.Color.Black;
+            chartArea16.AxisX.IsLabelAutoFit = false;
+            chartArea16.AxisX.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chartArea16.AxisX.Minimum = 0D;
+            chartArea16.AxisX.Title = "Training samples";
+            chartArea16.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chartArea16.AxisY.InterlacedColor = System.Drawing.Color.Black;
+            chartArea16.AxisY.Interval = 10D;
+            chartArea16.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea16.AxisY.IsLabelAutoFit = false;
+            chartArea16.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chartArea16.AxisY.Maximum = 110D;
+            chartArea16.AxisY.Minimum = 0D;
+            chartArea16.AxisY.Title = "Recognition Rate, %";
+            chartArea16.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chartArea16.BackColor = System.Drawing.Color.White;
+            chartArea16.Name = "ChartArea1";
+            this.errorsChart2.ChartAreas.Add(chartArea16);
             this.errorsChart2.Location = new System.Drawing.Point(798, 471);
             this.errorsChart2.Margin = new System.Windows.Forms.Padding(2);
             this.errorsChart2.Name = "errorsChart2";
@@ -671,13 +674,13 @@
             // 
             // stateErrorsChart
             // 
-            chartArea5.AxisX.InterlacedColor = System.Drawing.Color.Black;
-            chartArea5.AxisX.Title = "Training samples x10";
-            chartArea5.AxisY.InterlacedColor = System.Drawing.Color.Black;
-            chartArea5.AxisY.Title = "Error";
-            chartArea5.BackColor = System.Drawing.Color.White;
-            chartArea5.Name = "ChartArea1";
-            this.stateErrorsChart.ChartAreas.Add(chartArea5);
+            chartArea17.AxisX.InterlacedColor = System.Drawing.Color.Black;
+            chartArea17.AxisX.Title = "Training samples x10";
+            chartArea17.AxisY.InterlacedColor = System.Drawing.Color.Black;
+            chartArea17.AxisY.Title = "Error";
+            chartArea17.BackColor = System.Drawing.Color.White;
+            chartArea17.Name = "ChartArea1";
+            this.stateErrorsChart.ChartAreas.Add(chartArea17);
             this.stateErrorsChart.Location = new System.Drawing.Point(798, 217);
             this.stateErrorsChart.Margin = new System.Windows.Forms.Padding(2);
             this.stateErrorsChart.Name = "stateErrorsChart";
@@ -715,41 +718,41 @@
             // 
             // errorsChart
             // 
-            chartArea6.AxisX.Title = "Output neurons";
-            chartArea6.AxisY.Interval = 0.5D;
-            chartArea6.AxisY.IsLabelAutoFit = false;
-            chartArea6.AxisY.MajorGrid.Interval = 0.2D;
-            chartArea6.AxisY.MajorGrid.IntervalOffset = 0D;
-            chartArea6.AxisY.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea6.AxisY.Maximum = 1D;
-            chartArea6.AxisY.MaximumAutoSize = 100F;
-            chartArea6.AxisY.Minimum = -1D;
-            chartArea6.AxisY.ScaleBreakStyle.StartFromZero = System.Windows.Forms.DataVisualization.Charting.StartFromZero.Yes;
-            chartArea6.AxisY.Title = "Error";
-            chartArea6.Name = "ChartArea1";
-            this.errorsChart.ChartAreas.Add(chartArea6);
+            chartArea18.AxisX.Title = "Output neurons";
+            chartArea18.AxisY.Interval = 0.5D;
+            chartArea18.AxisY.IsLabelAutoFit = false;
+            chartArea18.AxisY.MajorGrid.Interval = 0.2D;
+            chartArea18.AxisY.MajorGrid.IntervalOffset = 0D;
+            chartArea18.AxisY.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea18.AxisY.Maximum = 1D;
+            chartArea18.AxisY.MaximumAutoSize = 100F;
+            chartArea18.AxisY.Minimum = -1D;
+            chartArea18.AxisY.ScaleBreakStyle.StartFromZero = System.Windows.Forms.DataVisualization.Charting.StartFromZero.Yes;
+            chartArea18.AxisY.Title = "Error";
+            chartArea18.Name = "ChartArea1";
+            this.errorsChart.ChartAreas.Add(chartArea18);
             this.errorsChart.Location = new System.Drawing.Point(477, 471);
             this.errorsChart.Margin = new System.Windows.Forms.Padding(2);
             this.errorsChart.Name = "errorsChart";
             this.errorsChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series4.Color = System.Drawing.Color.Red;
-            series4.MarkerSize = 15;
-            series4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Cross;
-            series4.Name = "Series1";
-            series4.Points.Add(dataPoint21);
-            series4.Points.Add(dataPoint22);
-            series4.Points.Add(dataPoint23);
-            series4.Points.Add(dataPoint24);
-            series4.Points.Add(dataPoint25);
-            series4.Points.Add(dataPoint26);
-            series4.Points.Add(dataPoint27);
-            series4.Points.Add(dataPoint28);
-            series4.Points.Add(dataPoint29);
-            series4.Points.Add(dataPoint30);
-            series4.YValuesPerPoint = 4;
-            this.errorsChart.Series.Add(series4);
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series12.Color = System.Drawing.Color.Red;
+            series12.MarkerSize = 15;
+            series12.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Cross;
+            series12.Name = "Series1";
+            series12.Points.Add(dataPoint81);
+            series12.Points.Add(dataPoint82);
+            series12.Points.Add(dataPoint83);
+            series12.Points.Add(dataPoint84);
+            series12.Points.Add(dataPoint85);
+            series12.Points.Add(dataPoint86);
+            series12.Points.Add(dataPoint87);
+            series12.Points.Add(dataPoint88);
+            series12.Points.Add(dataPoint89);
+            series12.Points.Add(dataPoint90);
+            series12.YValuesPerPoint = 4;
+            this.errorsChart.Series.Add(series12);
             this.errorsChart.Size = new System.Drawing.Size(317, 250);
             this.errorsChart.TabIndex = 5;
             this.errorsChart.Text = "chart2";
@@ -785,16 +788,42 @@
             this.errorsCheckBox.Text = "Cumulative error";
             this.errorsCheckBox.UseVisualStyleBackColor = false;
             // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Black;
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox3.Location = new System.Drawing.Point(1126, 30);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(160, 183);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 53;
+            this.pictureBox3.TabStop = false;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(13, 118);
+            this.radioButton3.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(80, 17);
+            this.radioButton3.TabIndex = 52;
+            this.radioButton3.Text = "Icons mode";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1292, 726);
+            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.errorsCheckBox);
             this.Controls.Add(this.signalParamText);
             this.Controls.Add(this.StopTrainingButton);
             this.Controls.Add(this.label6);
+            this.Controls.Add(this.trainModeBox);
             this.Controls.Add(this.trainSymbol);
             this.Controls.Add(this.iterationLabel);
             this.Controls.Add(this.stateErrorsChart);
@@ -848,6 +877,7 @@
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stateErrorsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorsChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -906,6 +936,8 @@
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.TextBox epochsTextBox;
         private System.Windows.Forms.CheckBox errorsCheckBox;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        public System.Windows.Forms.RadioButton radioButton3;
     }
 }
 

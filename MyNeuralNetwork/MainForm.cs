@@ -71,7 +71,12 @@ namespace MyNeuralNetwork
             {
                 signalType = SignalType.Sinus;
             }
-                        
+
+            if (radioButton3.Checked)
+            {
+                signalType = SignalType.Image;
+            }
+
             networkForm.SendNetworkSetup += new EventHandler(form2_SendNetworkSetup);           
             networkForm.Show();
             networkForm.Top = this.Top + this.Height / 2 - networkForm.Width / 2;
@@ -79,7 +84,23 @@ namespace MyNeuralNetwork
             networkForm.TopMost = true;
 
             trainNetworkButton.Enabled = true;
-            callModelConstructorButton.Text = "Create next network";
+            callModelConstructorButton.Text = "Create network";
+
+            int R = randomClr.Next(0, 255);
+            int G = randomClr.Next(0, 255);
+            int B = randomClr.Next(0, 255);
+
+            var newSeries = new System.Windows.Forms.DataVisualization.Charting.Series
+            {
+                Name = "Series" + (chartCount).ToString(),
+                Color = System.Drawing.Color.FromArgb(255, R, G, B),
+                IsVisibleInLegend = false,
+                IsXValueIndexed = false,
+                ChartType = SeriesChartType.Spline,
+                BorderWidth = 3
+            };
+
+            errorsChart2.Series.Add(newSeries);
         }
 
         private void form2_SendNetworkSetup(object sender, EventArgs e)
@@ -266,21 +287,21 @@ namespace MyNeuralNetwork
                 //    errorsChart2.Series[i].Points.Clear();
                 //}
 
-                int R = randomClr.Next(0, 255);
-                int G = randomClr.Next(0, 255);
-                int B = randomClr.Next(0, 255);
+                //int R = randomClr.Next(0, 255);
+                //int G = randomClr.Next(0, 255);
+                //int B = randomClr.Next(0, 255);
 
-                var newSeries2 = new System.Windows.Forms.DataVisualization.Charting.Series
-                {
-                    Name = "Series" + (chartCount).ToString(),
-                    Color = System.Drawing.Color.FromArgb(255, R, G, B),
-                    IsVisibleInLegend = false,
-                    IsXValueIndexed = false,
-                    ChartType = SeriesChartType.Spline,
-                    BorderWidth = 3
-                };
+                //var newSeries2 = new System.Windows.Forms.DataVisualization.Charting.Series
+                //{
+                //    Name = "Series" + (chartCount).ToString(),
+                //    Color = System.Drawing.Color.FromArgb(255, R, G, B),
+                //    IsVisibleInLegend = false,
+                //    IsXValueIndexed = false,
+                //    ChartType = SeriesChartType.Spline,
+                //    BorderWidth = 3
+                //};
 
-                errorsChart2.Series.Add(newSeries2);
+                //errorsChart2.Series.Add(newSeries2);
                 errorsChart2.Series[chartCount].Points.AddY(0);
 
                 chartCount++;
@@ -347,7 +368,7 @@ namespace MyNeuralNetwork
 
                     network.SendSignalsToInputLayer(signal.Amplitude);
                     TrainNetwork(network);
-                    PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
+                    //PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
                     DrawNetworkStats(DrawOptions.DrawWeights, trainIteration);
                     TestSamples(network, param);
                     network.CleanOldData();
@@ -692,6 +713,8 @@ namespace MyNeuralNetwork
         {
             pencilDown = false;
             userPaintBox.Image = ResizeImage(pictureBox1.Image, 28, 28);
+            inputSampleCount = network.Layers[0].Neurons.Count;
+            signal = new Signal(inputSampleCount);
 
             if (signalType == SignalType.Image)
             {
@@ -729,6 +752,11 @@ namespace MyNeuralNetwork
 
                 label1.Text = maxIndex.ToString();
                 label8.Text = maxIndex.ToString();
+
+                if (radioButton3.Checked)
+                {
+                    pictureBox3.Load($@"icons\\{maxIndex}.png");
+                }
             }            
             else
             {
@@ -939,6 +967,11 @@ namespace MyNeuralNetwork
                 signalType = SignalType.Sinus;
             }
 
+            if (radioButton3.Checked)
+            {
+                signalType = SignalType.Image;
+            }
+
             inputSampleCount = neuronsList[0];            
             trainCount = Convert.ToInt32(iterationsText.Text);
 
@@ -975,6 +1008,18 @@ namespace MyNeuralNetwork
         private void stateErrorsChart_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton3.Checked)
+            {
+                pictureBox3.Visible = true;
+            }
+            else
+            {
+                pictureBox3.Visible = false;
+            }
         }
     }
 }
