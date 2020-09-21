@@ -14,15 +14,15 @@ namespace MyNeuralNetwork
     {
         Network network;
         Signal signal;
+        ModelConstructor networkForm;
         SignalType signalType;
+        Monitor networkMonitor = new Monitor();
+
         int trainCount;
         int inputSampleCount;
         int trainParam;
         int epochs;
         int chartCount = 0;
-
-        ModelConstructor networkForm;
-        Monitor networkMonitor = new Monitor();  
 
         bool pencilDown;
         bool chartCreated;
@@ -86,21 +86,21 @@ namespace MyNeuralNetwork
             trainNetworkButton.Enabled = true;
             callModelConstructorButton.Text = "Create network";
 
-            int R = randomClr.Next(0, 255);
-            int G = randomClr.Next(0, 255);
-            int B = randomClr.Next(0, 255);
+            //int R = randomClr.Next(0, 255);
+            //int G = randomClr.Next(0, 255);
+            //int B = randomClr.Next(0, 255);
 
-            var newSeries = new System.Windows.Forms.DataVisualization.Charting.Series
-            {
-                Name = "Series" + (chartCount).ToString(),
-                Color = System.Drawing.Color.FromArgb(255, R, G, B),
-                IsVisibleInLegend = false,
-                IsXValueIndexed = false,
-                ChartType = SeriesChartType.Spline,
-                BorderWidth = 3
-            };
+            //var newSeries = new System.Windows.Forms.DataVisualization.Charting.Series
+            //{
+            //    Name = "Series" + (chartCount).ToString(),
+            //    Color = System.Drawing.Color.FromArgb(255, R, G, B),
+            //    IsVisibleInLegend = false,
+            //    IsXValueIndexed = false,
+            //    ChartType = SeriesChartType.Spline,
+            //    BorderWidth = 3
+            //};
 
-            errorsChart2.Series.Add(newSeries);
+            //errorsChart2.Series.Add(newSeries);
         }
 
         private void form2_SendNetworkSetup(object sender, EventArgs e)
@@ -122,8 +122,7 @@ namespace MyNeuralNetwork
             if (!chartCreated)
             {
                 for (int i = 0; i < network.CurrentNetworkOutput.Length; i++)
-                {
-                    
+                {                    
                     int R = randomClr.Next(0, 255);
                     int G = randomClr.Next(0, 255);
                     int B = randomClr.Next(0, 255);
@@ -141,7 +140,11 @@ namespace MyNeuralNetwork
                     stateErrorsChart.Series.Add(newSeries);
                 }
                
-                errorsChart2.Series[0].Points.AddY(0);
+                if (errorsChart2.Series.Count > 0)
+                {
+                    errorsChart2.Series[0].Points.AddY(0);
+                }
+                
 
                 for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
                 {
@@ -282,29 +285,31 @@ namespace MyNeuralNetwork
 
                 this.Text = $"Multilayer Perceptron [Training network...] Model configuration: {networkConfig}";
 
-                //for (int i = 0; i < errorsChart2.Series.Count; i++)
-                //{
-                //    errorsChart2.Series[i].Points.Clear();
-                //}
+                for (int i = 0; i < errorsChart2.Series.Count; i++)
+                {
+                    errorsChart2.Series[i].Points.Clear();
+                }
 
-                //int R = randomClr.Next(0, 255);
-                //int G = randomClr.Next(0, 255);
-                //int B = randomClr.Next(0, 255);
+                int R = randomClr.Next(0, 255);
+                int G = randomClr.Next(0, 255);
+                int B = randomClr.Next(0, 255);
 
-                //var newSeries2 = new System.Windows.Forms.DataVisualization.Charting.Series
-                //{
-                //    Name = "Series" + (chartCount).ToString(),
-                //    Color = System.Drawing.Color.FromArgb(255, R, G, B),
-                //    IsVisibleInLegend = false,
-                //    IsXValueIndexed = false,
-                //    ChartType = SeriesChartType.Spline,
-                //    BorderWidth = 3
-                //};
+                var newSeries2 = new System.Windows.Forms.DataVisualization.Charting.Series
+                {
+                    Name = "Series" + (chartCount).ToString(),
+                    Color = System.Drawing.Color.FromArgb(255, R, G, B),
+                    IsVisibleInLegend = false,
+                    IsXValueIndexed = false,
+                    ChartType = SeriesChartType.Spline,
+                    BorderWidth = 3
+                };
 
-                //errorsChart2.Series.Add(newSeries2);
-                errorsChart2.Series[chartCount].Points.AddY(0);
+                errorsChart2.Series.Add(newSeries2);
 
                 chartCount++;
+                errorsChart2.Series[chartCount-1].Points.AddY(0);
+
+                
 
                 for (int i = 0; i < stateErrorsChart.Series.Count; i++)
                 {
@@ -458,7 +463,6 @@ namespace MyNeuralNetwork
             networkToTest.testResults = new double[networkToTest.signalParamsList.Count];
             int imageIndex = 1;
             int frequency = 1; 
-
             double[] resultMatrix = new double[networkToTest.signalParamsList.Count];
                        
             for (int i = 0; i < networkToTest.signalParamsList.Count; i++)
@@ -471,8 +475,6 @@ namespace MyNeuralNetwork
                     {
                         signal = new Signal(networkToTest.Layers[0].Neurons.Count);
                         int param = sampleRandomizer.Next(0, Convert.ToInt32(network.Targets.Length));
-
-                        
 
                         if (signalType == SignalType.Image)
                         {            
@@ -656,7 +658,7 @@ namespace MyNeuralNetwork
            outputMessage += "\n";
            outputMessage += $"Total Accuracy: {validatedCorrectlyCount}/{(500 * networkToTest.signalParamsList.Count)}={validatedCorrectlyCount / (500 * networkToTest.signalParamsList.Count) * 100}% \n";
 
-            MessageBox.Show(outputMessage);
+           MessageBox.Show(outputMessage);
         }
 
         public static Bitmap ResizeImage(Image image, int width, int height)
@@ -698,7 +700,6 @@ namespace MyNeuralNetwork
             int Y = e.Y;
             Point p = new Point(X, Y);
             Pen pencil = new Pen(clr);
-
             pencil.Width = 10f;
 
             if (pencilDown)
@@ -796,9 +797,7 @@ namespace MyNeuralNetwork
         private void StopTrainingButton_Click(object sender, EventArgs e)
         {
             network.isTraining = false;
-            network.isValidating = false;
-
-
+            network.isValidating = false;            
             string networkConfig = "";
 
             for (int i = 0; i < network.Layers.Count; i++)
@@ -998,16 +997,6 @@ namespace MyNeuralNetwork
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
             loadModelFromFile();
-        }
-
-        private void errorsChart2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void stateErrorsChart_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)

@@ -24,17 +24,14 @@ namespace MyNeuralNetwork
         {
             Layers = new List<Layer>();
             randomWeight = new Random();
-
             CurrentNetworkOutput = new double[outputNeurons];
             CurrentNetworkOutputError = new double[outputNeurons];
             Targets = new double[outputNeurons];
             testResults = new double[outputNeurons];
-
             LearningRate = learningRate;
             signalParamsList = new List<double>();
             squaredError = new double[outputNeurons];
             CurrentRecognitionCount = 0;
-
             isTraining = false;
             isValidating = false;
         }
@@ -123,7 +120,7 @@ namespace MyNeuralNetwork
                         Layers[i].Neurons[k].OutputSignal += Layers[i - 1].Neurons[j].OutputSignal * Layers[i - 1].Neurons[j].Weights[k];
                     }
 
-                    Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal); //+ Layers[i].Neurons[k].bias); //
+                    Layers[i].Neurons[k].OutputSignal = Sigmoid(Layers[i].Neurons[k].OutputSignal); //+ Layers[i].Neurons[k].bias);
 
                     if (i == Layers.Count - 1)
                     {
@@ -235,11 +232,11 @@ namespace MyNeuralNetwork
 
         public void Pass()
         {
-            ForwardPropagation(); // Forward propagation;
-            FindNetworkOutputError(); // Calculate output
-            NeuronErrorDistribution(); // Check errors
-            RecalculateWeights(); // Back propagation with stochastic gradient descent
-            CleanOldData(); // Cleanup before next pass
+            ForwardPropagation();
+            FindNetworkOutputError();
+            NeuronErrorDistribution();
+            RecalculateWeights();
+            CleanOldData();
         }
     }
 }

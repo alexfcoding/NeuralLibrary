@@ -24,7 +24,6 @@ namespace MyNeuralNetwork
             {
                 double mean = 0;
                 double stdDev = 0.5;
-
                 MathNet.Numerics.Distributions.Normal normalDist = new MathNet.Numerics.Distributions.Normal(mean, stdDev);
                 double randomGaussianValue = normalDist.Sample();
                 //randomGaussianValue = randomWeight.NextDouble() - 0.5;

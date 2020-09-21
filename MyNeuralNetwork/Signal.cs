@@ -36,7 +36,6 @@ namespace MyNeuralNetwork
             Image im = Image.FromFile(imagePath);
             //image = new Bitmap(RotateImage(im, rndAngle.Next(0,360)));
             image = new Bitmap(im);
-
             Color clr = new Color();
             Color[] colorArray = new Color[784];
             int k = 0;
@@ -63,7 +62,6 @@ namespace MyNeuralNetwork
         public void ImageFromDrawer(PictureBox pictureBox)
         {
             image = new Bitmap(pictureBox.Image);
-
             Color clr = new Color();
             Color[] colorArray = new Color[784];
 
@@ -90,19 +88,12 @@ namespace MyNeuralNetwork
         public static Image RotateImage(Image img, float rotationAngle)
         {
             Bitmap bmp = new Bitmap(img.Width, img.Height);
-
             Graphics gfx = Graphics.FromImage(bmp);
-
             gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
-
             gfx.RotateTransform(rotationAngle);
-
             gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
-
-            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-           
+            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;           
             gfx.DrawImage(img, new Point(0, 0));
-
             gfx.Dispose();
 
             return bmp;

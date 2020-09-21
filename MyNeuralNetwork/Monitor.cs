@@ -22,8 +22,7 @@ namespace MyNeuralNetwork
 
         public void drawWeightsInMonitor(Network network)
         {
-            int weightId = 0;
-            int neuronId = 0;
+            int weightId = 0;            
 
             if (monitorEnabled == true)
             {
@@ -38,14 +37,7 @@ namespace MyNeuralNetwork
                                 weightsChart.Series[0].Points.AddXY(weightId, network.Layers[i].Neurons[j].Weights[k]);
                             }
                             weightId++;
-                        }
-
-                        //if (i > 0)
-                        //{
-                        //    neuronsChart.Series[0].Points.AddXY(i, network.Layers[i].Neurons[j].OutputSignal);
-                        //}
-
-                        //neuronId++;
+                        }                   
                     }
                 }
             }
@@ -57,8 +49,6 @@ namespace MyNeuralNetwork
             {
                 weightsChart.Series[0].Points.Clear();
             }
-            
-            //signalsChart.Series[0].Points.Clear();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
