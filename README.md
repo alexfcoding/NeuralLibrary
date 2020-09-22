@@ -24,19 +24,21 @@ Used as secondary method in [LINK] project to recognize controlled object state 
 
 <img src="gifs\handwritten_digits.gif" width="250"/> <img src="gifs\icons_validation.gif" width="250"/>
 
-### Quick MNIST 5 digits training/validation test: 784x50x5, 3 epochs x 1000
+### Quick MNIST 5 digits training/validation test: 784x50x5, 3 epochs x 1000 samples
 
 #### Accuracy: 2329/2500 = 93,16%
 ![Quick MNIST 5 digits](gifs/quick_test_5.gif)
 
-### Full MNIST 10 digits validation: 784x400x10, 8 epochs x 50000
+### Full MNIST 10 digits validation: 784x400x10, 8 epochs x 50000 samples
 
 #### Accuracy: 4776/5000 = 95,52%
 ![MNIST 10 digits](gifs/validation_10digits.gif)
 
 ## Run Demo App
 
-Launch "MyNeuralNetwork.sln"
+Unpack "unpack_to_exe_folder.zip" with mnist images, user icons and pre-trained models to "Debug" and "Release" folders.
+
+Launch "MyNeuralNetwork.sln" and compile.
 
 - Created in Visual Studio Community 2019
 - .Net Framework 4.7.2
@@ -45,14 +47,14 @@ Launch "MyNeuralNetwork.sln"
 
 ## DLL Usage
 
-##### Code example of 800x400x200x30 multilayer perceptron training on 30 different noisy signals (1 to 31Hz) with 0.005 learning rate / 5 epochs
+### Code example of 800x400x200x30 multilayer perceptron training on 30 different noisy signals (1 to 31Hz) with 0.005 learning rate / 5 epochs x 1000 samples
 
 ##### Accuracy 99,17%, see results below
 
 ```
 // - Add NeuralLibrary.dll reference to project in Visual Studio
 // - Add "using NeuralLibrary;"
-// To simplify the example, each network output corresponds to [frequency value + 1 Hz] signal class
+// To simplify the example, each network output value corresponds to [frequency value + 1 Hz] signal class
 
 int epochs = 5;
 int iterations = 1000;
@@ -73,11 +75,11 @@ for (int i = 0; i < epochs; i++)
 {
     for (int j = 0; j < iterations; j++) 
     {
-        int classToTrain = rndClass.Next(0, 40); // Randomize desired output (network performs badly without shuffling data)         	 signal.GenerateSinus(classToTrain + 1, rndAmplitude); // Generate noisy amplitudes with [classToTrain + 1 Hz] freq
+        int classToTrain = rndClass.Next(0, 30); // Randomize desired output (network performs badly without shuffling data)         	 signal.GenerateSinus(classToTrain + 1, rndAmplitude); // Generate noisy amplitudes with [classToTrain + 1 Hz] freq
         //signal.ImageFromFile(pathToImage, rotateAngle); // or load image according to classToTrain value
         network.SetTarget(classToTrain); // Set desired output and reset others
         network.SendSignalsToInputLayer(signal.Amplitude); // Send signal to input layer 
-        // network.SendSignalsToInputLayer(myDoubleArray); // or you can send any double[] array with your data        
+        // network.SendSignalsToInputLayer(myDoubleArray); // or send any double[] array with your data        
         network.Pass(); // Forward propagation -> back propagation with stochastic gradient descent        
         // Or, instead of a function Pass(), call separately:
         network.ForwardPropagation();
@@ -89,7 +91,7 @@ for (int i = 0; i < epochs; i++)
 }
 ```
 
-### Code example results: training/validation on 30 noisy signal classes with 800x400x200x30 network, 5 epochs x 1000
+### Code example results: training/validation on 30 noisy signal classes with 800x400x200x30 network, 5 epochs x 1000 samples
 
 #### Accuracy: 14875/15000 = 99,17%
 
