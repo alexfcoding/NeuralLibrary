@@ -553,7 +553,6 @@
             chartArea4.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
             chartArea4.AxisY.IsLabelAutoFit = false;
             chartArea4.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chartArea4.AxisY.Maximum = 110D;
             chartArea4.AxisY.Minimum = 0D;
             chartArea4.AxisY.Title = "Recognition Rate, %";
             chartArea4.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));

@@ -6,10 +6,11 @@ C# DLL library with demo UI app for creating, training and validation neural net
 
 - Neural network models creation with variable structure in object oriented style
 - Neural networks training with with a given learning rate, iterations, epochs, input signals
-- Three demo learning modes included:
+- Four demo learning modes included:
   - Training models to recognize images with rotation. MNIST handwritten digits database tested (png images)
   - Training models to recognize noisy sinusoidal signals
   - Drawing with mouse in interactive mode to train model recognition of any kind of user paintings
+  - Signal approximation test
 - Validation with real-time monitoring of errors, weights values and neuron outputs on charts
 - Saving pre-trained models to .mdl file at any training state
 - Loading pre-trained models from files
@@ -20,16 +21,20 @@ Created from scratch for educational purposes.
 
 Used as secondary method in [LINK] project to recognize controlled object state by vibroacoustic signals.
 
-### Example of MNIST digits and user images recognition
+#### Example of MNIST digits and user images recognition
 
 <img src="gifs\handwritten_digits.gif" width="250"/> <img src="gifs\icons_validation.gif" width="250"/>
 
-### Quick MNIST 5 digits training/validation test: 784x50x5, 3 epochs x 1000 samples
+#### Signal approximation
+
+<img src="gifs\approx_sin.gif" width="400"/><img src="gifs\approx_sin2.gif" width="400"/>
+
+#### Quick MNIST 5 digits training/validation test: 784x50x5, 3 epochs x 1000 samples
 
 #### Accuracy: 2329/2500 = 93,16%
 ![Quick MNIST 5 digits](gifs/quick_test_5.gif)
 
-### Full MNIST 10 digits validation: 784x400x10, 8 epochs x 50000 samples
+#### Full MNIST 10 digits validation: 784x400x10, 8 epochs x 50000 samples
 
 #### Accuracy: 4776/5000 = 95,52%
 ![MNIST 10 digits](gifs/validation_10digits.gif)
@@ -47,13 +52,14 @@ Launch "MyNeuralNetwork.sln" and compile.
 
 ## DLL Usage
 
-### Code example of 800x400x200x30 multilayer perceptron training on 30 different noisy signals (1 to 31Hz) with 0.005 learning rate / 5 epochs x 1000 samples
+#### Code example of 800x400x200x30 multilayer perceptron training on 30 different noisy signals (1 to 31Hz) with 0.005 learning rate / 5 epochs x 1000 samples
 
-##### Accuracy 99,17%, see results below
+#### Accuracy 99,17%, see results below
 
 ```
-// - Add NeuralLibrary.dll reference to project in Visual Studio
+// - Add NeuralLibrary.dll and MathNet.Numerics.dll references to project in Visual Studio
 // - Add "using NeuralLibrary;"
+// - Add "using MathNet.Numerics;"
 // To simplify the example, each network output value corresponds to [frequency value + 1 Hz] signal class
 
 int epochs = 5;
@@ -67,7 +73,7 @@ Random rndAmplitude = new Random();
 
 network = new Network(outputNeurons, learningRate); // Create new Network object with 30 outputs
 network.CreateInputLayer(inputNeurons, hiddenLayers[0]); // Create input layer, connected to first hidden
-network.CreateHiddenLayers(hiddensLayers, outputNeurons); // last is connected to output
+network.CreateHiddenLayers(hiddenLayers, outputNeurons); // last is connected to output
 network.CreateOutputLayer(outputNeurons, 0); // Create output layer
 signal = new Signal(inputNeurons); // Create signal object
 
@@ -81,7 +87,7 @@ for (int i = 0; i < epochs; i++)
         network.SendSignalsToInputLayer(signal.Amplitude); // Send signal to input layer 
         // network.SendSignalsToInputLayer(myDoubleArray); // or send any double[] array with your data        
         network.Pass(); // Forward propagation -> back propagation with stochastic gradient descent        
-        // Or, instead of a function Pass(), call separately:
+        // Or, instead of Pass() method, call separately:
         network.ForwardPropagation();
         network.FindNetworkOutputError();
         network.NeuronErrorDistribution();
@@ -91,7 +97,7 @@ for (int i = 0; i < epochs; i++)
 }
 ```
 
-### Code example results: training/validation on 30 noisy signal classes with 800x400x200x30 network, 5 epochs x 1000 samples
+#### Code example results: training/validation on 30 noisy signal classes with 800x400x200x30 network, 5 epochs x 1000 samples
 
 #### Accuracy: 14875/15000 = 99,17%
 

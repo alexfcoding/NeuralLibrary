@@ -66,7 +66,7 @@
             series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
             series1.Name = "Series1";
             this.weightsChart.Series.Add(series1);
-            this.weightsChart.Size = new System.Drawing.Size(314, 723);
+            this.weightsChart.Size = new System.Drawing.Size(434, 723);
             this.weightsChart.TabIndex = 51;
             this.weightsChart.Text = "chart2";
             // 
@@ -89,7 +89,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(318, 726);
+            this.ClientSize = new System.Drawing.Size(437, 726);
             this.Controls.Add(this.monitorEnableCheckBox);
             this.Controls.Add(this.weightsChart);
             this.Name = "Monitor";

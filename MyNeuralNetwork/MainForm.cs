@@ -85,22 +85,6 @@ namespace MyNeuralNetwork
 
             trainNetworkButton.Enabled = true;
             callModelConstructorButton.Text = "Create network";
-
-            //int R = randomClr.Next(0, 255);
-            //int G = randomClr.Next(0, 255);
-            //int B = randomClr.Next(0, 255);
-
-            //var newSeries = new System.Windows.Forms.DataVisualization.Charting.Series
-            //{
-            //    Name = "Series" + (chartCount).ToString(),
-            //    Color = System.Drawing.Color.FromArgb(255, R, G, B),
-            //    IsVisibleInLegend = false,
-            //    IsXValueIndexed = false,
-            //    ChartType = SeriesChartType.Spline,
-            //    BorderWidth = 3
-            //};
-
-            //errorsChart2.Series.Add(newSeries);
         }
 
         private void form2_SendNetworkSetup(object sender, EventArgs e)
@@ -159,10 +143,15 @@ namespace MyNeuralNetwork
                 outputsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutput[j]);
                 errorsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutputError[j]);
             }
-
+                        
             if (trainIteration % (200) == 0)
             {
                 errorsChart2.Series[errorsChart2.Series.Count-1].Points.AddXY(trainIteration, (double)network.CurrentRecognitionCount / 200 * 100);
+                network.CurrentRecognitionCount = 0;
+            }
+
+            if (trainIteration == trainCount)
+            {
                 network.CurrentRecognitionCount = 0;
             }
 
@@ -285,10 +274,10 @@ namespace MyNeuralNetwork
 
                 this.Text = $"Multilayer Perceptron [Training network...] Model configuration: {networkConfig}";
 
-                for (int i = 0; i < errorsChart2.Series.Count; i++)
-                {
-                    errorsChart2.Series[i].Points.Clear();
-                }
+                //for (int i = 0; i < errorsChart2.Series.Count; i++)
+                //{
+                //    errorsChart2.Series[i].Points.Clear();
+                //}
 
                 int R = randomClr.Next(0, 255);
                 int G = randomClr.Next(0, 255);
@@ -308,8 +297,6 @@ namespace MyNeuralNetwork
 
                 chartCount++;
                 errorsChart2.Series[chartCount-1].Points.AddY(0);
-
-                
 
                 for (int i = 0; i < stateErrorsChart.Series.Count; i++)
                 {
@@ -335,9 +322,14 @@ namespace MyNeuralNetwork
 
                 while (network.isTraining)
                 {
+                    if (trainIteration == trainCount)
+                    {
+                        network.isTraining = false;
+                        break;
+                    }
+
                     var watch = System.Diagnostics.Stopwatch.StartNew();
-                    int param = sampleRandomizer.Next(0, Convert.ToInt32(network.Targets.Length));
-                
+                    int param = sampleRandomizer.Next(0, Convert.ToInt32(network.Targets.Length));                
                     int param2 = sampleRandomizer.Next(1, trainCount);
 
                     network.SetTarget(param);
@@ -373,11 +365,10 @@ namespace MyNeuralNetwork
 
                     network.SendSignalsToInputLayer(signal.Amplitude);
                     TrainNetwork(network);
-                    //PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
+                    PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
                     DrawNetworkStats(DrawOptions.DrawWeights, trainIteration);
-                    TestSamples(network, param);
-                    network.CleanOldData();
-                                                            
+                    TestSamples(network, param);                    
+                    network.CleanOldData();                                                           
 
                     for (int i = 0; i < network.Targets.Length; i++)
                     {
@@ -399,13 +390,7 @@ namespace MyNeuralNetwork
                     //{
                     //    errors[i] += Math.Pow( (network.CurrentNetworkOutputError[i] - network.ErrorTarget), 2);
                     //}
-
-                    if (trainIteration == trainCount)
-                    {
-                        network.isTraining = false;
-                        break;
-                    }
-
+                    
                     watch.Stop();
                     var elapsedMs = watch.ElapsedMilliseconds;
                     int totalIterations = trainCount * epochs;
