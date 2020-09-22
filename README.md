@@ -27,7 +27,7 @@ Used as secondary method in [LINK] project to recognize controlled object state 
 
 #### Signal approximation
 
-<img src="gifs\approx_sin.gif" width="400"/><img src="gifs\approx_sin2.gif" width="400"/>
+<img src="gifs\approx_sin.gif" width="400"/><img src="gifs\approx_sin3.gif" width="400"/>
 
 #### Quick MNIST 5 digits training/validation test: 784x50x5, 3 epochs x 1000 samples
 
