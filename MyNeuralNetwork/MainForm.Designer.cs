@@ -68,6 +68,10 @@
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint28 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint29 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint30 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "0,0,0,0");
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.callModelConstructorButton = new System.Windows.Forms.Button();
             this.log = new System.Windows.Forms.ListBox();
             this.log2 = new System.Windows.Forms.ListBox();
@@ -122,6 +126,8 @@
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.errorsCheckBox = new System.Windows.Forms.CheckBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.outputsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rateChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputsChart)).BeginInit();
@@ -136,6 +142,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.stateErrorsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorsChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // callModelConstructorButton
@@ -809,12 +816,46 @@
             this.pictureBox3.TabIndex = 53;
             this.pictureBox3.TabStop = false;
             // 
+            // chart1
+            // 
+            chartArea7.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea7);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(724, 170);
+            this.chart1.Name = "chart1";
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Legend = "Legend1";
+            series6.Name = "Series2";
+            this.chart1.Series.Add(series5);
+            this.chart1.Series.Add(series6);
+            this.chart1.Size = new System.Drawing.Size(505, 355);
+            this.chart1.TabIndex = 54;
+            this.chart1.Text = "chart1";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(745, 531);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 55;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1292, 726);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.chart1);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.errorsCheckBox);
             this.Controls.Add(this.signalParamText);
@@ -875,6 +916,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.stateErrorsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorsChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -935,6 +977,8 @@
         private System.Windows.Forms.CheckBox errorsCheckBox;
         private System.Windows.Forms.PictureBox pictureBox3;
         public System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

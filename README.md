@@ -10,7 +10,7 @@ C# DLL library with demo UI app for creating, training and validation neural net
   - Training models to recognize images with rotation. MNIST handwritten digits database tested (png images)
   - Training models to recognize noisy sinusoidal signals
   - Drawing with mouse in interactive mode to train model recognition of any kind of user paintings
-  - Signal approximation test
+  - Signal approximation with neural networks
 - Validation with real-time monitoring of errors, weights values and neuron outputs on charts
 - Saving pre-trained models to .mdl file at any training state
 - Loading pre-trained models from files
@@ -21,13 +21,15 @@ Created from scratch for educational purposes.
 
 Used as secondary method in [LINK] project to recognize controlled object state by vibroacoustic signals.
 
-#### Example of MNIST digits and user images recognition
+#### MNIST digits and user images recognition
 
-<img src="gifs\handwritten_digits.gif" width="250"/> <img src="gifs\icons_validation.gif" width="250"/>
+<img src="gifs\handwritten_digits.gif" width="285"/> <img src="gifs\icons_validation.gif" width="285"/>
 
-#### Signal approximation
+#### Approximation with neural network
 
-<img src="gifs\approx_sin.gif" width="400"/><img src="gifs\approx_sin2.gif" width="400"/>
+#### <img src="gifs\approx_sin.gif" width="600"/>
+
+
 
 #### Quick MNIST 5 digits training/validation test: 784x50x5, 3 epochs x 1000 samples
 
@@ -87,7 +89,7 @@ for (int i = 0; i < epochs; i++)
         network.SendSignalsToInputLayer(signal.Amplitude); // Send signal to input layer 
         // network.SendSignalsToInputLayer(myDoubleArray); // or send any double[] array with your data        
         network.Pass(); // Forward propagation -> back propagation with stochastic gradient descent        
-        // Or, instead of Pass() method, call separately:
+        // Or, instead of Pass() method, you can call separately:
         network.ForwardPropagation();
         network.FindNetworkOutputError();
         network.NeuronErrorDistribution();
