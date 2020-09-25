@@ -27,9 +27,7 @@ Used as secondary method in [LINK] project to recognize controlled object state 
 
 #### Approximation with neural network
 
-#### <img src="gifs\approx_sin.gif" width="600"/>
-
-
+#### <img src="gifs\approx_sin.gif" width="773"/>
 
 #### Quick MNIST 5 digits training/validation test: 784x50x5, 3 epochs x 1000 samples
 
