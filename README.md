@@ -1,6 +1,6 @@
 # NeuralLibrary
 
-C# DLL library with demo UI app for creating, training and validation neural network models
+C# DLL library from scratch with demo UI app for creating, training and validation neural network models
 
 ## Features 
 
@@ -52,9 +52,9 @@ Launch "MyNeuralNetwork.sln" and compile.
 
 ## DLL Usage
 
-#### Code example of 800x400x200x30 multilayer perceptron training on 30 different noisy signals (1 to 31Hz) with 0.005 learning rate / 5 epochs x 1000 samples
+Code example of 800x400x200x30 multilayer perceptron training on 30 different noisy signals (1 to 31Hz) with 0.005 learning rate / 5 epochs x 1000 samples
 
-#### Accuracy 99,17%, see results below
+Accuracy 99,17%, see results below
 
 ```
 // - Add NeuralLibrary.dll and MathNet.Numerics.dll references to project in Visual Studio
@@ -81,24 +81,35 @@ for (int i = 0; i < epochs; i++)
 {
     for (int j = 0; j < iterations; j++) 
     {
-        int classToTrain = rndClass.Next(0, 30); // Randomize desired output (network performs badly without shuffling data)         	 signal.GenerateSinus(classToTrain + 1, rndAmplitude); // Generate noisy amplitudes with [classToTrain + 1 Hz] freq
-        //signal.ImageFromFile(pathToImage, rotateAngle); // or load image according to classToTrain value
+        int classToTrain = rndClass.Next(0, 30); // Randomize desired output (network performs badly without shuffling data)
+        signal.GenerateSinus(classToTrain + 1, rndAmplitude); // Generate noisy amplitudes with [classToTrain + 1 Hz] freq
         network.SetTarget(classToTrain); // Set desired output and reset others
         network.SendSignalsToInputLayer(signal.Amplitude); // Send signal to input layer 
-        // network.SendSignalsToInputLayer(myDoubleArray); // or send any double[] array with your data        
-        network.Pass(); // Forward propagation -> back propagation with stochastic gradient descent        
-        // Or, instead of Pass() method, you can call separately:
-        network.ForwardPropagation();
-        network.FindNetworkOutputError();
-        network.NeuronErrorDistribution();
-        network.RecalculateWeights();
-        network.CleanOldData();
+        network.Pass(); // Forward propagation -> back propagation with stochastic gradient descent  
     }
 }
 ```
-
+Loading images and custom training data
+```
+signal.ImageFromFile(pathToImage, rotateAngle); // load image according to classToTrain value        
+network.SendSignalsToInputLayer(myDoubleArray); // using any double[] array with your training data      
+```
+Instead of Pass() method, you can call separately
+```
+network.ForwardPropagation();
+network.FindNetworkOutputError();
+network.NeuronErrorDistribution();
+network.RecalculateWeights();
+network.CleanOldData();
+```
+Get current network output values and errors
+```
+double[] outputs = new double[network.CurrentNetworkOutput.Length];
+outputs = network.CurrentNetworkOutput;
+double[] errors = new double[network.CurrentNetworkOutputError.Length];
+errors = network.CurrentNetworkOutputError;
+```
 #### Code example results: training/validation on 30 noisy signal classes with 800x400x200x30 network, 5 epochs x 1000 samples
-
 #### Accuracy: 14875/15000 = 99,17%
 
 ![Noisy signal](gifs/sin_validation.gif)
