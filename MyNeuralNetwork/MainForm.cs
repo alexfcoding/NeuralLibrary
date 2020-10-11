@@ -15,8 +15,8 @@ namespace MyNeuralNetwork
         Network network;
         Signal signal;
         ModelConstructor networkForm;
-        SignalType signalType;
         Monitor networkMonitor = new Monitor();
+        SignalType signalType;        
 
         int trainCount;
         int inputSampleCount;
@@ -85,6 +85,15 @@ namespace MyNeuralNetwork
 
             trainNetworkButton.Enabled = true;
             callModelConstructorButton.Text = "Create network";
+
+            if (radioButton3.Checked)
+            {
+                pictureBox3.Visible = true;
+            }
+            else
+            {
+                pictureBox3.Visible = false;
+            }
         }
 
         private void form2_SendNetworkSetup(object sender, EventArgs e)
@@ -996,47 +1005,6 @@ namespace MyNeuralNetwork
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Network network2 = new Network(1, 0.1);
-            Random rnd = new Random();
-
-            int inputNeurons = 1; // Inputs
-            int[] hiddenLayers = { 100, 10 }; // Two hidden layers array
-            int outputNeurons = 1; // Outputs
-            int iterations = 1000;
-
-            network2.CreateInputLayer(inputNeurons, hiddenLayers[0]); // Create input layer, connected to first hidden
-            network2.CreateHiddenLayers(hiddenLayers, outputNeurons); // last is connected to output
-            network2.CreateOutputLayer(outputNeurons, 0); // Create output layer            
-
-            double time = 0;
-            double[] amplitude = new double[400];
-            double[] inputSignal = new double[1];
-            int freq = 300;
-
-            for (int i = 0; i < 400; i += 1)
-            {
-                time += 0.0001;
-                amplitude[i] = (Math.Sin(time * freq) + Math.Sin(time * freq * 2) + Math.Sin(time * freq * 5) + 3) / 6;
-                chart1.Series[0].Points.AddXY(i, amplitude[i]);
-            }
-
-            for (int i = 0; i < iterations; i++)
-            {
-                for (int j = 0; j < 400; j++)
-                {
-                    network2.Targets[0] = amplitude[j];
-                    inputSignal[0] = amplitude[j];
-                    network2.SendSignalsToInputLayer(inputSignal); // Send signal to input layer  
-                    network2.Pass();
-                    chart1.Series[1].Points.AddXY(j, network2.CurrentNetworkOutput[0]);
-                }
-
-                Application.DoEvents();
-                chart1.Series[1].Points.Clear();
-            }
-            MessageBox.Show("Ready");
-        }
+        
     }
 }

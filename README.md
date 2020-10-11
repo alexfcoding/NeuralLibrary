@@ -104,10 +104,8 @@ network.CleanOldData();
 ```
 Get current network output values and errors
 ```
-double[] outputs = new double[network.CurrentNetworkOutput.Length];
-outputs = network.CurrentNetworkOutput;
-double[] errors = new double[network.CurrentNetworkOutputError.Length];
-errors = network.CurrentNetworkOutputError;
+double[] outputs = network.CurrentNetworkOutput;
+double[] errors = network.CurrentNetworkOutputError;
 ```
 #### Code example results: training/validation on 30 noisy signal classes with 800x400x200x30 network, 5 epochs x 1000 samples
 #### Accuracy: 14875/15000 = 99,17%
