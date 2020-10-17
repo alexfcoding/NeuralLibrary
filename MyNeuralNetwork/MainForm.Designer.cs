@@ -108,9 +108,9 @@
             this.estimateLabel = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.выходToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.вToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stateErrorsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.trainSymbol = new System.Windows.Forms.Label();
             this.StopTrainingButton = new System.Windows.Forms.Button();
@@ -171,6 +171,8 @@
             this.log2.Name = "log2";
             this.log2.Size = new System.Drawing.Size(223, 508);
             this.log2.TabIndex = 2;
+            this.log2.TabStop = false;
+            this.log2.UseTabStops = false;
             // 
             // outputsChart
             // 
@@ -452,6 +454,7 @@
             this.radioButton2.TabIndex = 49;
             this.radioButton2.Text = "Function mode";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // radioButton1
             // 
@@ -465,6 +468,7 @@
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Image mode";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // label5
             // 
@@ -495,6 +499,7 @@
             this.trainModeBox.TabIndex = 47;
             this.trainModeBox.Text = "User-training";
             this.trainModeBox.UseVisualStyleBackColor = true;
+            this.trainModeBox.CheckedChanged += new System.EventHandler(this.trainModeBox_CheckedChanged);
             // 
             // trainNetworkButton
             // 
@@ -655,38 +660,40 @@
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.выходToolStripMenuItem,
-            this.выходToolStripMenuItem1,
-            this.вToolStripMenuItem});
+            this.loadFileMenuItem,
+            this.saveFileMenuItem,
+            this.exitMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.файлToolStripMenuItem.Text = "File";
             // 
-            // выходToolStripMenuItem
+            // loadFileMenuItem
             // 
-            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.выходToolStripMenuItem.Text = "Load model...";
-            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
+            this.loadFileMenuItem.Name = "loadFileMenuItem";
+            this.loadFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFileMenuItem.Text = "Load model...";
+            this.loadFileMenuItem.Click += new System.EventHandler(this.loadFileMenuItem_Click);
             // 
-            // выходToolStripMenuItem1
+            // saveFileMenuItem
             // 
-            this.выходToolStripMenuItem1.Name = "выходToolStripMenuItem1";
-            this.выходToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
-            this.выходToolStripMenuItem1.Text = "Save model...";
-            this.выходToolStripMenuItem1.Click += new System.EventHandler(this.выходToolStripMenuItem1_Click);
+            this.saveFileMenuItem.Name = "saveFileMenuItem";
+            this.saveFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveFileMenuItem.Text = "Save model...";
+            this.saveFileMenuItem.Click += new System.EventHandler(this.saveMenuItem_Click);
             // 
-            // вToolStripMenuItem
+            // exitMenuItem
             // 
-            this.вToolStripMenuItem.Name = "вToolStripMenuItem";
-            this.вToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.вToolStripMenuItem.Text = "Exit";
+            this.exitMenuItem.Name = "exitMenuItem";
+            this.exitMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitMenuItem.Text = "Exit";
+            this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
             // stateErrorsChart
             // 
             chartArea5.AxisX.InterlacedColor = System.Drawing.Color.Black;
             chartArea5.AxisX.Title = "Training samples x10";
             chartArea5.AxisY.InterlacedColor = System.Drawing.Color.Black;
+            chartArea5.AxisY.Maximum = 2D;
             chartArea5.AxisY.Title = "Error";
             chartArea5.BackColor = System.Drawing.Color.White;
             chartArea5.Name = "ChartArea1";
@@ -702,13 +709,15 @@
             // trainSymbol
             // 
             this.trainSymbol.AutoSize = true;
-            this.trainSymbol.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.trainSymbol.Location = new System.Drawing.Point(972, 181);
+            this.trainSymbol.BackColor = System.Drawing.Color.Black;
+            this.trainSymbol.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.trainSymbol.ForeColor = System.Drawing.Color.White;
+            this.trainSymbol.Location = new System.Drawing.Point(983, 184);
             this.trainSymbol.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.trainSymbol.Name = "trainSymbol";
-            this.trainSymbol.Size = new System.Drawing.Size(17, 24);
+            this.trainSymbol.Size = new System.Drawing.Size(118, 20);
             this.trainSymbol.TabIndex = 48;
-            this.trainSymbol.Text = "-";
+            this.trainSymbol.Text = "Class to train: 0";
             // 
             // StopTrainingButton
             // 
@@ -911,9 +920,9 @@
         private System.Windows.Forms.Label estimateLabel;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem вToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadFileMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveFileMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitMenuItem;
         private System.Windows.Forms.DataVisualization.Charting.Chart stateErrorsChart;
         private System.Windows.Forms.CheckBox trainModeBox;
         private System.Windows.Forms.Label trainSymbol;

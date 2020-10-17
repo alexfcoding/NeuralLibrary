@@ -41,6 +41,7 @@
             chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
             chartArea1.AxisX.LineColor = System.Drawing.Color.White;
             chartArea1.AxisX.MajorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.Minimum = 0D;
             chartArea1.AxisX.Title = "Weights";
             chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartArea1.AxisX.TitleForeColor = System.Drawing.Color.White;
@@ -48,8 +49,8 @@
             chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
             chartArea1.AxisY.LineColor = System.Drawing.Color.White;
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea1.AxisY.Maximum = 2D;
-            chartArea1.AxisY.Minimum = -2D;
+            chartArea1.AxisY.Maximum = 1.5D;
+            chartArea1.AxisY.Minimum = -1.5D;
             chartArea1.AxisY.Title = "Values";
             chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartArea1.AxisY.TitleForeColor = System.Drawing.Color.White;

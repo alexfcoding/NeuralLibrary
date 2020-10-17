@@ -42,6 +42,8 @@ namespace MyNeuralNetwork
 
             List<Chart> styledCharts = new List<Chart> { rateChart, errorsChart, errorsChart2, outputsChart, inputsChart, stateErrorsChart };           
             SetStyleForCharts(styledCharts);
+
+            pictureBox3.Visible = false;
         }
 
         private void SetStyleForCharts(List<Chart> styledCharts)
@@ -84,7 +86,7 @@ namespace MyNeuralNetwork
             networkForm.TopMost = true;
 
             trainNetworkButton.Enabled = true;
-            callModelConstructorButton.Text = "Create network";
+            //callModelConstructorButton.Text = "Create network";
 
             if (radioButton3.Checked)
             {
@@ -102,6 +104,7 @@ namespace MyNeuralNetwork
             network.CreateInputLayer(networkForm.inputNeuronsCount, networkForm.hiddenNeuronsCount[0]);
             network.CreateHiddenLayers(networkForm.hiddenNeuronsCount, networkForm.outputNeuronsCount);
             network.CreateOutputLayer(networkForm.outputNeuronsCount, 0);
+            networkMonitor.clearMonitor();
             networkMonitor.drawWeightsInMonitor(network);
             networkMonitor.Show();
         }
@@ -109,8 +112,7 @@ namespace MyNeuralNetwork
         private void DrawNetworkStats(DrawOptions drawOptions, int trainIteration = 1)
         {
             outputsChart.Series[0].Points.Clear();
-            errorsChart.Series[0].Points.Clear();           
-            networkMonitor.clearMonitor();                
+            errorsChart.Series[0].Points.Clear();
 
             if (!chartCreated)
             {
@@ -185,8 +187,12 @@ namespace MyNeuralNetwork
                     stateErrorsChart.Series[0].Points.AddY(sumError / network.CurrentNetworkOutput.Length);
                 }
             }
-
-            networkMonitor.drawWeightsInMonitor(network);                       
+            if (trainIteration % 50 == 0)
+            {
+                networkMonitor.clearMonitor();
+                networkMonitor.drawWeightsInMonitor(network);
+            }
+                                     
         }
 
         private void PrintNetworkStats(Network networkToPrint, Signal inputSignal, Network network, ListBox logToAdd, LogOptions logOptions)
@@ -213,18 +219,18 @@ namespace MyNeuralNetwork
                     logToAdd.Items.Add(network.CurrentNetworkOutput[i] + $" ( Output target : {network.Targets[i]} )");
                 }
 
-            logToAdd.Items.Add($"___________Network output error___________");
+            //logToAdd.Items.Add($"___________Network output error___________");
 
-            if (logOptions == LogOptions.PrintFirstState)
-                for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
-                {
-                    logToAdd.Items.Add(Math.Abs(network.CurrentNetworkOutputError[i]));
-                }
-            if (logOptions == LogOptions.PrintTrainingNetwork)
-                for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
-                {
-                    logToAdd.Items.Add(Math.Abs(network.CurrentNetworkOutputError[i]));
-                }
+            //if (logOptions == LogOptions.PrintFirstState)
+            //    for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
+            //    {
+            //        logToAdd.Items.Add(Math.Abs(network.CurrentNetworkOutputError[i]));
+            //    }
+            //if (logOptions == LogOptions.PrintTrainingNetwork)
+            //    for (int i = 0; i < network.CurrentNetworkOutputError.Length; i++)
+            //    {
+            //        logToAdd.Items.Add(Math.Abs(network.CurrentNetworkOutputError[i]));
+            //    }
 
             //if (logOptions == LogOptions.PrintFirstState)
             //{
@@ -714,23 +720,22 @@ namespace MyNeuralNetwork
             if (signalType == SignalType.Image)
             {
                 signal.ImageFromDrawer(userPaintBox);
+                rndAngle.Next(0, 360);
+            }
+                       
+            inputsChart.Series[0].Points.Clear();
+
+            for (int i = 0; i < inputSampleCount; i += 1)
+            {
+                inputsChart.Series[0].Points.AddXY(i, signal.Amplitude[i]);
             }
 
             if (!trainModeBox.Checked)
             {
-                inputsChart.Series[0].Points.Clear();
-
-                for (int i = 0; i < inputSampleCount; i += 1)
-                {
-                    inputsChart.Series[0].Points.AddXY(i, signal.Amplitude[i]);
-                }
-
                 network.SendSignalsToInputLayer(signal.Amplitude);
                 network.ForwardPropagation();
                 PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
-                DrawNetworkStats(DrawOptions.DrawWeights);
-                network.CleanOldData();
-
+                DrawNetworkStats(DrawOptions.DrawWeights);                
                 Application.DoEvents();
 
                 double maxPower = network.CurrentNetworkOutput[0];
@@ -747,45 +752,46 @@ namespace MyNeuralNetwork
 
                 label1.Text = maxIndex.ToString();
                 label8.Text = maxIndex.ToString();
-
+                
                 if (radioButton3.Checked)
                 {
                     pictureBox3.Load($@"icons\\{maxIndex}.png");
                 }
+
             }            
             else
-            {
-                network.SetTarget(trainParam);
-
-                if (signalType == SignalType.Image)
-                {
-                    rndAngle.Next(0, 360);
-                }
+            {  
                 if (signalType == SignalType.Sinus)
                 {
                     signal.GenerateSinus(trainParam * 10 + 1, rndAmplitude);
                 }
 
-                inputsChart.Series[0].Points.Clear();
-
-                for (int i = 0; i < inputSampleCount; i += 1)
-                {
-                    inputsChart.Series[0].Points.AddXY(i, signal.Amplitude[i]);
-                }
-
+                network.SetTarget(trainParam);
                 network.SendSignalsToInputLayer(signal.Amplitude);
-
                 TrainNetwork(network);
                 PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
                 DrawNetworkStats(DrawOptions.DrawWeights);
                 TestSamples(network, trainParam);
-                network.CleanOldData();
+                networkMonitor.clearMonitor();
+                networkMonitor.drawWeightsInMonitor(network);
 
-                trainParam = rndSet.Next(0, Convert.ToInt32(network.Targets.Length));                
-                trainSymbol.Text = "Draw " + trainParam.ToString();
+                trainParam = rndSet.Next(0, Convert.ToInt32(network.Targets.Length));
+                trainSymbol.Text = "Class to train: " + trainParam.ToString();
+                               
+                if (radioButton1.Checked)
+                {
+                    label8.Text = trainParam.ToString();
+                }
+
+                if (radioButton3.Checked)
+                {
+                    pictureBox3.Load($@"icons\\{trainParam}.png");
+                }
 
                 Application.DoEvents();
             }
+
+            network.CleanOldData();
         }               
 
         private void StopTrainingButton_Click(object sender, EventArgs e)
@@ -810,7 +816,7 @@ namespace MyNeuralNetwork
             this.Text = $"Multilayer Perceptron [Ready...] Model configuration: {networkConfig}";
         }
             
-        private void выходToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void saveMenuItem_Click(object sender, EventArgs e)
         {
             string pathToSave;
             saveFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
@@ -984,20 +990,27 @@ namespace MyNeuralNetwork
             
             MessageBox.Show($"Loaded pre-trained neural network: {networkConfig} neurons");
             this.Text = $"Multilayer Perceptron [Loaded...] Model configuration: {networkConfig}";
+            
+            networkMonitor.clearMonitor();
+            networkMonitor.drawWeightsInMonitor(network);
             networkMonitor.Show();
             networkMonitor.TopMost = true;
         }
 
-        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        private void loadFileMenuItem_Click(object sender, EventArgs e)
         {
             loadModelFromFile();
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
+            trainParam = 0;
+
             if (radioButton3.Checked)
             {
-                pictureBox3.Visible = true;
+                pictureBox3.Visible = true;                
+                pictureBox3.Load($@"icons\\{trainParam}.png");
+                trainSymbol.Text = "Class to train: " + trainParam.ToString();
             }
             else
             {
@@ -1005,6 +1018,53 @@ namespace MyNeuralNetwork
             }
         }
 
-        
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            trainParam = 0;
+
+            if (radioButton1.Checked)
+            {
+                pictureBox3.Visible = false;
+
+                if (trainModeBox.Checked)
+                {
+                    label8.Text = trainParam.ToString();
+                    trainSymbol.Text = "Class to train: " + trainParam.ToString();
+                }
+                else 
+                {
+                    label8.Text = "";
+                }
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            trainParam = 0;
+
+            if (radioButton2.Checked)
+            {
+                label8.Text = "";
+            }
+        }
+
+        private void trainModeBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (trainModeBox.Checked && radioButton1.Checked)
+            {
+                pictureBox3.Visible = false;
+                label8.Text = trainParam.ToString();
+            }
+
+            if (radioButton1.Checked && !trainModeBox.Checked)
+            {     
+                label8.Text = "";
+            }
+        }
+
+        private void exitMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
