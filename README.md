@@ -2,6 +2,10 @@
 
 C# DLL library from scratch with demo UI app for creating, training and validation neural network models
 
+[[Project page with demo]](https://alexfcoding.github.io/NeuralLibrary/)
+
+Used as one of the methods in a [PipeMonitor Project](https://alexfcoding.github.io/PipeMonitor/) for real-time object acoustic recognition with neural networks
+
 ## Features 
 
 - Neural network models creation with variable structure in object oriented style
@@ -16,10 +20,6 @@ C# DLL library from scratch with demo UI app for creating, training and validati
 - Loading pre-trained models from files
 - DLL to use neural networks in your project
 - Currently only multilayer perceptron network is supported
-
-Created from scratch for educational purposes.
-
-Used as secondary method in [LINK] project to recognize controlled object state by vibroacoustic signals.
 
 #### MNIST digits and user images recognition
 
