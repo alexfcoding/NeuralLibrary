@@ -2,24 +2,24 @@
 
 C# DLL library from scratch with demo UI app for creating, training and validation neural network models
 
-[[Project page with demo]](https://alexfcoding.github.io/NeuralLibrary/)
+[[Project Demo Page]](https://alexfcoding.github.io/NeuralLibrary/)
 
-Used as one of the methods in a [PipeMonitor Project](https://alexfcoding.github.io/PipeMonitor/) for real-time object acoustic recognition with neural networks
+Applied as one of the methods in a [PipeMonitor](https://alexfcoding.github.io/PipeMonitor/) project for real-time object acoustic recognition with neural networks
 
-## Features 
+## Features
 
-- Neural network models creation with variable structure in object oriented style
-- Neural networks training with with a given learning rate, iterations, epochs, input signals
+- Building neural networks with different structure in object oriented style
+- Training neural networks with a given learning rate, iterations, epochs, input signals
 - Four demo learning modes included:
-  - Training models to recognize images with rotation. MNIST handwritten digits database tested (png images)
-  - Training models to recognize noisy sinusoidal signals
-  - Drawing with mouse in interactive mode to train model recognition of any kind of user paintings
-  - Signal approximation with neural networks
+  - Training a model to recognize images with rotation. MNIST handwritten digits database tested (png images)
+  - Training a model to recognize noisy sinusoidal signals
+  - Drawing with a mouse in interactive mode to train a model to recognize any kind of user paintings
+  - Signal approximation with neural network
 - Validation with real-time monitoring of errors, weights values and neuron outputs on charts
-- Saving pre-trained models to .mdl file at any training state
+- Saving pre-trained models to a file at any training state
 - Loading pre-trained models from files
 - DLL to use neural networks in your project
-- Currently only multilayer perceptron network is supported
+- Currently only a multilayer perceptron network is supported
 
 #### MNIST digits and user images recognition
 
@@ -32,11 +32,13 @@ Used as one of the methods in a [PipeMonitor Project](https://alexfcoding.github
 #### Quick MNIST 5 digits training/validation test: 784x50x5, 3 epochs x 1000 samples
 
 #### Accuracy: 2329/2500 = 93,16%
+
 ![Quick MNIST 5 digits](gifs/quick_test_5.gif)
 
 #### Full MNIST 10 digits validation: 784x400x10, 8 epochs x 50000 samples
 
 #### Accuracy: 4776/5000 = 95,52%
+
 ![MNIST 10 digits](gifs/validation_10digits.gif)
 
 ## Run Demo App
@@ -89,12 +91,16 @@ for (int i = 0; i < epochs; i++)
     }
 }
 ```
+
 Loading images and custom training data
+
 ```
 signal.ImageFromFile(pathToImage, rotateAngle); // load image according to classToTrain value        
 network.SendSignalsToInputLayer(myDoubleArray); // using any double[] array with your training data      
 ```
+
 Instead of Pass() method, you can call separately
+
 ```
 network.ForwardPropagation();
 network.FindNetworkOutputError();
@@ -102,12 +108,17 @@ network.NeuronErrorDistribution();
 network.RecalculateWeights();
 network.CleanOldData();
 ```
+
 Get current network output values and errors
+
 ```
 double[] outputs = network.CurrentNetworkOutput;
 double[] errors = network.CurrentNetworkOutputError;
 ```
+
 #### Code example results: training/validation on 30 noisy signal classes with 800x400x200x30 network, 5 epochs x 1000 samples
+
 #### Accuracy: 14875/15000 = 99,17%
 
 ![Noisy signal](gifs/sin_validation.gif)
+
