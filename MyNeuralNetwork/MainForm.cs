@@ -100,10 +100,9 @@ namespace MyNeuralNetwork
 
         private void form2_SendNetworkSetup(object sender, EventArgs e)
         {            
-            network = new Network(networkForm.outputNeuronsCount, networkForm.learningRate);
-            network.CreateInputLayer(networkForm.inputNeuronsCount, networkForm.hiddenNeuronsCount[0]);
-            network.CreateHiddenLayers(networkForm.hiddenNeuronsCount, networkForm.outputNeuronsCount);
-            network.CreateOutputLayer(networkForm.outputNeuronsCount, 0);
+            network = new Network(networkForm.inputNeuronsCount, networkForm.hiddenNeuronsCount, networkForm.outputNeuronsCount);
+            network.LearningRate = networkForm.learningRate;
+
             networkMonitor.clearMonitor();
             networkMonitor.drawWeightsInMonitor(network);
             networkMonitor.Show();
@@ -926,11 +925,14 @@ namespace MyNeuralNetwork
                 hiddenLayersNeurons[i] = neuronsList[i + 1];
             }
 
-            network = new Network(neuronsList[neuronsList.Count-1], 0.07);
+            network = new Network(neuronsList[0], hiddenLayersNeurons, neuronsList[neuronsList.Count - 1]);
+            network.LearningRate = 0.07;
             signal = new Signal(neuronsList[0]);
-            network.CreateInputLayer(neuronsList[0], neuronsList[1]);
-            network.CreateHiddenLayers(hiddenLayersNeurons, neuronsList[neuronsList.Count - 1]);
-            network.CreateOutputLayer(neuronsList[neuronsList.Count - 1], 0);
+
+            //network.CreateInputLayer(neuronsList[0], neuronsList[1]);
+            //network.CreateHiddenLayers(hiddenLayersNeurons, neuronsList[neuronsList.Count - 1]);
+            //network.CreateOutputLayer(neuronsList[neuronsList.Count - 1], 0);
+
             PrintNetworkStats(network, signal, network, log2, LogOptions.PrintFirstState);
             DrawNetworkStats(DrawOptions.DrawWeights);
             network.CleanOldData();

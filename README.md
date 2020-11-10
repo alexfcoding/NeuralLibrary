@@ -67,17 +67,14 @@ Accuracy 99,17%, see results below
 int epochs = 5;
 int iterations = 1000;
 int inputNeurons = 784; // Inputs
-int[] hiddenLayers = { 400, 200 }; // Two hidden layers array
+int[] hiddenLayers = { 400, 200 }; // Two hidden layers array with 400 and 200 neurons
 int outputNeurons = 30; // Outputs
-double learningRate = 0.005; // Learning rate
 Random rndClass = new Random();
 Random rndAmplitude = new Random();
 
-network = new Network(outputNeurons, learningRate); // Create new Network object with 30 outputs
-network.CreateInputLayer(inputNeurons, hiddenLayers[0]); // Create input layer, connected to first hidden
-network.CreateHiddenLayers(hiddenLayers, outputNeurons); // last is connected to output
-network.CreateOutputLayer(outputNeurons, 0); // Create output layer
-signal = new Signal(inputNeurons); // Create signal object
+network = new Network(inputNeurons, hiddenLayers, outputNeurons); // Create a Network object
+signal = new Signal(inputNeurons); // Create a signal object
+network.LearningRate = 0.005; // Default value: 0.01
 
 for (int i = 0; i < epochs; i++) 
 {

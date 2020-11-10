@@ -20,20 +20,19 @@ namespace MyNeuralNetwork
 
         Random randomWeight;
 
-        public Network(int outputNeurons, double learningRate)
+        public Network(int inputNeuronCount, int[] hiddenLayersNeurons, int outputNeurons)
         {
             Layers = new List<Layer>();
-            randomWeight = new Random();
-            CurrentNetworkOutput = new double[outputNeurons];
-            CurrentNetworkOutputError = new double[outputNeurons];
-            Targets = new double[outputNeurons];
-            testResults = new double[outputNeurons];
-            LearningRate = learningRate;
-            signalParamsList = new List<double>();
-            squaredError = new double[outputNeurons];
+            randomWeight = new Random();                    
+            signalParamsList = new List<double>();            
             CurrentRecognitionCount = 0;
             isTraining = false;
             isValidating = false;
+            LearningRate = 0.01;
+
+            CreateInputLayer(inputNeuronCount, hiddenLayersNeurons[0]);
+            CreateHiddenLayers(hiddenLayersNeurons, outputNeurons);
+            CreateOutputLayer(outputNeurons, 0);
         }
 
         public void CreateInputLayer(int inputNeuronCount, int weightsCount)
@@ -47,8 +46,7 @@ namespace MyNeuralNetwork
                 inputLayer.Neurons.Add(neuron);
             }
 
-            Layers.Add(inputLayer);
-            
+            Layers.Add(inputLayer);            
         }
 
         public void CreateHiddenLayers(int[] hiddenLayersNeurons, int lastHiddenLayerNeurons)
@@ -90,6 +88,12 @@ namespace MyNeuralNetwork
             }
 
             Layers.Add(outputLayer);
+
+            CurrentNetworkOutput = new double[outputNeuronCount];
+            CurrentNetworkOutputError = new double[outputNeuronCount];
+            Targets = new double[outputNeuronCount];
+            testResults = new double[outputNeuronCount];
+            squaredError = new double[outputNeuronCount];
         }
 
         public void SetTarget(int classToTrain)

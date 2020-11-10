@@ -34,7 +34,7 @@ namespace MyNeuralNetwork
                         {
                             if (k % 10 == 0)
                             {
-                                weightsChart.Series[0].Points.AddXY(weightId, network.Layers[i].Neurons[j].Weights[k]);
+                                weightsChart.Series[0].Points.AddXY(weightId, network.Layers[i].Neurons[j].Weights[k]);                                
                             }
                             weightId++;
                         }                   
