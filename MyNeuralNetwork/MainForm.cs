@@ -898,11 +898,11 @@ namespace MyNeuralNetwork
 
             chartCount++;
 
-            openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
-            openFileDialog1.Filter = "Model File (*.mdl)|*.mdl;";
+            openFileLoaderDialog.InitialDirectory = Directory.GetCurrentDirectory();
+            openFileLoaderDialog.Filter = "Model File (*.mdl)|*.mdl;";
 
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-               path = openFileDialog1.FileName;
+            if (openFileLoaderDialog.ShowDialog() == DialogResult.OK)
+               path = openFileLoaderDialog.FileName;
             else
                 return;
 

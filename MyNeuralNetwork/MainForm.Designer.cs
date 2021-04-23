@@ -114,7 +114,7 @@
             this.stateErrorsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.trainSymbol = new System.Windows.Forms.Label();
             this.StopTrainingButton = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileLoaderDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.errorsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.signalParamText = new System.Windows.Forms.TextBox();
@@ -732,7 +732,7 @@
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileLoaderDialog.FileName = string.Empty;
             // 
             // errorsChart
             // 
@@ -927,7 +927,7 @@
         private System.Windows.Forms.CheckBox trainModeBox;
         private System.Windows.Forms.Label trainSymbol;
         private System.Windows.Forms.Button StopTrainingButton;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileLoaderDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         public System.Windows.Forms.ListBox log;
         public System.Windows.Forms.TextBox iterationsText;
