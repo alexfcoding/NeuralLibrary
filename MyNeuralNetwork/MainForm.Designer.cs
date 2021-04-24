@@ -670,21 +670,21 @@
             // loadFileMenuItem
             // 
             this.loadFileMenuItem.Name = "loadFileMenuItem";
-            this.loadFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFileMenuItem.Size = new System.Drawing.Size(146, 22);
             this.loadFileMenuItem.Text = "Load model...";
             this.loadFileMenuItem.Click += new System.EventHandler(this.loadFileMenuItem_Click);
             // 
             // saveFileMenuItem
             // 
             this.saveFileMenuItem.Name = "saveFileMenuItem";
-            this.saveFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveFileMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveFileMenuItem.Text = "Save model...";
             this.saveFileMenuItem.Click += new System.EventHandler(this.saveMenuItem_Click);
             // 
             // exitMenuItem
             // 
             this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitMenuItem.Size = new System.Drawing.Size(146, 22);
             this.exitMenuItem.Text = "Exit";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
@@ -864,6 +864,7 @@
             this.Controls.Add(this.log);
             this.Controls.Add(this.callModelConstructorButton);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.LayersColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.createNetworkButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.rateTextBox = new System.Windows.Forms.TextBox();
-            this.LayersColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,8 +44,14 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(172, 164);
-            this.dataGridView1.TabIndex = 0;            
+            this.dataGridView1.TabIndex = 0;
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
+            // 
+            // LayersColumn
+            // 
+            this.LayersColumn.HeaderText = "Network Layers";
+            this.LayersColumn.Name = "LayersColumn";
+            this.LayersColumn.Width = 120;
             // 
             // createNetworkButton
             // 
@@ -75,12 +81,6 @@
             this.rateTextBox.TabIndex = 3;
             this.rateTextBox.Text = "0,05";
             // 
-            // LayersColumn
-            // 
-            this.LayersColumn.HeaderText = "Network Layers";
-            this.LayersColumn.Name = "LayersColumn";
-            this.LayersColumn.Width = 120;
-            // 
             // ModelConstructor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -90,6 +90,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.createNetworkButton);
             this.Controls.Add(this.dataGridView1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ModelConstructor";
             this.Text = "Constructor";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
