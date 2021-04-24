@@ -116,6 +116,7 @@
             this.Controls.Add(this.learnRateTextBox);
             this.Controls.Add(this.generateButton);
             this.Controls.Add(this.chart1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ApproxForm";
             this.Text = "Neural Approximator";
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();

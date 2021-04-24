@@ -93,6 +93,7 @@
             this.ClientSize = new System.Drawing.Size(437, 726);
             this.Controls.Add(this.monitorEnableCheckBox);
             this.Controls.Add(this.weightsChart);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Monitor";
             this.Text = "Network Monitor";
             ((System.ComponentModel.ISupportInitialize)(this.weightsChart)).EndInit();
