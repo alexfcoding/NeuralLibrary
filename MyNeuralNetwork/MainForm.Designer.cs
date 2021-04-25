@@ -111,6 +111,10 @@
             this.loadFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.databaseConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stateErrorsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.trainSymbol = new System.Windows.Forms.Label();
             this.StopTrainingButton = new System.Windows.Forms.Button();
@@ -649,7 +653,8 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem});
+            this.файлToolStripMenuItem,
+            this.databaseToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -670,23 +675,53 @@
             // loadFileMenuItem
             // 
             this.loadFileMenuItem.Name = "loadFileMenuItem";
-            this.loadFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFileMenuItem.Size = new System.Drawing.Size(146, 22);
             this.loadFileMenuItem.Text = "Load model...";
             this.loadFileMenuItem.Click += new System.EventHandler(this.loadFileMenuItem_Click);
             // 
             // saveFileMenuItem
             // 
             this.saveFileMenuItem.Name = "saveFileMenuItem";
-            this.saveFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveFileMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveFileMenuItem.Text = "Save model...";
             this.saveFileMenuItem.Click += new System.EventHandler(this.saveMenuItem_Click);
             // 
             // exitMenuItem
             // 
             this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitMenuItem.Size = new System.Drawing.Size(146, 22);
             this.exitMenuItem.Text = "Exit";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
+            // 
+            // databaseToolStripMenuItem
+            // 
+            this.databaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.databaseConnectionToolStripMenuItem,
+            this.loadModelToolStripMenuItem,
+            this.saveModelToolStripMenuItem});
+            this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
+            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.databaseToolStripMenuItem.Text = "Database";
+            // 
+            // databaseConnectionToolStripMenuItem
+            // 
+            this.databaseConnectionToolStripMenuItem.Name = "databaseConnectionToolStripMenuItem";
+            this.databaseConnectionToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.databaseConnectionToolStripMenuItem.Text = "Database Connection";
+            this.databaseConnectionToolStripMenuItem.Click += new System.EventHandler(this.databaseConnectionToolStripMenuItem_Click);
+            // 
+            // loadModelToolStripMenuItem
+            // 
+            this.loadModelToolStripMenuItem.Name = "loadModelToolStripMenuItem";
+            this.loadModelToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.loadModelToolStripMenuItem.Text = "Load Model...";
+            this.loadModelToolStripMenuItem.Click += new System.EventHandler(this.loadModelToolStripMenuItem_Click);
+            // 
+            // saveModelToolStripMenuItem
+            // 
+            this.saveModelToolStripMenuItem.Name = "saveModelToolStripMenuItem";
+            this.saveModelToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.saveModelToolStripMenuItem.Text = "Save Model...";
             // 
             // stateErrorsChart
             // 
@@ -944,6 +979,10 @@
         private System.Windows.Forms.CheckBox errorsCheckBox;
         private System.Windows.Forms.PictureBox pictureBox3;
         public System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem databaseConnectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadModelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveModelToolStripMenuItem;
     }
 }
 

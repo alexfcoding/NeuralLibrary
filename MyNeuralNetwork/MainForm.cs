@@ -1,22 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Threading;
-using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Data.SQLite;
 
 namespace MyNeuralNetwork
 {
     public partial class MainForm : Form
     {
+        private string sqlite_db_path;
         Network network;
         Signal signal;
         ModelConstructor networkForm;
         Monitor networkMonitor = new Monitor();
-        SignalType signalType;        
+        SignalType signalType;
 
         int trainCount;
         int inputSampleCount;
@@ -35,12 +36,12 @@ namespace MyNeuralNetwork
         Random rndAngle = new Random();
         Random rndAmplitude = new Random();
         Random rndSet = new Random();
-        
+
         public MainForm()
         {
             InitializeComponent();
 
-            List<Chart> styledCharts = new List<Chart> { rateChart, errorsChart, errorsChart2, outputsChart, inputsChart, stateErrorsChart };           
+            List<Chart> styledCharts = new List<Chart> { rateChart, errorsChart, errorsChart2, outputsChart, inputsChart, stateErrorsChart };
             SetStyleForCharts(styledCharts);
 
             pictureBox3.Visible = false;
@@ -57,7 +58,7 @@ namespace MyNeuralNetwork
                 styledCharts[i].ChartAreas["ChartArea1"].AxisY.LabelStyle.Font = chartAxisFont;
                 styledCharts[i].ChartAreas["ChartArea1"].AxisX.TitleFont = chartTitleFont;
                 styledCharts[i].ChartAreas["ChartArea1"].AxisY.TitleFont = chartTitleFont;
-            }            
+            }
         }
 
         public void callModelConstructorButton_Click(object sender, EventArgs e)
@@ -79,7 +80,7 @@ namespace MyNeuralNetwork
                 signalType = SignalType.Image;
             }
 
-            networkForm.SendNetworkSetup += new EventHandler(form2_SendNetworkSetup);           
+            networkForm.SendNetworkSetup += new EventHandler(form2_SendNetworkSetup);
             networkForm.Show();
             networkForm.Top = this.Top + this.Height / 2 - networkForm.Width / 2;
             networkForm.Left = this.Left + this.Width / 2 - networkForm.Width / 2;
@@ -99,7 +100,7 @@ namespace MyNeuralNetwork
         }
 
         private void form2_SendNetworkSetup(object sender, EventArgs e)
-        {            
+        {
             network = new Network(networkForm.inputNeuronsCount, networkForm.hiddenNeuronsCount, networkForm.outputNeuronsCount);
             network.LearningRate = networkForm.learningRate;
 
@@ -116,7 +117,7 @@ namespace MyNeuralNetwork
             if (!chartCreated)
             {
                 for (int i = 0; i < network.CurrentNetworkOutput.Length; i++)
-                {                    
+                {
                     int R = randomClr.Next(0, 255);
                     int G = randomClr.Next(0, 255);
                     int B = randomClr.Next(0, 255);
@@ -126,24 +127,24 @@ namespace MyNeuralNetwork
                         Name = "Series" + (i).ToString(),
                         Color = System.Drawing.Color.FromArgb(255, R, G, B),
                         IsVisibleInLegend = false,
-                        IsXValueIndexed = false,                        
+                        IsXValueIndexed = false,
                         ChartType = SeriesChartType.Spline,
                         BorderWidth = 3
                     };
 
                     stateErrorsChart.Series.Add(newSeries);
                 }
-               
+
                 if (errorsChart2.Series.Count > 0)
                 {
                     errorsChart2.Series[0].Points.AddY(0);
                 }
-                
+
 
                 for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
                 {
                     stateErrorsChart.Series[j].Points.AddY(0);
-                }                
+                }
 
                 chartCreated = true;
             }
@@ -153,10 +154,10 @@ namespace MyNeuralNetwork
                 outputsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutput[j]);
                 errorsChart.Series[0].Points.AddXY(j, network.CurrentNetworkOutputError[j]);
             }
-                        
+
             if (trainIteration % (200) == 0)
             {
-                errorsChart2.Series[errorsChart2.Series.Count-1].Points.AddXY(trainIteration, (double)network.CurrentRecognitionCount / 200 * 100);
+                errorsChart2.Series[errorsChart2.Series.Count - 1].Points.AddXY(trainIteration, (double)network.CurrentRecognitionCount / 200 * 100);
                 network.CurrentRecognitionCount = 0;
             }
 
@@ -170,7 +171,7 @@ namespace MyNeuralNetwork
                 double sumError = 0;
 
                 for (int j = 0; j < network.CurrentNetworkOutput.Length; j++)
-                {                    
+                {
                     if (errorsCheckBox.Checked)
                     {
                         sumError += network.squaredError[j];
@@ -178,7 +179,7 @@ namespace MyNeuralNetwork
                     else
                     {
                         stateErrorsChart.Series[j].Points.AddY((network.squaredError[j]));
-                    }                    
+                    }
                 }
 
                 if (errorsCheckBox.Checked)
@@ -191,7 +192,7 @@ namespace MyNeuralNetwork
                 networkMonitor.clearMonitor();
                 networkMonitor.drawWeightsInMonitor(network);
             }
-                                     
+
         }
 
         private void PrintNetworkStats(Network networkToPrint, Signal inputSignal, Network network, ListBox logToAdd, LogOptions logOptions)
@@ -283,7 +284,7 @@ namespace MyNeuralNetwork
                     {
                         networkConfig += $"{network.Layers[i].Neurons.Count}";
                     }
-                
+
                 }
 
                 this.Text = $"Multilayer Perceptron [Training network...] Model configuration: {networkConfig}";
@@ -310,7 +311,7 @@ namespace MyNeuralNetwork
                 errorsChart2.Series.Add(newSeries2);
 
                 chartCount++;
-                errorsChart2.Series[chartCount-1].Points.AddY(0);
+                errorsChart2.Series[chartCount - 1].Points.AddY(0);
 
                 for (int i = 0; i < stateErrorsChart.Series.Count; i++)
                 {
@@ -330,9 +331,9 @@ namespace MyNeuralNetwork
                 {
                     network.CurrentNetworkOutputError[i] = 1;
                 }
-                       
+
                 int trainIteration = 1;
-                int[] imageIndex = new int[network.Targets.Length];            
+                int[] imageIndex = new int[network.Targets.Length];
 
                 while (network.isTraining)
                 {
@@ -343,11 +344,11 @@ namespace MyNeuralNetwork
                     }
 
                     var watch = System.Diagnostics.Stopwatch.StartNew();
-                    int param = sampleRandomizer.Next(0, Convert.ToInt32(network.Targets.Length));                
+                    int param = sampleRandomizer.Next(0, Convert.ToInt32(network.Targets.Length));
                     int param2 = sampleRandomizer.Next(1, trainCount);
 
                     network.SetTarget(param);
-                    
+
                     if (signalType == SignalType.Image)
                     {
                         if (imageIndex[param] == 0)
@@ -365,7 +366,7 @@ namespace MyNeuralNetwork
                     }
                     if (signalType == SignalType.Sinus)
                     {
-                        signal.GenerateSinus(param*10 + 1, rndAmplitude);
+                        signal.GenerateSinus(param * 10 + 1, rndAmplitude);
                     }
 
                     inputsChart.Series[0].Points.Clear();
@@ -381,8 +382,8 @@ namespace MyNeuralNetwork
                     TrainNetwork(network);
                     PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
                     DrawNetworkStats(DrawOptions.DrawWeights, trainIteration);
-                    TestSamples(network, param);                    
-                    network.CleanOldData();                                                           
+                    TestSamples(network, param);
+                    network.CleanOldData();
 
                     for (int i = 0; i < network.Targets.Length; i++)
                     {
@@ -391,10 +392,10 @@ namespace MyNeuralNetwork
 
                     for (int i = 0; i < network.Targets.Length; i++)
                     {
-                        network.squaredError[param] += (network.CurrentNetworkOutputError[i] * network.CurrentNetworkOutputError[i]);                   
+                        network.squaredError[param] += (network.CurrentNetworkOutputError[i] * network.CurrentNetworkOutputError[i]);
                     }
 
-                    Application.DoEvents();                
+                    Application.DoEvents();
                     iterationLabel.Text = $"Sample: {trainIteration.ToString()}";
                     FillProgressBar(0, trainCount, trainIteration);
 
@@ -404,7 +405,7 @@ namespace MyNeuralNetwork
                     //{
                     //    errors[i] += Math.Pow( (network.CurrentNetworkOutputError[i] - network.ErrorTarget), 2);
                     //}
-                    
+
                     watch.Stop();
                     var elapsedMs = watch.ElapsedMilliseconds;
                     int totalIterations = trainCount * epochs;
@@ -414,9 +415,9 @@ namespace MyNeuralNetwork
                     double estimateSec = Math.Round(sec % 60);
                     estimateLabel.Text = $"{Math.Round((double)epochIteration / totalIterations * 100)} % / Epoch: {epoch + 1} / Performance per cycle: {elapsedMs} ms / Estimated time: {estimateMin} min {estimateSec} s";
                 }
-                       
+
                 this.Text = $"Multilayer Perceptron [Ready...] Model configuration: {networkConfig}";
-                recognitionTestButton.Enabled = true;                
+                recognitionTestButton.Enabled = true;
             }
 
         }
@@ -444,7 +445,7 @@ namespace MyNeuralNetwork
             else
             {
                 detectLabel.Text = "Failed";
-                detectLabel.BackColor = Color.Red;                             
+                detectLabel.BackColor = Color.Red;
             }
         }
 
@@ -461,9 +462,9 @@ namespace MyNeuralNetwork
             double testCount = 500;
             networkToTest.testResults = new double[networkToTest.signalParamsList.Count];
             int imageIndex = 1;
-            int frequency = 1; 
+            int frequency = 1;
             double[] resultMatrix = new double[networkToTest.signalParamsList.Count];
-                       
+
             for (int i = 0; i < networkToTest.signalParamsList.Count; i++)
             {
                 network.SetTarget(i);
@@ -476,7 +477,7 @@ namespace MyNeuralNetwork
                         int param = sampleRandomizer.Next(0, Convert.ToInt32(network.Targets.Length));
 
                         if (signalType == SignalType.Image)
-                        {            
+                        {
                             rndAngle.Next(0, 360);
                             signal.ImageFromFile($@"mnist_png\testing\{i}\" + imageIndex.ToString() + ".png", rndAngle);
                             previewPaintBox2.Image = signal.image;
@@ -574,7 +575,7 @@ namespace MyNeuralNetwork
             try
             {
                 int imageIndex = 1;
-                double param = Convert.ToDouble(signalParamText.Text);                
+                double param = Convert.ToDouble(signalParamText.Text);
                 signal = new Signal(inputSampleCount);
 
                 if (signalType == SignalType.Image)
@@ -603,7 +604,7 @@ namespace MyNeuralNetwork
                 DrawNetworkStats(DrawOptions.DontDrawWeights);
                 network.CleanOldData();
                 Application.DoEvents();
-                
+
             }
             catch
             {
@@ -643,7 +644,7 @@ namespace MyNeuralNetwork
             }
         }
 
-        public void Validation (Network networkToTest)
+        public void Validation(Network networkToTest)
         {
             TestRecognitionRate(networkToTest);
             string outputMessage = "";
@@ -654,10 +655,10 @@ namespace MyNeuralNetwork
                 outputMessage += $"Validation rate for class ({networkToTest.signalParamsList[i]}): {networkToTest.testResults[i]} / 500 = {networkToTest.testResults[i] / 500 * 100}% \n";
             }
 
-           outputMessage += "\n";
-           outputMessage += $"Total Accuracy: {validatedCorrectlyCount}/{(500 * networkToTest.signalParamsList.Count)}={validatedCorrectlyCount / (500 * networkToTest.signalParamsList.Count) * 100}% \n";
+            outputMessage += "\n";
+            outputMessage += $"Total Accuracy: {validatedCorrectlyCount}/{(500 * networkToTest.signalParamsList.Count)}={validatedCorrectlyCount / (500 * networkToTest.signalParamsList.Count) * 100}% \n";
 
-           MessageBox.Show(outputMessage);
+            MessageBox.Show(outputMessage);
         }
 
         public static Bitmap ResizeImage(Image image, int width, int height)
@@ -721,7 +722,7 @@ namespace MyNeuralNetwork
                 signal.ImageFromDrawer(userPaintBox);
                 rndAngle.Next(0, 360);
             }
-                       
+
             inputsChart.Series[0].Points.Clear();
 
             for (int i = 0; i < inputSampleCount; i += 1)
@@ -734,7 +735,7 @@ namespace MyNeuralNetwork
                 network.SendSignalsToInputLayer(signal.Amplitude);
                 network.ForwardPropagation();
                 PrintNetworkStats(network, signal, network, log2, LogOptions.PrintTrainingNetwork);
-                DrawNetworkStats(DrawOptions.DrawWeights);                
+                DrawNetworkStats(DrawOptions.DrawWeights);
                 Application.DoEvents();
 
                 double maxPower = network.CurrentNetworkOutput[0];
@@ -751,15 +752,15 @@ namespace MyNeuralNetwork
 
                 label1.Text = maxIndex.ToString();
                 label8.Text = maxIndex.ToString();
-                
+
                 if (radioButton3.Checked)
                 {
                     pictureBox3.Load($@"icons\\{maxIndex}.png");
                 }
 
-            }            
+            }
             else
-            {  
+            {
                 if (signalType == SignalType.Sinus)
                 {
                     signal.GenerateSinus(trainParam * 10 + 1, rndAmplitude);
@@ -776,7 +777,7 @@ namespace MyNeuralNetwork
 
                 trainParam = rndSet.Next(0, Convert.ToInt32(network.Targets.Length));
                 trainSymbol.Text = "Class to train: " + trainParam.ToString();
-                               
+
                 if (radioButton1.Checked)
                 {
                     label8.Text = trainParam.ToString();
@@ -791,12 +792,12 @@ namespace MyNeuralNetwork
             }
 
             network.CleanOldData();
-        }               
+        }
 
         private void StopTrainingButton_Click(object sender, EventArgs e)
         {
             network.isTraining = false;
-            network.isValidating = false;            
+            network.isValidating = false;
             string networkConfig = "";
 
             for (int i = 0; i < network.Layers.Count; i++)
@@ -814,7 +815,7 @@ namespace MyNeuralNetwork
 
             this.Text = $"Multilayer Perceptron [Ready...] Model configuration: {networkConfig}";
         }
-            
+
         private void saveMenuItem_Click(object sender, EventArgs e)
         {
             string pathToSave;
@@ -832,11 +833,11 @@ namespace MyNeuralNetwork
 
         private void saveModelToFile(string path)
         {
-            int weightId = 0;            
+            int weightId = 0;
             string weight = "";
-            
+
             StreamWriter sw = File.CreateText(path);
-                    
+
             try
             {
                 for (int i = 0; i < network.Layers.Count; i++)
@@ -866,11 +867,11 @@ namespace MyNeuralNetwork
             {
                 MessageBox.Show("There is nothing to save, create network first");
             }
-            
+
         }
 
         private void loadModelFromFile()
-        {           
+        {
             string path, networkInfo, weightString;
             int neuronsCount = 0;
             int weightsCount = 0;
@@ -902,7 +903,7 @@ namespace MyNeuralNetwork
             openFileDialog1.Filter = "Model File (*.mdl)|*.mdl;";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
-               path = openFileDialog1.FileName;
+                path = openFileDialog1.FileName;
             else
                 return;
 
@@ -917,10 +918,10 @@ namespace MyNeuralNetwork
                 neuronsList.Add(Convert.ToInt32(strlist[1]));
                 strCounter++;
             }
-            
-            int[] hiddenLayersNeurons = new int[neuronsList.Count-2];
 
-            for (int i = 0; i < neuronsList.Count-2; i++)
+            int[] hiddenLayersNeurons = new int[neuronsList.Count - 2];
+
+            for (int i = 0; i < neuronsList.Count - 2; i++)
             {
                 hiddenLayersNeurons[i] = neuronsList[i + 1];
             }
@@ -942,8 +943,8 @@ namespace MyNeuralNetwork
                 for (int j = 0; j < network.Layers[i].Neurons.Count; j += 1)
                 {
                     for (int k = 0; k < network.Layers[i].Neurons[j].Weights.Length; k++)
-                    {      
-                       
+                    {
+
                         char[] separator = { '/' };
 
                         weightString = sr.ReadLine();
@@ -954,7 +955,7 @@ namespace MyNeuralNetwork
                     neuronsCount++;
                 }
             }
-            
+
             trainNetworkButton.Enabled = true;
             recognitionTestButton.Enabled = true;
 
@@ -973,7 +974,7 @@ namespace MyNeuralNetwork
                 signalType = SignalType.Image;
             }
 
-            inputSampleCount = neuronsList[0];            
+            inputSampleCount = neuronsList[0];
             trainCount = Convert.ToInt32(iterationsText.Text);
 
             string networkConfig = "";
@@ -989,10 +990,10 @@ namespace MyNeuralNetwork
                     networkConfig += $"{network.Layers[i].Neurons.Count}";
                 }
             }
-            
+
             MessageBox.Show($"Loaded pre-trained neural network: {networkConfig} neurons");
             this.Text = $"Multilayer Perceptron [Loaded...] Model configuration: {networkConfig}";
-            
+
             networkMonitor.clearMonitor();
             networkMonitor.drawWeightsInMonitor(network);
             networkMonitor.Show();
@@ -1010,7 +1011,7 @@ namespace MyNeuralNetwork
 
             if (radioButton3.Checked)
             {
-                pictureBox3.Visible = true;                
+                pictureBox3.Visible = true;
                 pictureBox3.Load($@"icons\\{trainParam}.png");
                 trainSymbol.Text = "Class to train: " + trainParam.ToString();
             }
@@ -1033,7 +1034,7 @@ namespace MyNeuralNetwork
                     label8.Text = trainParam.ToString();
                     trainSymbol.Text = "Class to train: " + trainParam.ToString();
                 }
-                else 
+                else
                 {
                     label8.Text = "";
                 }
@@ -1059,14 +1060,39 @@ namespace MyNeuralNetwork
             }
 
             if (radioButton1.Checked && !trainModeBox.Checked)
-            {     
+            {
                 label8.Text = "";
+            }
+        }
+
+        public string Sqlite_db_path
+        {
+            get
+            {
+                return sqlite_db_path;
+            }
+            set
+            {
+                sqlite_db_path = value;
             }
         }
 
         private void exitMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void databaseConnectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DatabaseConnection dbForm = new DatabaseConnection(Sqlite_db_path);
+            dbForm.ShowDialog();
+            Sqlite_db_path = dbForm.GetConnetionPath();
+        }
+
+        private void loadModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DatabaseLoader dbLoader = new DatabaseLoader(Sqlite_db_path);
+            dbLoader.ShowDialog();
         }
     }
 }
