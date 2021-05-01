@@ -1,31 +1,80 @@
 ﻿using MyNeuralNetwork.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SQLite;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MyNeuralNetwork
 {
     public partial class DatabaseLoader : Form
     {
-        SQLiteConnection sqliteDb;
-        private string sqlite_db_path;
+        #region Variables
+        private SQLiteConnection sqliteDb;
+        private string sqliteDbPath;
+        #endregion
 
-        public DatabaseLoader(string _sqlite_db_path)
+        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DatabaseLoader"/> class.
+        /// </summary>
+        /// <param name="_sqliteDbPath">The sqlite database path.</param>
+        public DatabaseLoader(string _sqliteDbPath)
         {
             InitializeComponent();
 
-            this.sqlite_db_path = _sqlite_db_path;
+            sqliteDbPath = _sqliteDbPath;
+
+            if (!string.IsNullOrEmpty(sqliteDbPath))
+            {
+                try
+                {
+                    Model model = new Model(SqliteDb, SqliteDbPath);
+                    SqliteDb = model.GetConnection();
+                    if (model.SqliteDb.State == System.Data.ConnectionState.Open)
+                        model.ReadModelPreview();
+
+                    SortedDictionary<int, string> models = new SortedDictionary<int, string>();
+                    foreach (ModelItem item in model.Items)
+                    {
+                        models.Add(item.ModelId, item.ModelName);
+                    }
+
+                    cmbDatabaseLoader.DataSource = new BindingSource(models, null);
+                    cmbDatabaseLoader.DisplayMember = "Value";
+                    cmbDatabaseLoader.ValueMember = "Key";
+                }
+                catch
+                {
+                    MessageBox.Show("Error loading database existing models.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please, first select an database(sqlite) to load.");
+            }
         }
+        #endregion
 
-        public string Sqlite_db_path { get => sqlite_db_path; set => sqlite_db_path = value; }
+        #region Properties
 
+        /// <summary>
+        /// Gets or sets the sqlite database path.
+        /// </summary>
+        /// <value>
+        /// The sqlite database path.
+        /// </value>
+        public string SqliteDbPath { get => sqliteDbPath; set => sqliteDbPath = value; }
+        /// <summary>
+        /// Gets or sets the sqlite database.
+        /// </summary>
+        /// <value>
+        /// The sqlite database.
+        /// </value>
+        public SQLiteConnection SqliteDb { get => sqliteDb; set => sqliteDb = value; }
+
+        #endregion
+
+        #region Events
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -33,13 +82,11 @@ namespace MyNeuralNetwork
 
         private void btnLoadModel_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(Sqlite_db_path))
+            if (!string.IsNullOrWhiteSpace(SqliteDbPath))
             {
-                sqliteDb = new SQLiteConnection($"Data Source={Sqlite_db_path};Version=3;New=True;Compress=True;");
-                sqliteDb.Open();
-
-                Model model = new Model(sqliteDb, 1);
-                model.ReadModel();
+                string selectedModelName = cmbDatabaseLoader.SelectedValue.ToString();
+                Model model = new Model(SqliteDb, selectedModelName, SqliteDbPath);
+                model.ReadModel(string.Format("SELECT * FROM MODEL WHERE NAME='{0}'", selectedModelName));
             }
             else
             {
@@ -49,13 +96,37 @@ namespace MyNeuralNetwork
 
         private void btnViewModel_Click(object sender, EventArgs e)
         {
-            Model model = new Model(sqliteDb);
-            model.ReadModelPreview();
-
-            foreach (ModelItems item in model.Items)
+            if (cmbDatabaseLoader.SelectedValue != null)
             {
-                
+                try
+                {
+                    string selectedModelName = cmbDatabaseLoader.SelectedValue.ToString();
+                    Model model = new Model(SqliteDb, selectedModelName, SqliteDbPath);
+                    model.GetNeuronLayerData(string.Format("SELECT * FROM LAYERSNEURONS WHERE MODEL_ID={0}", selectedModelName));
+                    model.GetWeightData(string.Format("SELECT * FROM WEIGHTS WHERE MODEL_ID={0}", selectedModelName));
+
+                    gridNLayers.DataSource = model.NeuronLayers;
+                    gridWeights.DataSource = model.Weights;
+
+                    btnLoadModel.Enabled = true;
+                }
+                catch
+                {
+                    btnLoadModel.Enabled = false;
+                    MessageBox.Show("Please select model before load model.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please selected an model to be loaded.");
             }
         }
+        #endregion
+
+        #region Methods
+
+
+
+        #endregion
     }
 }

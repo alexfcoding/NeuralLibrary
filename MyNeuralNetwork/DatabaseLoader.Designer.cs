@@ -31,7 +31,7 @@ namespace MyNeuralNetwork
         {
             this.btnViewModel = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listViewModels = new System.Windows.Forms.ListView();
+            this.cmbDatabaseLoader = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.gridNLayers = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -47,7 +47,7 @@ namespace MyNeuralNetwork
             // 
             // btnViewModel
             // 
-            this.btnViewModel.Location = new System.Drawing.Point(687, 124);
+            this.btnViewModel.Location = new System.Drawing.Point(687, 31);
             this.btnViewModel.Name = "btnViewModel";
             this.btnViewModel.Size = new System.Drawing.Size(100, 23);
             this.btnViewModel.TabIndex = 0;
@@ -57,27 +57,26 @@ namespace MyNeuralNetwork
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.listViewModels);
+            this.groupBox1.Controls.Add(this.cmbDatabaseLoader);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(309, 134);
+            this.groupBox1.Size = new System.Drawing.Size(309, 55);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Database Models";
             // 
-            // listViewModels
+            // cmbDatabaseLoader
             // 
-            this.listViewModels.HideSelection = false;
-            this.listViewModels.Location = new System.Drawing.Point(7, 20);
-            this.listViewModels.Name = "listViewModels";
-            this.listViewModels.Size = new System.Drawing.Size(290, 108);
-            this.listViewModels.TabIndex = 0;
-            this.listViewModels.UseCompatibleStateImageBehavior = false;
+            this.cmbDatabaseLoader.FormattingEnabled = true;
+            this.cmbDatabaseLoader.Location = new System.Drawing.Point(7, 20);
+            this.cmbDatabaseLoader.Name = "cmbDatabaseLoader";
+            this.cmbDatabaseLoader.Size = new System.Drawing.Size(296, 21);
+            this.cmbDatabaseLoader.TabIndex = 0;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.gridNLayers);
-            this.groupBox2.Location = new System.Drawing.Point(13, 154);
+            this.groupBox2.Location = new System.Drawing.Point(13, 74);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(775, 200);
             this.groupBox2.TabIndex = 2;
@@ -95,7 +94,7 @@ namespace MyNeuralNetwork
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.gridWeights);
-            this.groupBox3.Location = new System.Drawing.Point(12, 360);
+            this.groupBox3.Location = new System.Drawing.Point(12, 280);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(775, 196);
             this.groupBox3.TabIndex = 3;
@@ -112,7 +111,8 @@ namespace MyNeuralNetwork
             // 
             // btnLoadModel
             // 
-            this.btnLoadModel.Location = new System.Drawing.Point(713, 562);
+            this.btnLoadModel.Enabled = false;
+            this.btnLoadModel.Location = new System.Drawing.Point(713, 482);
             this.btnLoadModel.Name = "btnLoadModel";
             this.btnLoadModel.Size = new System.Drawing.Size(75, 23);
             this.btnLoadModel.TabIndex = 4;
@@ -122,7 +122,7 @@ namespace MyNeuralNetwork
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(632, 562);
+            this.btnClose.Location = new System.Drawing.Point(632, 482);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 5;
@@ -134,7 +134,7 @@ namespace MyNeuralNetwork
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 607);
+            this.ClientSize = new System.Drawing.Size(800, 519);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnLoadModel);
             this.Controls.Add(this.groupBox3);
@@ -158,12 +158,12 @@ namespace MyNeuralNetwork
 
         private System.Windows.Forms.Button btnViewModel;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView listViewModels;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.DataGridView gridNLayers;
         private System.Windows.Forms.DataGridView gridWeights;
         private System.Windows.Forms.Button btnLoadModel;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.ComboBox cmbDatabaseLoader;
     }
 }

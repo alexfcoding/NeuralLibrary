@@ -98,8 +98,9 @@
       <DependentUpon>ModelConstructor.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Model.cs" />
-    <Compile Include="Models\NetworkLayers.cs" />
-    <Compile Include="Models\NetworkWeights.cs" />
+    <Compile Include="Models\ModelItem.cs" />
+    <Compile Include="Models\NetworkLayer.cs" />
+    <Compile Include="Models\NetworkWeight.cs" />
     <Compile Include="Monitor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,7 +151,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\script.sql" />
+    <Content Include="Models\sqliteScript.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

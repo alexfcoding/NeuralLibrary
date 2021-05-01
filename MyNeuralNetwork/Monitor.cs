@@ -45,9 +45,16 @@ namespace MyNeuralNetwork
 
         public void clearMonitor()
         {
-            if (monitorEnabled == true)
+            try
             {
-                weightsChart.Series[0].Points.Clear();
+                if (monitorEnabled == true)
+                {
+                    weightsChart.Series[0].Points.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please restart NeuralNetwork in order to load Monitor GUI.");
             }
         }
 
